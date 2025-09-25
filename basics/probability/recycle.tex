@@ -1,0 +1,8 @@
+We will show that for $k \le n < m$, $\binom{n}{k} < \binom{m}{k}$. It is sufficient to show that $\binom{n}{k} < \binom{n+1}{k}$. Equivalently,
+\begin{align*}
+  \dfrac{n!}{k!(n-k)!}        & < \dfrac{(n+1)!}{k!(n+1-k)!} \\
+  \iff (n-k+1)(n-k+2)\ldots n & < (n-k)(n-k+1)\ldots (n+1)   \\
+\end{align*}
+The last inequality is true, since $n-k+i < n-k+i+1$ for all $i=1,2,\ldots,k$.
+Given that $k\ge 3$ and $n\le \lfloor 2^{k/2}\rfloor$, we have
+$$\binom{n}{k}\frac{2}{2^{\binom{k}{2}}} \le \binom{\lfloor 2^{k/2}\rfloor}{k}\frac{2}{2^{\binom{k}{2}}}.$$
