@@ -1,12 +1,12 @@
 # Fdb version 4
-["biber exercises"] 0 "exercises.bcf" "exercises.bbl" "exercises" 1758837229.39298 0
+["biber exercises"] 0 "exercises.bcf" "exercises.bbl" "exercises" 1759074690.37099 0
   "exercises.bcf" 0 -1 0 "pdflatex"
   "refs.bib" 0 -1 0 ""
   (generated)
   "exercises.bbl"
   "exercises.blg"
   (rewritten before read)
-["pdflatex"] 1758837227.64249 "d:/Projects/m2-bezout/basics/complexity/exercises.tex" "exercises.pdf" "exercises" 1758837229.39356 0
+["pdflatex"] 1759074688.67669 "d:/Projects/m2-bezout/basics/analysis/exercises.tex" "exercises.pdf" "exercises" 1759074690.37158 0
   "c:/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1715005736 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1715000933 1004 54797486969f23fa377b128694d548df ""
   "c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1715000933 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -31,6 +31,7 @@
   "c:/texlive/2024/texmf-dist/fonts/tfm/public/rsfs/rsfs5.tfm" 1715013124 684 3a51bd4fd9600428d5264cf25f04bb9a ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb" 1715000933 34811 78b52f49e893bcba91bd7581cdc144c0 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb" 1715000933 32001 6aeea3afe875097b1eb0da29acd61e28 ""
+  "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb" 1715000933 30251 6afa5cb1d0204815a708a080681d4674 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb" 1715000933 36299 5f9df58c2139e7edcf37c8fca4bd384d ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb" 1715000933 35469 dcf3a5f2fc1862f5952e3ee5eb1d98c4 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1715000933 35752 024fb6c41858982481f6968b5fc26508 ""
@@ -38,6 +39,7 @@
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1715000933 32569 5e5ddc8df908dea60932f3c484a54c0d ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb" 1715000933 32626 5abc8bb2f28aa647d4c70f8ea38cc0d3 ""
   "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb" 1715000933 37944 359e864bd06cde3b1cf57bb20757fb06 ""
+  "c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb" 1715000933 34694 870c211f62cb72718a00e353f14f254d ""
   "c:/texlive/2024/texmf-dist/tex/context/base/mkii/supp-pdf.mkii" 1715010466 71627 94eb9990bed73c364d7f53f960cc8c5b ""
   "c:/texlive/2024/texmf-dist/tex/generic/iftex/iftex.sty" 1715007390 7237 bdd120a32c8fdb4b433cf9ca2e7cd98a ""
   "c:/texlive/2024/texmf-dist/tex/generic/infwarerr/infwarerr.sty" 1715007468 8356 7bbb2c2373aa810be568c29e333da8ed ""
@@ -68,7 +70,6 @@
   "c:/texlive/2024/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibraryshapes.multipart.code.tex" 1715011777 923 c7a223b32ffdeb1c839d97935eee61ff ""
   "c:/texlive/2024/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarytopaths.code.tex" 1715011777 11518 738408f795261b70ce8dd47459171309 ""
   "c:/texlive/2024/texmf-dist/tex/generic/pgf/frontendlayer/tikz/tikz.code.tex" 1715011777 186782 af500404a9edec4d362912fe762ded92 ""
-  "c:/texlive/2024/texmf-dist/tex/generic/pgf/libraries/pgflibraryarrows.meta.code.tex" 1715011777 58801 1e750fb0692eb99aaac45698bbec96b1 ""
   "c:/texlive/2024/texmf-dist/tex/generic/pgf/libraries/pgflibraryplothandlers.code.tex" 1715011777 32995 ac577023e12c0e4bd8aa420b2e852d1a ""
   "c:/texlive/2024/texmf-dist/tex/generic/pgf/libraries/shapes/pgflibraryshapes.multipart.code.tex" 1715011777 62281 aff261ef10ba6cbe8e3c872a38c05a61 ""
   "c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfint.code.tex" 1715011777 3063 8c415c68a0f3394e45cfeca0b65f6ee6 ""
@@ -192,12 +193,12 @@
   "c:/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1715016025 5529302 90924f286bd62ce7380ad2a7c245cc29 ""
   "c:/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1715016381 8225106 23b0b124de1b4418613bd745731e6982 ""
   "c:/texlive/2024/texmf.cnf" 1715015993 713 e69b156964470283e0530f5060668171 ""
-  "d:/Projects/m2-bezout/basics/complexity/exercises.tex" 1758824999 5540 f28b78361ad3d06659e8f5486cc0cc36 ""
-  "exercises.aux" 1758837228 832 ef1a3baf0aa42ee17bc7eb6938eb6646 "pdflatex"
+  "d:/Projects/m2-bezout/basics/analysis/exercises.tex" 1759068916 5634 7f98149d8b52e3181582b31b57791691 ""
+  "exercises.aux" 1759074689 225 b735319d774f9939f9b0f797dd859c3c "pdflatex"
   "exercises.bbl" 0 -1 0 "biber exercises"
-  "exercises.run.xml" 1758837228 2334 cdf06358f54b5336c7240c541ff9a8d6 "pdflatex"
-  "exercises.tex" 1758824999 5540 f28b78361ad3d06659e8f5486cc0cc36 ""
-  "weeks/week2.tex" 1758837227 9990 6c4151d070e5b5ff3ffcf3d38a783a9e ""
+  "exercises.run.xml" 1759074689 2334 cdf06358f54b5336c7240c541ff9a8d6 "pdflatex"
+  "exercises.tex" 1759068916 5634 7f98149d8b52e3181582b31b57791691 ""
+  "weeks/week1.tex" 1759074686 3910 76f84962208b70c850decf6252f9267b ""
   (generated)
   "exercises.aux"
   "exercises.bcf"

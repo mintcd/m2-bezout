@@ -1,0 +1,35 @@
+\begin{center}
+  {\bf
+    \vspace{0.9cm}
+    Probability - Exercise Sheet 2 - Random Variables and Expectation\\
+    \vspace{0.2cm}
+    CHAU Dang Minh
+  }
+\end{center}
+
+\section{Exercise 1.} \textbf{(Number of Hamiltonian paths in a tournament.)} A tournament $T_n$ is a orientation of the edges of $K_n$. We say that $T_n$ admits a Hamiltonian path if there exists $\sigma\in \S_n$ such that $(\sigma(1),\sigma(2)),\ldots, (\sigma(n-1),\sigma(n))\in T_n$.
+
+We want to show that for every integer $n$ there exists one tournament with at least $\dfrac{n!}{2^{n-1}}$ Hamiltonian paths.
+
+Let us choose a random tournament $T_n$. For any $\sigma\in \S_n$, let $A_\sigma$ be the event that $(\sigma(1),\sigma(2)),\ldots, (\sigma(n-1),\sigma(n))\in T_n$. Let $X$ be the number of Hamiltonian paths.
+
+\begin{enumerate}
+  \item Give an expression of $X$ in terms of the events $A_\sigma$.
+  \item Prove that for every $\sigma\in \S_n$, $\PP(A_\sigma) = \dfrac{1}{2^{n-1}}$.
+  \item Compute $\EE(X)$.
+  \item Prove the expected result.
+\end{enumerate}
+
+\textit{Solution.}
+To be precise, the sample space $\Omega$ is the set of all tournaments, the $\sigma$-algebra $\A$ is the power set of $\Omega$, and the probability measure $\PP$ is defined as $\PP(\{T_n\}) = \dfrac{1}{2^{\binom{n}{2}}}$, for every tournament $T_n$. Also, $X: \Omega\to\NN$.
+\begin{enumerate}
+  \item We have $X = \sum_{\sigma\in \S_n} \textbf{1}_{A_\sigma}.$
+  \item For every $T_n$ such that $(i,j)\in T_n$, there exists exactly one $T_n'$ such that $(j,i)\in T_n'$, and vice versa. Hence, there are as many tournaments containing the edge $(i,j)$ as those containing the edge $(j,i)$. Half of the tournaments contain the edge $(i,j)$ and the other half contain the edge $(j,i)$. Therefore, for every $i,j\in [n]$, we have
+
+        $$\PP((i,j)\in T_n) = \PP((j,i)\in T_n) = \dfrac{1}{2}.$$
+
+        Furthermore, for every $\sigma\in \S_n$, the edges $(\sigma(1),\sigma(2)),\ldots, (\sigma(n-1),\sigma(n))$ are distinct and the orientations of the edges are independent. Therefore,
+        $$\PP(A_\sigma) = \PP((\sigma(1),\sigma(2))\in T_n, \ldots, (\sigma(n-1),\sigma(n))\in T_n) = \prod_{i=1}^{n-1} \PP((\sigma(i),\sigma(i+1))\in T_n) = \left(\dfrac{1}{2}\right)^{n-1} = \dfrac{1}{2^{n-1}}.$$
+  \item We have $\EE(X) = \sum_{\sigma\in \S_n} \EE(\textbf{1}_{A_\sigma}) = \sum_{\sigma\in \S_n} \PP(A_\sigma) = n! \dfrac{1}{2^{n-1}} = \dfrac{n!}{2^{n-1}}.$
+  \item Since $\EE(X) = \dfrac{n!}{2^{n-1}} \le \max\limits_{ T_n\in \Omega} X(T_n)$, there exists at least one tournament whose the number of Hamiltonian paths is greater than $\dfrac{n!}{2^{n-1}}$.
+\end{enumerate}

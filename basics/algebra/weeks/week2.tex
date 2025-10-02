@@ -1,0 +1,39 @@
+\section{Exercise 2.} Let $A\in \M_{p,q}$ and $B\in \M_{q,p}$. Show that $\det(I_p + AB) = \det(I_q + BA)$.
+
+\textit{Solution.} Let $\rank A = r$. Then there exist invertible matrices $P\in \M_p$ and $Q\in \M_q$, and a matrix $D\in \M_{p,q}$ such that $d_{ii} = 1$ for $i\in [r]$ and $d_{ij} = 0$ otherwise, such that $A = PDQ.$ We have
+$$\det(I_p + AB) = \det(P^{-1}(I_p+AB)P) = \det(P^{-1}(I_p+PDQ B)P) = \det(I_p+ D (QBP)).$$
+Let $C = QBP \in \M_{q,p}$, we rewrite $\det(I_p + AB) = \det(I_p + DC)$. Similarly, $\det(I_q + BA) = \det(I_q + CD)$. We have to show that $\det(I_p + DC) = \det(I_q + CD)$. From the form of $D$, the matrices $DC$ and $CD$ are triangular and agree on the first $r$ diagonal entries, while the other diagonal entries are zeros. Therefore, $I_p + DC$ and $I_q + CD$ are triangular and agree on the on the first $r$ diagonal entries, while the other diagonal entries are ones. Since the determinant of a triangular matrix is the product of its diagonal entries, we have $\det(I_p + DC) = \det(I_q + CD)$.
+
+For $u,v\in\RR^n$, we have $\det(I_n + uv^\top) = 1 + v^\top u = 1+\sum\limits_{i=1}^n u_iv_i$.
+
+
+
+\section{Exercise 3.} \textbf{(Kernel Lemma)} Let $V$ be a $\KK$-vector space and $f\in \text{End}(V)$. Let $P=P_1\ldots P_r\in\KK[X]$ with $P_1,\ldots,P_r$ in $\KK[X]$ and pairwise coprime. Then
+\[
+  \ker(P(f)) = \bigoplus_{i=1}^r \ker(P_i(f)).
+\]
+
+\textit{Proof.} Firstly we have $f^m\circ f^n = f^n\circ f^m = f^{m+n}$ for any nonnegative integers $m$ and $n$. Hence for $P,Q\in\KK[X]$, we have $P(f)\circ Q(f) = PQ(f) = QP(f) = Q(f) \circ P(f)$.
+
+We prove the lemma by induction.
+
+\begin{itemize}
+  \item For $r=2$, we have $P=P_1P_2$ with $P_1,P_2\in \KK[X]$ coprime. Since $P_1$ and $P_2$ are coprime, there exist $U,V\in \KK[X]$ such that
+        $$U P_1 + V P_2 = 1.$$
+        Let $x\in \ker(P(f))$. Then, $P(f)(x) = P_1P_2(f)(x) = 0$. On the other hand,
+        $$UP_1(f)(x) + V P_2(f)(x) = x.$$
+        Let $x_1 = UP_1(f)(x)$ and $x_2 = V P_2(f)(x)$. We have $x = x_1 + x_2$. Furthermore,
+        $$P_1(f)(x_1) = P_1VP_2(f)(x) = V(f) \circ (P_1P_2)(f)(x) = 0,$$
+        implying that $x_1\in \text{ker}(P_1(f))$. Similarly, $x_2\in \text{ker}(P_2(f))$. Therefore,
+        $$\ker(P(f)) \subseteq \ker(P_1(f)) + \ker(P_2(f)).$$ Conversely, let $x_1\in \ker(P_1(f))$. We have $P(f)(x_1) = P_2(f)\circ P_1(f)(x_1) = 0$, or $x_1 \in \ker(P_1(f))$. That means $\ker(P_1(f))\subset \ker(P(f))$. Similarly, $\ker(P_2(f))\subset \ker(P(f))$. Hence,
+        $$\ker(P_1(f)) + \ker(P_2(f)) \subseteq \ker(P(f)).$$ Thus, $\ker(P(f)) = \ker(P_1(f)) + \ker(P_2(f)).$
+        To show that the sum is direct, it is sufficient to show that $\ker(P_1(f))\cap \ker(P_2(f)) = \{0\}$. Indeed, let $x\in \ker(P_1(f))\cap \ker(P_2(f))$, then
+        $$x = UP_1(f)(x) + V P_2(f)(x) = U(f)\circ P_1(f)(x) + V(f) \circ P_2(f)(x) = 0.$$
+
+        Therefore, $\ker(P(f)) = \ker(P_1(f)) \oplus \ker(P_2(f)).$
+  \item Suppose that the lemma is true for some $r\ge 2$. Let $P = P_1\ldots P_{r+1}$ with $P_1,\ldots,P_{r+1}\in \KK[X]$ pairwise coprime. Let $Q = P_1\ldots P_r$. Since $P_{r+1}$ is coprime to each of $P_1,\ldots,P_r$, it is also coprime to $Q$. By the case $r=2$, we have
+        $$\ker(P(f)) = \ker(Q(f)) \oplus \ker(P_{r+1}(f)).$$ By the induction hypothesis, we have
+        $$\ker(Q(f)) = \bigoplus_{i=1}^r \ker(P_i(f)).$$ Therefore,
+        $$\ker(P(f)) = \left(\bigoplus_{i=1}^r \ker(P_i(f))\right) \oplus \ker(P_{r+1}(f)) = \bigoplus_{i=1}^{r+1} \ker(P_i(f)).$$
+\end{itemize}
+

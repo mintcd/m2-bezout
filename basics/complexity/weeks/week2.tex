@@ -1,0 +1,144 @@
+\begin{center}
+  {\bf
+    \vspace{0.9cm}
+    Complexity - Exercise Sheet 2\\
+    \vspace{0.2cm}
+    CHAU Dang Minh
+  }
+\end{center}
+
+\section{Exercise 2.2.} Let $\textsc{Factoring} = \{\langle n,m\rangle \,|, n \text{ has a factor } k \text{ such that } 1 < k \le m\}$.
+
+\begin{enumerate}[(a)]
+  \item Show that $\textsc{Factoring} \in \text{NP}$.
+  \item Consider the following algorithm for \textsc{Factoring}
+
+        \begin{algorithmic}
+          \For{$k = 2$ \text{to} $m$}
+          \If{$k$ divides $n$}
+          \State \textbf{return} 1
+          \EndIf
+          \EndFor
+          \State \textbf{return} 0
+        \end{algorithmic}
+
+
+        Why does this algorithm not show that $\textsc{Factoring} \in \text{P}$?
+\end{enumerate}
+
+\textit{Solution.}
+Let $|n|$ be the length of the binary representation of $n$. We have an encoding of the pair $\langle n, m \rangle$ such that the length of the encoding is also $O(\log(n))$. Firstly, encode $m$ and $n$ as usual, separated by $\#$. Then encode again $0\mapsto 00$, $1\mapsto 01$ and $\# \mapsto 11$. Indeed, $|\langle m,n\rangle| \in O(2\log n) = O(\log n) =O(|n|)$. Therefore, it is enough to measure complexity with respect to $|n|$.
+\begin{enumerate}[(a)]
+  \item Let the verifier $V$ accept input $\langle n, m \rangle$ and certificate $k$ if $1 < k \le m$ and $k$ divides $n$. It runs standard division on binaries to check if $k$ divides $n$, which takes time in $O(|n|)$. Therefore, $\textsc{Factoring}\in \text{NP}$.
+  \item The algorithm above runs in time $O(m)$, which is $O(2^{|n|})$ when $m$ is chosen to be in $O(n)$. Therefore, this algorithm does not show that $\textsc{Factoring} \in \text{P}$.
+\end{enumerate}
+
+\section{Exercise 2.5.} Show that \textsc{Clique}, \textsc{VertexCover} and \textsc{DomSet} are in NP.
+
+\textit{Solution.} The length of the encoding of a graph $G$ is $O(|E|) = O(|V|^2)$. The natural number for the minimal size of the cliques, the maximal size of the vertex covers and the maximal size of dominating sets are all bounded by $|V|$. Therefore, it is enough to measure complexity with respect to $|V|$.
+
+
+The certificate for each element $\langle G,k\rangle$ in \textsc{Clique} is a clique $S$. The verifier checks if
+\begin{enumerate}
+  \item $S \subseteq V$ in $O(k|V|)\subset O(|V|^2)$, by searching each vertex in $S$ in $V$;
+  \item $|S| \ge k$ in $O(k)\subset O(|V|)$;
+  \item all vertices in $S$ are pairwise connected in $O(k^2\cdot |E|) \subset O(|V|^4)$, by searching for each pair of vertices in $S$ if there is the corresponding edge in $E$.
+\end{enumerate}
+
+Therefore, the running time is polynomial in $|V|$, or \textsc{Clique} is in NP.
+
+The certificate for each element $\langle G,k\rangle$ in \textsc{VertexCover} is a vertex cover $S$. The verifier checks if
+\begin{enumerate}
+  \item $S \subseteq V$ and $|S| \le k$ in polynomial of $|V|$ similarly to above;
+  \item all edges in $G$ are covered by $S$ in $O(|E|\cdot k) \subset O(|V|^3)$, by searching for each edge in $E$ if at least one of its endpoints is in $S$.
+\end{enumerate}
+
+Therefore, we also have that \textsc{VertexCover} is in NP.
+
+The certificate for each element $\langle G,k\rangle$ in \textsc{DomSet} is a dominating set $S$. The verifier checks if
+\begin{enumerate}
+  \item $S \subseteq V$ and $|S| \le k$ in polynomial of $|V|$ similarly to above;
+  \item all vertices in $G$ are dominated by $S$ in $O(|V|\cdot k\cdot |V|\cdot k) \subset O(|V|^4)$, by searching in worst case if a vertex is not in $S$ and adjacent to all $|V|-1$ other vertices.
+\end{enumerate}
+
+Therefore we also have that \textsc{DomSet} is in NP.
+
+\section{Exercise 2.6.} Show that \textsc{Clique} is NP-hard.
+
+\textit{Solution.} Using the fact that the independent set problem \textsc{IndSet} is NP-hard, we will show that
+$$\textsc{IndSet} \le_P \textsc{Clique}.$$
+Let $G = (V,E)$ be a graph. We define the complement graph $\overline{G} = (V, \overline{E})$ where $\overline{E} = \{\{u,v\} \,|\, u,v \in V, u \neq v, \{u,v\} \notin E\}$. We have that
+\[S \text{ is an independent set in } G \iff S \text{ is a clique in } \overline{G}.\]
+Indeed, if $S$ is an independent set in $G$, then for all $u,v \in S$, $\{u,v\} \notin E$. Therefore, $\{u,v\} \in \overline{E}$ and $S$ is a clique in $\overline{G}$. The converse is similar. Hence, $\langle G,k\rangle \in \textsc{IndSet} \iff \langle \overline{G}, k\rangle \in \textsc{Clique}$.
+
+Next, we show that there is a transformation $f$ such that $f(\langle G,k\rangle) = \langle \overline{G}, k\rangle$ that is computable in polynomial time of $|V|$. In particular, the computation is in $O(|V|^2\cdot|E|)\subset O(|V|^4)$, by traversing all pairs of vertices in $V$ and checking if there is the corresponding edge in $E$.
+
+Therefore, $\textsc{IndSet} \le_P \textsc{Clique}$, or \textsc{Clique} is harder than every problem in NP. Therefore, \textsc{Clique} is NP-hard.
+
+\section{Exercise 2.7.} Show that $\textsc{Clique}\le_P\textsc{VertexCover}$.
+
+\textit{Solution.} Let $G = (V,E)$ be a graph. We have that
+\[S \text{ is a clique in } G \iff S \text{ is an independent set in } \overline{G} \iff  V\setminus S \text{ is a vertex cover in } \overline{G}.\]
+
+The first equivalence is shown in Exercise 2.6. For the second equivalence, if $S$ is an independent set in $\overline{G}$, then for all $u,v \in S$, $\{u,v\} \notin \overline{E}$. Therefore, $\{u,v\} \in E$ and at least one of $u,v$ is in $V\setminus S$. Hence, $V\setminus S$ is a vertex cover in $\overline{G}$. The converse is similar. Hence, $\langle G,k\rangle \in \textsc{Clique} \iff \langle \overline{G}, |V|-k\rangle \in \textsc{VertexCover}$, or $\langle G,k\rangle \in \textsc{Clique} \iff \langle \overline{G}, |V|-k\rangle \in \textsc{VertexCover}$.
+
+The polynomial-time computable transformation $f$ such that $f(\langle G,k\rangle) = \langle \overline{G}, |V|-k\rangle$ is defined as follows. Transforming $G$ to $\overline{G}$ is in polynomial time as in Exercise 2.6 and computing $|V|-k$ is in $O(1)$.
+
+Therefore, $\textsc{Clique}\le_P\textsc{VertexCover}$.
+
+\section{Exercise 2.8.} Show that $\textsc{VertexCover}\le_P\textsc{DomSet}$.
+
+\textit{Solution.} Let $G = (V,E)$ be a graph. We construct a graph $G' = (V',E')$ as follows such that
+\begin{align*}
+  V' & = V \cup \{v_e \,|\, e \in E\},                            \\
+  E' & = E \cup \{\{u,v_e\}, \{v,v_e\} \,|\, e = \{u,v\} \in E\}.
+\end{align*}
+
+We will show that
+$$S \text{ is a vertex cover in } G \iff S \text{ is a dominating set in }  G'.$$
+If $S$ is a vertex cover in $G$, then for all $e = \{u,v\} \in E$, at least one of $u,v$ is in $S$. Therefore, $v_e$ is adjacent to at least one vertex in $S$ in $G'$. Hence, all vertices in $V'\setminus S$ are adjacent to at least one vertex in $S$, or $S$ is a dominating set in $G'$. The converse is similar. Hence, $\langle G,k\rangle \in \textsc{VertexCover} \iff \langle G', k\rangle \in \textsc{DomSet}$.
+
+The polynomial-time computable transformation $f$ such that $f(\langle G,k\rangle) = \langle G', k\rangle$ is defined as follows. Constructing $V'$ from $V$ is in $O(|V| + |E|)\subset O(|V|^2)$ and constructing $E'$ from $E$ is in $O(|E|)\subset O(|V|^2)$.
+
+Therefore, $\textsc{VertexCover}\le_P\textsc{DomSet}$.
+
+\newpage
+
+\begin{center}
+  {\bf
+    \vspace{0.9cm}
+    Extra Exercises
+  }
+\end{center}
+
+\section{Exercise 2.1.} Show that the problem $\textsc{Iso} = \{\langle G, H\rangle \,|\, G \text{ is isomorphic to } H\}$ is in NP.
+
+\textit{Solution.} The length of the encoding of a graph $G$ is $O(|E|) = O(|V|^2)$. Using the same argument as in Exercise 2.2, the length of the encoding of the pair $\langle G, H \rangle$ is also $O(|V|^2)$. Therefore, it is enough to measure complexity with respect to $|V|$.
+
+The certificate to be fed in the verifier for each element $\langle G,H\rangle$ in \textsc{Iso} is a bijection $f: V_G \to V_H$. The verifier firstly transforms $E_G$ to $E'_G$ following $f$ in $O(|V|^2)$. Then it compares $E'_G$ with $E_H$ in $O(|V|^4)$ (by comparing the length of these lists, then search for each element in $E'_G$ in $E_H$). Therefore, the running time is polynomial in $|V|$, or \textsc{Iso} is in NP.
+
+\section{Exercise 2.3.} Suppose that $A,B\in \text{NP}$. Can we conclude that $A\cup B \in \text{NP}$ or $A\cap B \in \text{NP}$?
+
+\textit{Solution.} By the assumption, there are two polynomial-time verifiers $V_A$ and $V_B$ for $A$ and $B$ respectively. We will construct two polynomial-time verifiers $V_\cup$ and $V_\cap$ for $A\cup B$ and $A\cap B$ respectively.
+
+Note that each certificate $c$ of either $A$ or $B$ is also a certificate for $A\cup B$. For $V_\cup$, on input $x$ and certificate $c$, it runs as follows.
+\begin{enumerate}
+  \item Runs $V_A$ on input $x$ and certificate $c$. If $V_A$ accepts, then $V_\cup$ accepts;
+  \item Otherwise, it runs $V_B$ on input $x$ and certificate $c$. If $V_B$ accepts, then $V_\cup$ accepts;
+  \item Otherwise, it rejects.
+\end{enumerate}
+
+The running time of $V_\cup$ is at most the sum $V_A$ and $V_B$, which is bounded by polynomial in $|x|$. Therefore, the running time of $V_\cup$ is polynomial in $|x|$. Moreover, if $x \in A\cup B$, then there is a certificate such that either $V_A$ or $V_B$ accepts, which is the certificate such that $V_\cup$ accepts.
+
+For $V_\cap$, on input $x$ and certificate $(c_A, c_B)$, it runs as follows such that $c_A$ is a certificate for $A$ and $c_B$ is a certificate for $B$, it runs as follows.
+
+\begin{enumerate}
+  \item Runs $V_A$ on input $x$ and certificate $c_A$. If $V_A$ rejects, then $V_\cap$ rejects;
+  \item Otherwise, it runs $V_B$ on input $x$ and certificate $c_B$. If $V_B$ rejects, then $V_\cap$ rejects;
+  \item Otherwise, it accepts.
+\end{enumerate}
+
+Similarly to above, the running time of $V_\cap$ is polynomial in $|x|$.
+
+Therefore, both $A\cup B$ and $A\cap B$ are in NP.
+

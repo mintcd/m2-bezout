@@ -1,0 +1,22 @@
+\section{Exercise 26.}
+Let $H$ be a subgroup of the additive group $(\RR,+)$. Assume $H$ is not reduced to $\{0\}$. Denote $H_+=\{s\in H\,|\, s>0\}$.
+\begin{enumerate}[(a)]
+  \item Show that $H_+$ admits an infimum $\alpha$ in $\RR_+$.
+  \item Show that whenever $\alpha>0$ then $\alpha\in H_+$.
+  \item Deduce that whenever $\alpha>0$ then $H=\alpha\ZZ$.
+  \item Show that whenever $\alpha=0$ then $H$ is dense in $\RR$.
+  \item \textbf{Application:} Prove that $B=\{\cos(n)\,|\, n\in\ZZ\}$ is dense in $[-1,1]$.
+\end{enumerate}
+
+\textit{Solution.}
+\begin{enumerate}[(a)]
+  \item Since $H$ is not reduced to $\{0\}$, there is an element $h\in H$ such that $h\neq 0$. If $h>0$, then $h\in H_+$. If $h<0$, then $-h \in H$ and $-h > 0$, which means that $-h\in H_+$. In both cases, $H_+$ is non-empty. Moreover, $H_+$ is bounded below by $0$. Since $H_+\subset\RR_+$, by the completeness property of $\RR$, $H_+$ admits an infimum $\alpha$ in $\RR_+$.
+  \item Suppose that $\alpha\notin H_+$. Then, for every $h\in H_+$, we have $h>\alpha$ or $h-\alpha>0$. Since $H$ is a subgroup of $(\RR,+)$, we have $h-\alpha\in H$. Thus, $h-\alpha\in H_+$. This means that for every $h\in H_+$, there exists an element $h-\alpha\in H_+$ such that $h-\alpha<h$. This contradicts the fact that $\alpha$ is a lower bound of $H_+$. From this fact, we build a sequence $(h_n)$ in $H_+$ such that $h=h_0$ is an arbitrary element of $H_+$ and $h_{n+1}=h_n-\alpha.$ This sequence is decreasing and bounded below by $\alpha$. Thus, it converges to a limit $l\geq \alpha$. However, taking the limit on both sides of the recurrence relation, we get $l=l-\alpha$, which implies that $\alpha=0$. This contradicts the assumption that $\alpha>0$. Therefore, $\alpha\in H_+$.
+  \item Let $x\in H$. Consider the case $x\ge 0$. Take $n=\lfloor x/\alpha\rfloor\in\mathbb{Z}_{\ge 0}$ and set $r=x-n\alpha$. Then $0\le r<\alpha$ and $r\in H$ (since $H$ is a subgroup). If $r>0$, then $r\in H+$ contradicts the minimality of $\alpha$ in $H_+$. Hence $r=0$ and $x=n\alpha$. For $x<0$, we use the same argument to have $-x=n\alpha$ for some $n\in \ZZ_+$. Therefore, $H\subset\alpha\mathbb{Z}$. The reverse inclusion is obvious since $\alpha\in H$. Thus, $H=\alpha\ZZ$.
+  \item We will show that for every $x,y\in\RR$ such that $0\le x<y$, there exists an element $h\in H_+$ such that $x<h<y$. Let $d = y-x \in H$. Since $\alpha=0=\inf H_+$, there exists an element $h'\in H$ such that $0<h'<d$. Choose $n=\left\lfloor \dfrac{x}{h}\right\rfloor + 1\in \ZZ$. Then,
+        $$x<h'n\le x+h'< x+d = y.$$
+        Thus, $h=h'n\in H_+$ satisfies $x<h<y$.
+
+        Now we show that every $x\in\RR$ is a limit of a sequence of elements of $H$. Consider the case $x\ge 0$. Using the previous argument, for every $n\in \NN^*$, there exists $h_n$ in $H$ such that $x< h_n < x+ \dfrac{1}{n}$. Thus, the sequence $(h_n)$ converges to $x$. This shows that $H$ is dense in $\RR$. For $x<0$, we use the same argument to show that there exists a sequence $(h_n)$ in $H$ which converges to $-x$. Then, the sequence $(-h_n)$ converges to $x$. Thus, $H$ is dense in $\RR$.
+  \item Let $G=\ZZ + 2\pi\ZZ = \{m+2\pi n \,|\, m,n\in \ZZ\}$ be a subgroup of $(\RR, +)$. If $G = \alpha\ZZ$ for some $\alpha >0$, then since $1\in G$ and $2\pi \in G$, there exist $a,b\in \ZZ$ such that $1 = a\alpha$ and $2\pi = b\alpha$. Thus, $\pi = \dfrac{b}{2a} \in \QQ$, a contradiction. Therefore, from (c), we have $\inf G_+=0$ and from (d), $G$ is dense in $\RR$. We claim that $G'=\{n\mod 2\pi \,|\, n\in \ZZ\}$ is dense in $[0,2\pi)$. Indeed, for every $x\in [0,2\pi)$, there exists a sequence $(g_n)$ in $G$ which converges to $x$. Therefore, the sequence $(g_n\mod 2\pi)$ in $G'$ converges to $x$. Since the function $\cos$ is continuous, we have $\{\cos(n)\,|\, n\in \ZZ\} = \{\cos(n)\,|\, n\in G'\}$ is dense in $[\cos(0),\cos(2\pi)] = [-1,1]$.
+\end{enumerate}
