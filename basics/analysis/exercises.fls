@@ -1,8 +1,8 @@
-PWD d:/Projects/m2-bezout/basics/probability
+PWD d:/Projects/m2-bezout/basics/analysis
 INPUT c:/texlive/2024/texmf.cnf
 INPUT c:/texlive/2024/texmf-dist/web2c/texmf.cnf
 INPUT c:/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT d:/Projects/m2-bezout/basics/probability/exercises.tex
+INPUT d:/Projects/m2-bezout/basics/analysis/exercises.tex
 OUTPUT exercises.log
 INPUT c:/texlive/2024/texmf-dist/tex/latex/base/article.cls
 INPUT c:/texlive/2024/texmf-dist/tex/latex/base/article.cls
@@ -298,10 +298,10 @@ INPUT c:/texlive/2024/texmf-dist/tex/latex/biblatex/lbx/english.lbx
 INPUT c:/texlive/2024/texmf-dist/tex/latex/biblatex/lbx/english.lbx
 OUTPUT exercises.bcf
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmcsc10.tfm
-INPUT ./weeks/week2.tex
-INPUT ./weeks/week2.tex
-INPUT weeks/week2.tex
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
+INPUT ./weeks/week1.tex
+INPUT ./weeks/week1.tex
+INPUT weeks/week1.tex
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmr8.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmr6.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmmi10.tfm
@@ -332,8 +332,6 @@ INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/rsfs/rsfs10.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/rsfs/rsfs10.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/rsfs/rsfs5.tfm
 INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmti10.tfm
-INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmbx8.tfm
-INPUT c:/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmbx6.tfm
 OUTPUT exercises.pdf
 INPUT c:/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map
 INPUT exercises.aux
@@ -343,10 +341,8 @@ INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
-INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb
-INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
 INPUT c:/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb

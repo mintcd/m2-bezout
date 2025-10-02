@@ -13,12 +13,13 @@
 \usepackage{mathtools}
 \usepackage{xparse}
 \usepackage{algorithm}
-\usepackage{algpseudocode}
+\usepackage[noend]{algpseudocode}
 \usepackage{biblatex}
 \usepackage{listings}
 \usepackage{matlab-prettifier}
 \usepackage{marvosym}
 \usepackage{subcaption}
+\usepackage{enumerate}
 
 \usepackage{tikz}
 \usetikzlibrary {arrows.meta, automata,positioning, calc}
@@ -129,7 +130,7 @@
 \titleformat{\section}[runin]   % "runin" = same line, no big break
   {\normalfont\normalsize\bfseries} % style: normal text size + bold
   {}                             % no number
-  {1em}                          % no space before text
+  {0pt}                          % no space before text
   {}                             % code before the title
 
 \titlespacing*{\section}
@@ -207,20 +208,12 @@
   \textsc{Universit\'e Gustave Eiffel} \hfill  \,\\
   M2 -- Semester 1 -- 2025/2026 \hfill \, \\
   \bigskip
-
-  %%TITRE
-  {\bf
-    \vspace{0.9cm}
-    Complexity - Exercise Sheet 1\\
-    \vspace{0.2cm}
-    CHAU Dang Minh
-  }
 \end{center}
 \bigskip
 
 \vspace{0.5cm}
 
-\input{weeks/week1.tex}
+\input{weeks/week2.tex}
 \printbibliography
 
 \end{document}
