@@ -33,3 +33,61 @@ To be precise, the sample space $\Omega$ is the set of all tournaments, the $\si
   \item We have $\EE(X) = \sum_{\sigma\in \S_n} \EE(\textbf{1}_{A_\sigma}) = \sum_{\sigma\in \S_n} \PP(A_\sigma) = n! \dfrac{1}{2^{n-1}} = \dfrac{n!}{2^{n-1}}.$
   \item Since $\EE(X) = \dfrac{n!}{2^{n-1}} \le \max\limits_{ T_n\in \Omega} X(T_n)$, there exists at least one tournament whose the number of Hamiltonian paths is greater than $\dfrac{n!}{2^{n-1}}$.
 \end{enumerate}
+
+\section{Exercise 2.} \textbf{(Balancing vectors)} Let $v_1,\ldots,v_n\in\RR^n$ such that $|v_i| = 1$ for every $i\in [n]$, where $|\cdot|$ is the euclidean norm.
+\begin{enumerate}
+  \item We want to prove that there exist $\varepsilon_1,\ldots,\varepsilon_n\in\{-1,1\}$ such that
+        $$|\varepsilon_1v_1 + \ldots + \varepsilon_nv_n| \le \sqrt{n},$$
+        and also that there exist $\varepsilon'_1,\ldots,\varepsilon'_n\in\{-1,1\}$ such that
+        $$|\varepsilon'_1v_1 + \ldots + \varepsilon'_nv_n| \ge \sqrt{n}.$$
+        Let $(\chi_1,\ldots,\chi_n)$ be a vector of symmetric Rademacher random variables, i.e. $\PP(\chi_i = 1) = \PP(\chi_i = -1) = \dfrac{1}{2}$ for every $i\in [n]$.
+        \begin{enumerate}
+          \item Give the expression of the second moment of the random variable $X = |\chi_1v_1 + \ldots + \chi_nv_n|$.
+          \item Conclude.
+        \end{enumerate}
+  \item We assume now $|v_i|\le 1$ for every $i\in[n]$. Let $(p_i)_{i\in[n]}\in[0,1]^n$. By considering Bernoulli random variables $\chi_i$ with parameters $p_i$, show that there exists $(\eta_1,\ldots,\eta_n)\in[0,1]^n$ such that
+        $$|(p_1v_1+\ldots+p_nv_n) - (\eta_1v_1+\ldots+\eta_nv_n)|\le \dfrac{\sqrt{n}}{2}.$$
+\end{enumerate}
+
+\textit{Solution.}
+\begin{enumerate}
+  \item We have
+        \begin{align*}
+          \EE[X^2] & = \EE[|\chi_1v_1 + \ldots + \chi_nv_n|^2]                                                                                           \\
+                   & = \EE\left(\sum\limits_{i=1}^n\chi_i^2|v_i|^2 + 2\sum\limits_{1\le i < j \le n} \chi_i\chi_j\langle v_i, v_j\rangle\right)          \\
+                   & = \EE\left(\sum\limits_{i=1}^n \chi_i^2 |v_i|^2\right) + 2\sum\limits_{1\le i < j \le n}  \EE(\chi_i\chi_j \langle v_i, v_j\rangle) \\
+                   & = \EE\left(\sum\limits_{i=1}^n 1 \right) + 2\sum\limits_{1\le i < j \le n}   \langle v_i, v_j\rangle\EE(\chi_i\chi_j)               \\
+                   & = n + 2\sum\limits_{1\le i < j \le n}  \langle v_i, v_j\rangle \cdot 0                                                              \\
+                   & = n
+        \end{align*}
+        If for every $\varepsilon_1,\ldots,\varepsilon_n\in\{-1,1\}$ we have $|\varepsilon_1v_1 + \ldots + \varepsilon_nv_n| > \sqrt{n}$, then $X > \sqrt{n}$ almost surely, or $X^2 > \sqrt{n}$ almost surely. Hence $\EE[X^2] > n$, which is a contradiction. Therefore, there exist $\varepsilon_1,\ldots,\varepsilon_n\in\{-1,1\}$ such that $|\varepsilon_1v_1 + \ldots + \varepsilon_nv_n| \le \sqrt{n}$. The proof of the second part is similar.
+  \item Let $\chi_i$ be a Bernoulli random variable with parameter $p$
+\end{enumerate}
+
+
+\section{Exercise 3.} Show that the variance of the number of fixed points of a random permutation is $1$.
+
+\textit{Solution.} Let $\sigma$ be a random permutation in $\S_n$. Let $X$ be the number of fixed points of $\sigma$. For every $i\in [n]$, let $X_i = \textbf{1}_{\{\sigma(i) = i\}}$. We have $X = \sum_{i=1}^n X_i$. We have $\EE(X_i) = \PP(\sigma(i) = i) = \dfrac{1}{n}$. Therefore,
+
+On the other hand,
+$$\EE(X) = \sum_{i=1}^n \EE(X_i) = n \cdot \dfrac{1}{n} = 1.$$
+\begin{align*}
+  \EE(X^2) & = \EE\left(\left(\sum_{i=1}^n X_i\right)^2\right)                          \\
+           & = \EE\left(\sum_{i=1}^n X_i^2 + 2\sum_{1 \leq i < j \leq n} X_i X_j\right) \\
+           & = \sum_{i=1}^n \EE(X_i^2) + 2\sum_{1 \leq i < j \leq n} \EE(X_i X_j)
+\end{align*}
+
+Since $X_i$ is an indicator variable, $X_i^2 = X_i$, so $\EE(X_i^2) = \EE(X_i) = \frac{1}{n}$. For $i \neq j$, we have
+$$\EE(X_i X_j) = \PP(\sigma(i) = i \text{ and } \sigma(j) = j).$$ The remaining $n-2$ elements can be permuted arbitrarily, so
+\[
+  \EE(X_i X_j) = \frac{(n-2)!}{n!} = \frac{1}{n(n-1)}
+\]
+
+Therefore,
+\begin{align*}
+  \EE(X^2) & = n \cdot \frac{1}{n} + 2 \cdot \binom{n}{2} \cdot \frac{1}{n(n-1)} \\
+           & = 1 + 2 \cdot \frac{n(n-1)}{2} \cdot \frac{1}{n(n-1)}               \\
+           & = 1 + 1 = 2
+\end{align*}
+
+Thus, $\operatorname{Var}(X) = \EE(X^2) - (\EE(X))^2 = 2 - 1^2 = 1$.

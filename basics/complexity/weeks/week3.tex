@@ -1,0 +1,300 @@
+\begin{center}
+  {\bf
+    \vspace{0.9cm}
+    Complexity - Exercise Sheet 3\\
+    \vspace{0.2cm}
+    CHAU Dang Minh
+  }
+\end{center}
+
+\section{Exercise 3.2.} A $k$-coloring of a graph $G=(V,E)$ is an assignment $c: V\to \{1,2,\ldots,k\}$ such that if $\{u,v\}\in E$, then $c(u)\neq c(v)$. Let $\textsc{$k$-Col} = \{\langle G\rangle \,|\, G \text{ has a } k\text{-coloring}\}$. Prove that $\textsc{3Sat}\le_P \textsc{$3$-Col}$.
+
+\textit{Solution.} Let us construct a graph $G=\langle V,E\rangle$ from a $3$-CNF formula $\phi$ as follows.
+\begin{enumerate}
+  \item Introduce two vertices $v_f$ and $v_u$ in $V$ and connect them by an edge. If a vertex has the same color as $v_f$, then its corresponding literal or variable is assigned to \texttt{False}. If it has the same color as $v_u$, then it is assigned to \texttt{Undefined}.
+  \item For each clause $C_j=(\ell_{j}^{1}\vee \ell_{j}^{2}\vee \ell_{j}^{3})$ in $\phi$, introduce three vertices $v_{j}^{1}, v_{j}^{2}, v_{j}^{3}$ in $V$ and connect them to $v_u$. This forces every literal to be assigned to either \texttt{True} or \texttt{False}.
+  \item We have to make sure that the assignments of the literals in each clause are consistent. For each variable $x$ in $\phi$, introduce two vertices $v_{x}$ and $v_{\neg x}$ in $V$ and connect them to each other and to $v_u$. If a vertex $v_j^k$ corresponds to the literal $x$ (resp. $\neg x$), connect $v_j^k$ to $v_{\neg x}$ (resp. $v_x$).
+  \item Finally, we have to make sure that for each triple $v_{j}^{1}, v_{j}^{2}, v_{j}^{3}$, at least one vertex has the different color from $v_f$. Let say the color of $v_f$ is red, $v_u$ is gray and the other color is green. We will design a subgraph for each clause. Let $o_j$ be a vertex in this subgraph that is connected to $v_f$ and $v_u$ i.e. it is always green. We want that there is a valid coloring for the subgraph if and only if at least one vertex among $v_{j}^{1}, v_{j}^{2}, v_{j}^{3}$ is green, which means that at least one literal in the clause is assigned to \texttt{True}. The possible cases are shown in Figures (a)-(h).
+        \begin{figure}[ht]
+          \centering
+          \begin{subfigure}{0.45\textwidth}
+            \centering
+            \begin{tikzpicture}
+              \node[state, fill=red, fill opacity=0.5, text opacity=1] (v1) at (0,0) {$v_j^{1}$};
+              \node[state, fill=red, fill opacity=0.5, text opacity=1] (v2) at (0,-1.5) {$v_j^{2}$};
+              \node[state, fill=red, fill opacity=0.5, text opacity=1] (v3) at (0,-3) {$v_j^{3}$};
+
+              \node[state, fill=green, fill opacity=0.5, text opacity=1] (a) at (1.5,0) {$a_{j}$};
+              \node[state, fill=gray, fill opacity=0.5, text opacity=1] (b) at (1.5,-1.5) {$b_{j}$};
+
+              \node[state, fill=red, fill opacity=0.5, text opacity=1] (c) at (3,-0.75) {$c_j$};
+
+              \node[state, fill=gray, fill opacity=0.5, text opacity=1] (d) at (4.5,-0.75) {$d_{j}$};
+
+              \node[state, fill=gray, fill opacity=0.5, text opacity=1] (e) at (4.5,-3) {$e_{j}$};
+
+              \node[state, fill=green, fill opacity=0.5, text opacity=1] (o) at (6,-1.5) {$o_j$};
+
+              \path (v1) edge (a);
+              \path (v2) edge (b);
+              \path (a) edge (b);
+              \path (a) edge (c);
+              \path (b) edge (c);
+              \path (c) edge (d);
+              \path (v3) edge (e);
+              \path (d) edge (e);
+              \path (d) edge (o);
+              \path (e) edge (o);
+            \end{tikzpicture}
+            \caption{Red-Red-Red: \textbf{invalid} (other colorings also force both $d_j$ and $e_j$ to be gray).}
+          \end{subfigure}
+          \hfill
+          \begin{subfigure}{0.45\textwidth}
+            \centering
+            \begin{tikzpicture}
+              \node[state, fill=red, fill opacity=0.5, text opacity=1] (v1) at (0,0) {$v_j^{1}$};
+              \node[state, fill=red, fill opacity=0.5, text opacity=1] (v2) at (0,-1.5) {$v_j^{2}$};
+              \node[state, fill=green, fill opacity=0.5, text opacity=1] (v3) at (0,-3) {$v_j^{3}$};
+
+              \node[state, fill=green, fill opacity=0.5, text opacity=1] (a) at (1.5,0) {$a_{j}$};
+              \node[state, fill=gray, fill opacity=0.5, text opacity=1] (b) at (1.5,-1.5) {$b_{j}$};
+
+              \node[state, fill=red, fill opacity=0.5, text opacity=1] (c) at (3,-0.75) {$c_j$};
+
+              \node[state, fill=gray, fill opacity=0.5, text opacity=1] (d) at (4.5,-0.75) {$d_{j}$};
+
+              \node[state, fill=red, fill opacity=0.5, text opacity=1] (e) at (4.5,-3) {$e_{j}$};
+
+              \node[state, fill=green, fill opacity=0.5, text opacity=1] (o) at (6,-1.5) {$o_j$};
+
+              \path (v1) edge (a);
+              \path (v2) edge (b);
+              \path (a) edge (b);
+              \path (a) edge (c);
+              \path (b) edge (c);
+              \path (c) edge (d);
+              \path (v3) edge (e);
+              \path (d) edge (e);
+              \path (d) edge (o);
+              \path (e) edge (o);
+            \end{tikzpicture}
+            \caption{Red-Red-Green}
+          \end{subfigure}
+          \begin{subfigure}{0.45\textwidth}
+            \centering
+            \begin{tikzpicture}
+              \node[state, fill=red, fill opacity=0.5, text opacity=1] (v1) at (0,0) {$v_j^{1}$};
+              \node[state, fill=green, fill opacity=0.5, text opacity=1] (v2) at (0,-1.5) {$v_j^{2}$};
+              \node[state, fill=red, fill opacity=0.5, text opacity=1] (v3) at (0,-3) {$v_j^{3}$};
+
+              \node[state, fill=green, fill opacity=0.5, text opacity=1] (a) at (1.5,0) {$a_{j}$};
+              \node[state, fill=red, fill opacity=0.5, text opacity=1] (b) at (1.5,-1.5) {$b_{j}$};
+
+              \node[state, fill=gray, fill opacity=0.5, text opacity=1] (c) at (3,-0.75) {$c_j$};
+
+              \node[state, fill=red, fill opacity=0.5, text opacity=1] (d) at (4.5,-0.75) {$d_{j}$};
+
+              \node[state, fill=gray, fill opacity=0.5, text opacity=1] (e) at (4.5,-3) {$e_{j}$};
+
+              \node[state, fill=green, fill opacity=0.5, text opacity=1] (o) at (6,-1.5) {$o_j$};
+
+              \path (v1) edge (a);
+              \path (v2) edge (b);
+              \path (a) edge (b);
+              \path (a) edge (c);
+              \path (b) edge (c);
+              \path (c) edge (d);
+              \path (v3) edge (e);
+              \path (d) edge (e);
+              \path (d) edge (o);
+              \path (e) edge (o);
+            \end{tikzpicture}
+            \caption{Red-Green-Red}
+          \end{subfigure}
+          \hfill
+          \begin{subfigure}{0.45\textwidth}
+            \centering
+            \begin{tikzpicture}
+              \node[state, fill=red, fill opacity=0.5, text opacity=1] (v1) at (0,0) {$v_j^{1}$};
+              \node[state, fill=green, fill opacity=0.5, text opacity=1] (v2) at (0,-1.5) {$v_j^{2}$};
+              \node[state, fill=red, fill opacity=0.5, text opacity=1] (v3) at (0,-3) {$v_j^{3}$};
+
+              \node[state, fill=green, fill opacity=0.5, text opacity=1] (a) at (1.5,0) {$a_{j}$};
+              \node[state, fill=red, fill opacity=0.5, text opacity=1] (b) at (1.5,-1.5) {$b_{j}$};
+
+              \node[state, fill=gray, fill opacity=0.5, text opacity=1] (c) at (3,-0.75) {$c_j$};
+
+              \node[state, fill=red, fill opacity=0.5, text opacity=1] (d) at (4.5,-0.75) {$d_{j}$};
+
+              \node[state, fill=gray, fill opacity=0.5, text opacity=1] (e) at (4.5,-3) {$e_{j}$};
+
+              \node[state, fill=green, fill opacity=0.5, text opacity=1] (o) at (6,-1.5) {$o_j$};
+
+              \path (v1) edge (a);
+              \path (v2) edge (b);
+              \path (a) edge (b);
+              \path (a) edge (c);
+              \path (b) edge (c);
+              \path (c) edge (d);
+              \path (v3) edge (e);
+              \path (d) edge (e);
+              \path (d) edge (o);
+              \path (e) edge (o);
+            \end{tikzpicture}
+            \caption{Green-Red-Red}
+          \end{subfigure}
+        \end{figure}
+        \begin{figure}[ht]\ContinuedFloat
+          \begin{subfigure}{0.45\textwidth}
+            \centering
+            \begin{tikzpicture}
+              \node[state, fill=red, fill opacity=0.5, text opacity=1] (v1) at (0,0) {$v_j^{1}$};
+              \node[state, fill=green, fill opacity=0.5, text opacity=1] (v2) at (0,-1.5) {$v_j^{2}$};
+              \node[state, fill=green, fill opacity=0.5, text opacity=1] (v3) at (0,-3) {$v_j^{3}$};
+
+              \node[state, fill=green, fill opacity=0.5, text opacity=1] (a) at (1.5,0) {$a_{j}$};
+              \node[state, fill=gray, fill opacity=0.5, text opacity=1] (b) at (1.5,-1.5) {$b_{j}$};
+
+              \node[state, fill=red, fill opacity=0.5, text opacity=1] (c) at (3,-0.75) {$c_j$};
+
+              \node[state, fill=gray, fill opacity=0.5, text opacity=1] (d) at (4.5,-0.75) {$d_{j}$};
+
+              \node[state, fill=red, fill opacity=0.5, text opacity=1] (e) at (4.5,-3) {$e_{j}$};
+
+              \node[state, fill=green, fill opacity=0.5, text opacity=1] (o) at (6,-1.5) {$o_j$};
+
+              \path (v1) edge (a);
+              \path (v2) edge (b);
+              \path (a) edge (b);
+              \path (a) edge (c);
+              \path (b) edge (c);
+              \path (c) edge (d);
+              \path (v3) edge (e);
+              \path (d) edge (e);
+              \path (d) edge (o);
+              \path (e) edge (o);
+            \end{tikzpicture}
+            \caption{Red-Green-Green}
+          \end{subfigure}
+          \hfill
+          \begin{subfigure}{0.45\textwidth}
+            \centering
+            \begin{tikzpicture}
+              \node[state, fill=green, fill opacity=0.5, text opacity=1] (v1) at (0,0) {$v_j^{1}$};
+              \node[state, fill=red, fill opacity=0.5, text opacity=1] (v2) at (0,-1.5) {$v_j^{2}$};
+              \node[state, fill=green, fill opacity=0.5, text opacity=1] (v3) at (0,-3) {$v_j^{3}$};
+
+              \node[state, fill=red, fill opacity=0.5, text opacity=1] (a) at (1.5,0) {$a_{j}$};
+              \node[state, fill=gray, fill opacity=0.5, text opacity=1] (b) at (1.5,-1.5) {$b_{j}$};
+
+              \node[state, fill=green, fill opacity=0.5, text opacity=1] (c) at (3,-0.75) {$c_j$};
+
+              \node[state, fill=gray, fill opacity=0.5, text opacity=1] (d) at (4.5,-0.75) {$d_{j}$};
+
+              \node[state, fill=red, fill opacity=0.5, text opacity=1] (e) at (4.5,-3) {$e_{j}$};
+
+              \node[state, fill=green, fill opacity=0.5, text opacity=1] (o) at (6,-1.5) {$o_j$};
+
+              \path (v1) edge (a);
+              \path (v2) edge (b);
+              \path (a) edge (b);
+              \path (a) edge (c);
+              \path (b) edge (c);
+              \path (c) edge (d);
+              \path (v3) edge (e);
+              \path (d) edge (e);
+              \path (d) edge (o);
+              \path (e) edge (o);
+            \end{tikzpicture}
+            \caption{Red-Green-Green}
+          \end{subfigure}
+          \begin{subfigure}{0.45\textwidth}
+            \centering
+            \begin{tikzpicture}
+              \node[state, fill=green, fill opacity=0.5, text opacity=1] (v1) at (0,0) {$v_j^{1}$};
+              \node[state, fill=green, fill opacity=0.5, text opacity=1] (v2) at (0,-1.5) {$v_j^{2}$};
+              \node[state, fill=red, fill opacity=0.5, text opacity=1] (v3) at (0,-3) {$v_j^{3}$};
+
+              \node[state, fill=red, fill opacity=0.5, text opacity=1] (a) at (1.5,0) {$a_{j}$};
+              \node[state, fill=gray, fill opacity=0.5, text opacity=1] (b) at (1.5,-1.5) {$b_{j}$};
+
+              \node[state, fill=green, fill opacity=0.5, text opacity=1] (c) at (3,-0.75) {$c_j$};
+
+              \node[state, fill=red, fill opacity=0.5, text opacity=1] (d) at (4.5,-0.75) {$d_{j}$};
+
+              \node[state, fill=gray, fill opacity=0.5, text opacity=1] (e) at (4.5,-3) {$e_{j}$};
+
+              \node[state, fill=green, fill opacity=0.5, text opacity=1] (o) at (6,-1.5) {$o_j$};
+
+              \path (v1) edge (a);
+              \path (v2) edge (b);
+              \path (a) edge (b);
+              \path (a) edge (c);
+              \path (b) edge (c);
+              \path (c) edge (d);
+              \path (v3) edge (e);
+              \path (d) edge (e);
+              \path (d) edge (o);
+              \path (e) edge (o);
+            \end{tikzpicture}
+            \caption{Green-Green-Red}
+          \end{subfigure}
+          \hfill
+          \begin{subfigure}{0.45\textwidth}
+            \centering
+            \begin{tikzpicture}
+              \node[state, fill=green, fill opacity=0.5, text opacity=1] (v1) at (0,0) {$v_j^{1}$};
+              \node[state, fill=green, fill opacity=0.5, text opacity=1] (v2) at (0,-1.5) {$v_j^{2}$};
+              \node[state, fill=green, fill opacity=0.5, text opacity=1] (v3) at (0,-3) {$v_j^{3}$};
+
+              \node[state, fill=red, fill opacity=0.5, text opacity=1] (a) at (1.5,0) {$a_{j}$};
+              \node[state, fill=gray, fill opacity=0.5, text opacity=1] (b) at (1.5,-1.5) {$b_{j}$};
+
+              \node[state, fill=green, fill opacity=0.5, text opacity=1] (c) at (3,-0.75) {$c_j$};
+
+              \node[state, fill=gray, fill opacity=0.5, text opacity=1] (d) at (4.5,-0.75) {$d_{j}$};
+
+              \node[state, fill=red, fill opacity=0.5, text opacity=1] (e) at (4.5,-3) {$e_{j}$};
+
+              \node[state, fill=green, fill opacity=0.5, text opacity=1] (o) at (6,-1.5) {$o_j$};
+
+              \path (v1) edge (a);
+              \path (v2) edge (b);
+              \path (a) edge (b);
+              \path (a) edge (c);
+              \path (b) edge (c);
+              \path (c) edge (d);
+              \path (v3) edge (e);
+              \path (d) edge (e);
+              \path (d) edge (o);
+              \path (e) edge (o);
+            \end{tikzpicture}
+            \caption{Green-Green-Green}
+          \end{subfigure}
+        \end{figure}
+\end{enumerate}
+
+It is clear that if $G$ has a valid $3$-coloring, then we can construct a satisfying assignment for $\phi$ following the colors of $v_x$'s. Conversely, if $\phi$ has a satisfying assignment the we color $v_f$ by red, $v_u$ by gray. For each variable $x$, if $x$ is assigned to \texttt{True}, color $v_x$ by green and $v_{\neg x}$ by red; otherwise, color $v_x$ by red and $v_{\neg x}$ by green. Use this information to color $v_j^k$'s. Since each clause has at least one true literal, we follow Figures (b)-(h) to color the subgraph of each clause. This gives a valid $3$-coloring for $G$. Therefore, $\phi$ is satisfiable if and only if $G$ has a valid $3$-coloring.
+
+The transformation from $\phi$ to $G$ can be done in polynomial time of the length of $\phi$. Indeed, the creation of $v_f$ and $v_u$ also takes constant time. The number of variables is at most the length of $\phi$ and the number of clauses is at most one third of the length of $\phi$. Each clause introduces a constant number of vertices and edges, and so does each variable. The edges are created at most the square of the number of vertices, which is still polynomial in the length of $\phi$.
+
+Thus, $\textsc{3Sat}\le_P \textsc{$3$-Col}$.
+
+\section{Exercise 3.3.} \textsc{NAE-3Sat} is the problem of deciding for a given $3$-CNF formula whether there is a truth assignment to the variables so that in very clause, there is at least one true literal and at least one false literal. Show that \textsc{NAE-3Sat} is NP-hard.
+
+\textit{Solution.} We will show that $\textsc{3Sat}\le_P \textsc{NAE-3Sat}$. Let $\phi$ be a $3$-CNF formula. Introduce a new variable $p$ that will be used when dealing with all clauses. For each clause $C_j=(\ell_{j}^{1}\vee \ell_{j}^{2}\vee \ell_{j}^{3})$ in $\phi$, we will create two clauses $(\ell_{j}^{1}\vee \ell_{j}^{2}\vee w_j)$ and $(\neg w_j \vee \ell_{j}^{3}\vee p)$. The conjunction of all these clauses makes a new formula $\phi'$.
+
+We show that if $\phi$ is satisfiable, then so is $\phi'$. In particular, if $\ell_{j}^{1}\vee \ell_{j}^{2}\vee \ell_{j}^{3}$ is satisfiable, then $(\ell_{j}^{1}\vee \ell_{j}^{2}\vee w_j)\wedge (\neg w_j \vee \ell_{j}^{3}\vee p)$ is NAE-satisfiable. We set $p$ to false and consider the following cases.
+\begin{enumerate}
+  \item If $\ell_{j}^{1}$ (resp. $\ell_{j}^{2}$) is true, then we can assign $w_j$ to false. This makes the first clause NAE-satisfied because $\ell_{j}^{1}$ (resp. $\ell_{j}^{2}$) is true and $w_j$ is false. The second clause is also NAE-satisfied because $\neg w_j$ is true and $p$ is false.
+  \item If $\ell_{j}^{3}$ is true, then we can assign $w_j$ to $\neg(\ell_{j}^1\wedge \ell_{j}^2)$. This makes the first clause NAE-satisfied because we have excluded the cases that $\ell_{j}^1, \ell_{j}^2$ and $w_j$ are all true and $\ell_{j}^1, \ell_{j}^2$ and $w_j$ are all false. The second clause is also NAE-satisfied because $\ell_{j}^{3}$ is true and $p$ is false.
+\end{enumerate}
+
+Conversely, if $\phi'$ is satisfiable, then so is $\phi$. Let $\M$ be a NAE-satisfying assignment for the variables in $\phi'$. Note that since the literals in each clause of $\phi'$ are not all the same cannot be all true, the assignment $\overline{\M}$ such that for each variable in $\phi'$, $\overline{\M}(x) = \neg \M(x)$ is also a NAE-satisfying assignment. Therefore, we can choose $\M$ such that $p$ is false. We will show that the restriction of $\M$ to the variables in $\phi$ is a satisfying assignment for $\phi$. In particular, if $(\ell_{j}^{1}\vee \ell_{j}^{2}\vee w_j)$ and $ (\neg w_j \vee \ell_{j}^{3}\vee p)$ is NAE-satisfiable, then $\ell_{j}^{1}\vee \ell_{j}^{2}\vee \ell_{j}^{3}$ is satisfiable. Suppose that this is not the case i.e. $\ell_{j}^{1}, \ell_{j}^{2}, \ell_{j}^{3}$ are all false. Then $w_j$ is true to make the first clause NAE-satisfied. Plugging this into the second clause, we have $(\neg w_j \vee \ell_{j}^{3}\vee p) = (\text{false} \vee \text{false} \vee \text{false})$, which is not NAE-satisfied. This is a contradiction.
+
+Therefore, $\phi$ is satisfiable if and only if $\phi'$ is NAE-satisfiable.
+
+The transformation from $\phi$ to $\phi'$ can be done in polynomial time of the length of $\phi$. Indeed, the number of clauses in $\phi$ is at most one third of the length of $\phi$. Each clause introduces a constant number of clauses and variables.
+
+Thus, $\textsc{3Sat}\le_P \textsc{NAE-3Sat}$ and so \textsc{NAE-3Sat} is NP-hard.
+

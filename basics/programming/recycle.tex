@@ -1,0 +1,17 @@
+Suppose that we have found $x_0$ and $y_0$ such that $10x_0 + my_0 = c$. Then all solutions are given by $(x_k, y_k)_{k\in\ZZ}$ such that
+$$x_k = x_0 + k\dfrac{m}{c}, \quad y_k = y_0 - k\dfrac{10}{c}.$$
+
+Let $r=\dfrac{m}{c}$, then $r\wedge m = 1$. Consider $k\in [0, m-1]$. Then for every pair $k_1, k_2$ such that $0\le k_1<k_2\le m-1$, we must have
+$$x_{k_1} \not\equiv x_{k_2} \mod m.$$
+Indeed, if $x_{k_1} \equiv x_{k_2}\mod m $, then $x_{k_2} - x_{k_1} = r(k_2-k_1) \equiv 0 \mod m$. But $r\wedge m = 1$, we must have $k_2-k_1 \equiv 0 \mod m$. Since $1\le k_2-k_1\le m-1$, we get a contradiction. Therefore, $(0,\ldots, m-1)$ is a complete set of residues modulo $m$. In particular, there exists $k\in [0,m-1]$ such that $x_k \wedge m = 1$. This proves our claim.
+
+Thus, our algorithm is as follows:
+\begin{enumerate}
+  \item Find $c = 10\wedge m$ and $(x_0,y_0)$ such that $10x_0 + my_0 = c$, using Extended Euclidean algorithm.
+  \item Scan $k$ from $0$ to $m-1$ to find $k$ such that $x_0 + k\dfrac{m}{c} \wedge m = 1$.
+  \item Return $(a,b) = (c, x_0 + k\dfrac{m}{c} \mod m)$.
+\end{enumerate}
+
+\textbf{Remark.} We have $c\in \{1,2,5,10\}$. For prime numbers, the solution always contains $a=1$. In the cases $10\divides m$, the solution is $(10, 1-m)$. We may improve by searching for a divisibility rule for $\dfrac{m}{10}$, then say that $m\divides 10d + u$ if and only if $u = 0$ and $d \divides \dfrac{m}{10}$.
+
+The Extended Euclidean algorithm runs in $O(\log m)$ time. The scanning part runs in $O(m \log m)$ time since each GCD computation takes $O(\log m)$ time. Thus, the overall complexity is $O(m \log m)$.
