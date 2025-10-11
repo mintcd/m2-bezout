@@ -1,0 +1,62 @@
+\section{Exercise 10.} Show that the function $f: \text{GL}_n(\RR) \to \text{GL}_n(\RR)$ such that $f(M) = M^{-1}$ is differentiable and compute its differential.
+
+\textit{Solution.} Let $\|\cdot\|$ be a norm on $\text{GL}_n(\RR)$. Firstly, note that for any $A,B\in\text{GL}_n(\RR)$, we have
+$$A^{-1} - B^{-1} = A^{-1}BB^{-1}-A^{-1}AB^{-1} = A^{-1}(BB^{-1} - AB^{-1}) = A^{-1}(B-A)B^{-1}.$$
+
+Let $A\in \text{GL}_n(\RR)$, we want to show that $f$ is differentiable at $A$. For any $H\in\text{GL}_n(\RR)$ such that $A+H\in \text{GL}_n(\RR)$, we have
+$$f(A+H) - f(A) = (A+H)^{-1} - A^{-1} = (A+H)^{-1}(A-(A+H))A^{-1} = -(A+H)^{-1}HA^{-1}.$$
+
+Choose $L:\text{GL}_n(\RR) \to \text{GL}_n(\RR)$ such that $L(H) = -A^{-1}HA^{-1}$. For any $H,K\in\text{GL}_n(\RR)$ and $\alpha\in\RR$, we have
+$$L(\alpha H+K) = -A^{-1}(\alpha H+K)A^{-1} = -\alpha A^{-1}HA^{-1} - A^{-1}KA^{-1} = \alpha L(H) + L(K).$$
+Hence, $L$ is linear.
+To show that $L$ is continuous on $\text{GL}_n(\RR)$, we only have to show that $L$ is continuous at $0$. Indeed, for any $H\in\text{GL}_n(\RR)$, we have
+$$\|L(H)\| = \|-A^{-1}HA^{-1}\| \le \|A^{-1}\|\|H\|\|A^{-1}\| = \|A^{-1}\|^2\|H\|.$$
+Thus, for any $\varepsilon > 0$, there exists $\delta = \dfrac{\varepsilon}{\|A^{-1}\|^2}$ such that if $\|H\| < \delta$, then $\|L(H)\| < \varepsilon$. This shows that $L$ is continuous at $0$, hence continuous on $\text{GL}_n(\RR)$.
+Now, we have
+\begin{align*}
+  \|f(A+H) - f(A) - L(H)\|
+   & = \|-(A+H)^{-1}HA^{-1} + A^{-1}HA^{-1}\|         \\
+   & = \|(A^{-1} - (A+H)^{-1})HA^{-1}\|               \\
+   & = \|A^{-1}H(A+H)^{-1}HA^{-1}\|.                  \\
+   & \le \|A^{-1}\|\|H\|\|(A+H)^{-1}\|\|H\|\|A^{-1}\| \\
+   & = \|A^{-1}\|^2\|(A+H)^{-1}\|\|H\|^2.
+\end{align*}
+
+Hence, let $\theta(A,H) = \dfrac{1}{\|H\|}(f(A+H) - f(A) - L(H))$, we have
+$$\|\theta(A,H)\| \le \|A^{-1}\|^2\|(A+H)^{-1}\|\|H\|\to 0, \text{ as } H\to 0,$$
+or $\theta(A,H) \to 0$ as $H \to 0$. Therefore, we have found $L$ and $\theta$ such that
+$$\|f(A+H) - f(A) - L(H)\| = \|H\|\cdot\theta(A,H)$$
+
+such that $L$ is linear and continuous and $\theta(A,H) \to 0$ as $H\to 0$. This shows that $f$ is differentiable at $A$. Since $A$ is chosen arbitrarily, we conclude that $f$ is differentiable on $\text{GL}_n(\RR)$. The differential of $f$ at $A$ is given by
+$$df(A)(H) = L(H) = -A^{-1}HA^{-1}.$$
+
+
+\section{Exercise 11.}  Consider $n$ points $(x_i,y_i)$ in the plan $\RR^2$ with at least two distinct $x_i$'s. Show that there exist two real numbers $\lambda,\mu$ which minimize the sum
+$$S(\lambda,\mu) = \sum_{i=1}^n (\lambda x_i + \mu - y_i)^2.$$
+
+\textit{Solution.} We have
+$$\dfrac{\partial S}{\partial \lambda} = 2\sum_{i=1}^n (\lambda x_i + \mu - y_i)x_i, \quad \dfrac{\partial S}{\partial \mu} = 2\sum_{i=1}^n (\lambda x_i + \mu - y_i).$$
+
+Let us solve for $(\lambda_0, \mu_0)$ such that $\dfrac{\partial S}{\partial \lambda}(\lambda_0,\mu_0) = 0$ and $\dfrac{\partial S}{\partial \mu}(\lambda_0,\mu_0) = 0$. Equivalently,
+$$\begin{cases}
+    \lambda_0\sum_{i=1}^n x_i^2 + \mu_0\sum_{i=1}^n x_i = \sum_{i=1}^n y_ix_i, \\
+    \lambda_0\sum_{i=1}^n x_i + n\mu_0 = \sum_{i=1}^n y_i.
+  \end{cases}.$$
+
+Multiplying the first equation by $n$ and the second equation by $\sum_{i=1}^n x_i$, then subtract the two equations, we get
+$$\lambda_0\left(n\sum_{i=1}^n x_i^2 - \left(\sum_{i=1}^n x_i\right)^2\right) = n\sum_{i=1}^n y_ix_i - \sum_{i=1}^n y_i\sum_{i=1}^n x_i.$$
+Since there are at least two distinct $x_i$'s, we have $n\sum_{i=1}^n x_i^2 - (\sum_{i=1}^n x_i)^2 = n\sum_{i=1}^n (x_i - \bar{x})^2 > 0$, where $\bar{x} = \dfrac{1}{n}\sum_{i=1}^n x_i$. Thus,
+$$\lambda_0 = \dfrac{n\sum_{i=1}^n y_ix_i - \sum_{i=1}^n y_i\sum_{i=1}^n x_i}{n\sum_{i=1}^n x_i^2 - (\sum_{i=1}^n x_i)^2}$$
+Substituting $\lambda_0$ into the second equation, we get
+$$\mu_0 = \dfrac{\sum_{i=1}^n y_i - \lambda_0\sum_{i=1}^n x_i}{n}.$$
+
+$$\dfrac{\partial^2 S}{\partial \lambda^2} = 2\sum_{i=1}^n x_i^2, \quad \dfrac{\partial^2 S}{\partial \mu^2} = 2n, \quad \dfrac{\partial^2 S}{\partial \lambda \partial \mu} = \dfrac{\partial^2 S}{\partial \mu \partial \lambda} = 2\sum_{i=1}^n x_i.$$
+
+We will show that the critical point $(\lambda_0,\mu_0)$ minimizes $S$. For any $(\lambda,\mu)\in\RR^2$, we have
+
+$$\left(\dfrac{\partial^2 S}{\partial \lambda^2}(\lambda,\mu)\right)\left(\dfrac{\partial^2 S}{\partial \mu^2}(\lambda,\mu)\right) - \left(\dfrac{\partial^2 S}{\partial \lambda \partial \mu}(\lambda,\mu)\right)^2 = 4n\sum_{i=1}^n x_i^2 - 4\left(\sum_{i=1}^n x_i\right)^2 = 4n\sum_{i=1}^n (x_i - \bar{x})^2 > 0,$$
+$$\dfrac{\partial^2 S}{\partial \lambda^2}(\lambda,\mu) = 2\sum_{i=1}^n x_i^2 > 0.$$
+
+Therefore, $(\lambda_0,\mu_0)$ is a local minimum of $S$. Also from the calculation, the Hessian matrix of $S$ is always positive definite. Thus, $S$ is strictly convex, and $(\lambda_0,\mu_0)$ is the unique global minimum of $S$.
+
+

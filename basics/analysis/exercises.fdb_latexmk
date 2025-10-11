@@ -1,12 +1,13 @@
 # Fdb version 4
-["biber exercises"] 0 "exercises.bcf" "exercises.bbl" "exercises" 1759074690.37099 0
+["biber exercises"] 0 "exercises.bcf" "exercises.bbl" "exercises" 1759692893.94019 0
   "exercises.bcf" 0 -1 0 "pdflatex"
   "refs.bib" 0 -1 0 ""
   (generated)
   "exercises.bbl"
   "exercises.blg"
   (rewritten before read)
-["pdflatex"] 1759074688.67669 "d:/Projects/m2-bezout/basics/analysis/exercises.tex" "exercises.pdf" "exercises" 1759074690.37158 0
+["pdflatex"] 1759692892.08368 "d:/Projects/m2-bezout/basics/analysis/exercises.tex" "exercises.pdf" "exercises" 1759692893.94078 0
+  "../common-setup.tex" 1759583786 5409 d76dfd44564398d9cf622662e9c5cbee ""
   "c:/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1715005736 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1715000933 1004 54797486969f23fa377b128694d548df ""
   "c:/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1715000933 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -43,7 +44,6 @@
   "c:/texlive/2024/texmf-dist/tex/context/base/mkii/supp-pdf.mkii" 1715010466 71627 94eb9990bed73c364d7f53f960cc8c5b ""
   "c:/texlive/2024/texmf-dist/tex/generic/iftex/iftex.sty" 1715007390 7237 bdd120a32c8fdb4b433cf9ca2e7cd98a ""
   "c:/texlive/2024/texmf-dist/tex/generic/infwarerr/infwarerr.sty" 1715007468 8356 7bbb2c2373aa810be568c29e333da8ed ""
-  "c:/texlive/2024/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty" 1715008153 5412 d5a2436094cd7be85769db90f29250a6 ""
   "c:/texlive/2024/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty" 1715009224 17865 1a9bd36b4f98178fa551aca822290953 ""
   "c:/texlive/2024/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty" 1715011725 20089 80423eac55aa175305d35b49e04fe23b ""
   "c:/texlive/2024/texmf-dist/tex/generic/pgf/basiclayer/pgfcore.code.tex" 1715011777 1016 1c2b89187d12a2768764b83b4945667c ""
@@ -70,6 +70,7 @@
   "c:/texlive/2024/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibraryshapes.multipart.code.tex" 1715011777 923 c7a223b32ffdeb1c839d97935eee61ff ""
   "c:/texlive/2024/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarytopaths.code.tex" 1715011777 11518 738408f795261b70ce8dd47459171309 ""
   "c:/texlive/2024/texmf-dist/tex/generic/pgf/frontendlayer/tikz/tikz.code.tex" 1715011777 186782 af500404a9edec4d362912fe762ded92 ""
+  "c:/texlive/2024/texmf-dist/tex/generic/pgf/libraries/pgflibraryarrows.meta.code.tex" 1715011777 58801 1e750fb0692eb99aaac45698bbec96b1 ""
   "c:/texlive/2024/texmf-dist/tex/generic/pgf/libraries/pgflibraryplothandlers.code.tex" 1715011777 32995 ac577023e12c0e4bd8aa420b2e852d1a ""
   "c:/texlive/2024/texmf-dist/tex/generic/pgf/libraries/shapes/pgflibraryshapes.multipart.code.tex" 1715011777 62281 aff261ef10ba6cbe8e3c872a38c05a61 ""
   "c:/texlive/2024/texmf-dist/tex/generic/pgf/math/pgfint.code.tex" 1715011777 3063 8c415c68a0f3394e45cfeca0b65f6ee6 ""
@@ -149,7 +150,6 @@
   "c:/texlive/2024/texmf-dist/tex/latex/graphics/keyval.sty" 1715006525 2671 7e67d78d9b88c845599a85b2d41f2e39 ""
   "c:/texlive/2024/texmf-dist/tex/latex/graphics/mathcolor.ltx" 1715006525 2885 9c645d672ae17285bba324998918efd8 ""
   "c:/texlive/2024/texmf-dist/tex/latex/graphics/trig.sty" 1715006525 4023 293ea1c16429fc0c4cf605f4da1791a9 ""
-  "c:/texlive/2024/texmf-dist/tex/latex/grfext/grfext.sty" 1715006645 7133 b94bbacbee6e4fdccdc7f810b2aec370 ""
   "c:/texlive/2024/texmf-dist/tex/latex/jknapltx/mathrsfs.sty" 1715007717 300 12fa6f636b617656f2810ee82cb05015 ""
   "c:/texlive/2024/texmf-dist/tex/latex/jknapltx/ursfs.fd" 1715007717 548 cc4e3557704bfed27c7002773fad6c90 ""
   "c:/texlive/2024/texmf-dist/tex/latex/kvoptions/kvoptions.sty" 1715008160 22555 6d8e155cfef6d82c3d5c742fea7c992e ""
@@ -193,12 +193,12 @@
   "c:/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1715016025 5529302 90924f286bd62ce7380ad2a7c245cc29 ""
   "c:/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1715016381 8225106 23b0b124de1b4418613bd745731e6982 ""
   "c:/texlive/2024/texmf.cnf" 1715015993 713 e69b156964470283e0530f5060668171 ""
-  "d:/Projects/m2-bezout/basics/analysis/exercises.tex" 1759068916 5634 7f98149d8b52e3181582b31b57791691 ""
-  "exercises.aux" 1759074689 225 b735319d774f9939f9b0f797dd859c3c "pdflatex"
+  "d:/Projects/m2-bezout/basics/analysis/exercises.tex" 1759688563 494 08ab61391e3dfb7ada257fa455661202 ""
+  "exercises.aux" 1759692893 325 54623cb0d9995df3db8246be366eff31 "pdflatex"
   "exercises.bbl" 0 -1 0 "biber exercises"
-  "exercises.run.xml" 1759074689 2334 cdf06358f54b5336c7240c541ff9a8d6 "pdflatex"
-  "exercises.tex" 1759068916 5634 7f98149d8b52e3181582b31b57791691 ""
-  "weeks/week1.tex" 1759074686 3910 76f84962208b70c850decf6252f9267b ""
+  "exercises.run.xml" 1759692893 2334 cdf06358f54b5336c7240c541ff9a8d6 "pdflatex"
+  "exercises.tex" 1759688563 494 08ab61391e3dfb7ada257fa455661202 ""
+  "weeks/week2.tex" 1759692891 4903 d6cf9eb3147b60a28263bf2eb0256dc0 ""
   (generated)
   "exercises.aux"
   "exercises.bcf"
