@@ -1,0 +1,57 @@
+\section{Exercise 8.} Let $(u_n)$ be a sequence defined by $u_0\in\RR$ and $u_{n+1} = u_n + e^{-u_n}$. Show that $u_n \to +\infty$ and
+$$u_n = \ln n + \dfrac{\ln n }{2n} + o\left(\dfrac{\ln n}{n}\right).$$
+
+\textit{Solution.} We first show that $u_n \to +\infty$. For every $n\in\NN$, we have $u_{n+1}-u_n = e^{-u_n} > 0$, or $u_{n+1} > u_n$. Hence $(u_n)$ is a strictly increasing sequence. Suppose that $(u_n)$ is bounded above by some $M\in\RR$. Then, it converges to some limit $L\in\RR$. Taking the limit on both sides of the recurrence relation, we get
+$$L = L + e^{-L} \iff e^{-L} = 0.$$
+This is a contradiction, since $e^{-L} > 0$ for every $L\in\RR$. Hence $(u_n)$ is not bounded above, and since it is increasing, we must have $u_n \to +\infty$.
+
+Let $a_n = e^{u_n}$, then $a_n\to \infty$. Also, $u_n=\ln(a_n)$. We have
+$$a_{n+1} = e^{u_{n+1}} = e^{u_n + e^{-u_n}} = e^{u_n}e^{e^{-u_n}} = a_n e^{\frac{1}{a_n}} \ge a_n\left(1+ \frac{1}{a_n}\right) = a_n + 1.$$
+Therefore, $a_n\ge n + a_0 = n + e^{u_0} > n$ for all $n\in\NN$.
+Since $\dfrac{1}{a_n}\to 0$, we can use the Taylor expansion of $e^x$ at $0$ to get
+$$a_{n+1} = a_n\left(1 + \dfrac{1}{a_n} + \dfrac{1}{2a_n^2} + O\left(\dfrac{1}{a_n^3}\right)\right) = a_n + 1 + \dfrac{1}{2a_n} + O\left(\dfrac{1}{a_n^2}\right).$$
+We also have
+\begin{align*}
+  a_n - a_0
+   & = \sum\limits_{k=0}^{n-1} (a_{k+1} - a_k)   = \sum\limits_{k=0}^{n-1} \left(1 + \dfrac{1}{2a_k} + O\left(\dfrac{1}{a_k^2}\right)\right) \\
+   & = n + \dfrac{1}{2}\sum\limits_{k=0}^{n-1} \dfrac{1}{a_k} + O\left(\sum\limits_{k=0}^{n-1} \dfrac{1}{a_k^2}\right)                       \\
+   & \le  n + \dfrac{1}{2}\sum\limits_{k=1}^{n-1} \dfrac{1}{k} + \dfrac{1}{a_0} + O\left(\sum\limits_{k=0}^{n-1} \dfrac{1}{n^2}\right)       \\
+   & \le n + \ln n + O(1),
+\end{align*}
+or $a_n \le n + \ln n + O(1)$. Now let $b_n = a_n - n - \dfrac{1}{2}\ln n$. Then we have
+\begin{align*}
+  b_{n+1} - b_n
+   & = a_{n+1} - a_n - 1 - \dfrac{1}{2}(\ln(n+1) - \ln n) = \dfrac{1}{2a_n} + O\left(\dfrac{1}{a_n^2}\right) - \dfrac{1}{2}(\ln(n+1) - \ln n).
+\end{align*}
+
+Since $\ln(n+1) - \ln n = \ln\left(1 + \dfrac{1}{n}\right) = \dfrac{1}{n} - \dfrac{1}{2n^2} + O\left(\dfrac{1}{n^3}\right)$, we obtain
+
+\begin{align*}
+  b_{n+1} - b_n
+   & = \dfrac{1}{2a_n} + O\left(\dfrac{1}{a_n^2}\right) - \dfrac{1}{2}\left(\dfrac{1}{n} - \dfrac{1}{2n^2} + O\left(\dfrac{1}{n^3}\right)\right) \\
+   & = \dfrac{1}{2}\left(\dfrac{1}{a_n} - \dfrac{1}{n}\right) + \dfrac{1}{4n^2} + O\left(\dfrac{1}{n^3} + \dfrac{1}{a_n^2}\right).
+\end{align*}
+
+From $a_n \le n + \ln n + O(1)$, for $n\ge 1$, we have
+\begin{align*}
+  \dfrac{1}{a_n} \ge \dfrac{1}{n + \ln n + O(1)} = \dfrac{1}{n}\cdot\dfrac{1}{1 + \frac{\ln n}{n} + O\left(\frac{1}{n}\right)} = \dfrac{1}{n} - \dfrac{\ln n}{n^2} + O\left(\dfrac{\ln^2 n}{n^3}\right).
+\end{align*}
+
+Therefore, $0 > \dfrac{1}{a_n} - \dfrac{1}{n} > -\dfrac{\ln n}{n^2} + O\left(\dfrac{\ln^2 n}{n^3}\right)$ or $0 < \left|\dfrac{1}{a_n} - \dfrac{1}{n}\right| < \dfrac{\ln n}{n^2} + O\left(\dfrac{\ln^2 n}{n^3}\right)$. For some $N_1\in\NN$, we have $\dfrac{\ln n}{n^2} < \dfrac{1}{n^{3/2}}$ for every $n > N_1$. Using the fact that $\sum\limits_{k=1}^{n} \dfrac{1}{k^p} < \infty$, for every $p > 1$, we get
+\begin{align*}
+  \sum\limits_{n=1}^{\infty}\dfrac{\ln n}{n^2} \le \sum\limits_{n=1}^{N_1}\dfrac{\ln n}{n^2} + \sum\limits_{n=N_1+1}^{\infty}\dfrac{\sqrt{n}}{n^2} = \sum\limits_{n=1}^{N_1}\dfrac{\ln n}{n^2} + \sum\limits_{n=N_1+1}^{\infty}\dfrac{1}{n^{3/2}} < \infty.
+\end{align*}
+
+Using the same argument, we also have $\sum\limits_{n=1}^{\infty} O\left(\dfrac{\ln^2 n}{n^3}\right) < \infty$. Hence, $\sum\limits_{n=1}^{\infty}\left|\dfrac{1}{a_n} - \dfrac{1}{n}\right| < \infty$.
+
+From the calculation of $b_{n+1} - b_{n}$, there exist $C > 0$ and $N_2\in\NN$ such that for every $n > N_2$, we have
+\begin{align*}
+  |b_{n+1} - b_n| \le \dfrac{1}{2}\left|\dfrac{1}{a_n} - \dfrac{1}{n}\right| + \dfrac{1}{4n^2} + C\left(\dfrac{1}{n^3} + \dfrac{1}{a_n^2}\right) < \dfrac{1}{2}\left|\dfrac{1}{a_n} - \dfrac{1}{n}\right| + \dfrac{1}{4n^2} + C\left(\dfrac{1}{n^3} + \dfrac{1}{n^2}\right).
+\end{align*}
+Therefore, $\sum\limits_{n=1}^{\infty} |b_{n+1} - b_n| < \infty$, implying that $\sum\limits_{n=1}^{\infty} (b_{n+1} - b_n)$ converges. Hence, $b_n = b_0 + \sum\limits_{k=1}^{n} (b_{k} - b_{k-1})$ converges to some limit $b\in\RR$. Therefore, $a_n = n + \dfrac{1}{2}\ln n + b + o(1)$, implying that
+
+$$u_n = \ln n + \ln\left(1 + \dfrac{\frac{1}{2}\ln n + b + o(1)}{n}\right).$$
+
+Since $\dfrac{\frac{1}{2}\ln n + b + o(1)}{n} \to 0$, we can use the Taylor expansion of $\ln(1+x)$ at $0$ to get
+$$u_n = \ln n + \dfrac{\frac{1}{2}\ln n + b + o(1)}{n} + o\left(\dfrac{\ln n}{2n} + \dfrac{b}{n} + \dfrac{o(1)}{n}\right) = \ln n + \dfrac{\ln n}{2n} + o\left(\dfrac{\ln n}{n}\right).$$
+

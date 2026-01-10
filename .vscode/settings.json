@@ -1,12 +1,33 @@
 {
   "cSpell.words": [
     "abelian",
+    "Berge's",
+    "Birtkoff",
     "comprimeness",
     "Contrapositively",
+    "conv",
     "coprime",
+    "Edmonds",
+    "Frobenius",
     "Gustave",
+    "Hedlund",
     "infimum",
-    "maximality"
+    "injective",
+    "König's",
+    "mathbb",
+    "mathcal",
+    "mathrm",
+    "maximality",
+    "Minkowski",
+    "morphism",
+    "Morphisms",
+    "Neumann",
+    "polytope",
+    "Representability",
+    "Sofic",
+    "subproblems",
+    "Tutte",
+    "Weyl"
   ],
   "cSpell.ignorePaths": [
     "package-lock.json",
@@ -17,5 +38,6 @@
     ".vscode",
     ".vscode-insiders",
     ".gitignore",
+    ""
   ]
 }
