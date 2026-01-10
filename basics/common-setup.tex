@@ -32,7 +32,10 @@
 \usetikzlibrary{arrows.meta, automata,positioning, calc}
 
 % Margins
-\setmarginsrb{2.5cm}{1.3cm}{2.5cm}{1.3cm}{0cm}{0cm}{0cm}{0cm}
+\setmarginsrb{2.5cm}{2cm}{2.5cm}{3cm}{0cm}{0cm}{0cm}{0cm}
+
+% Add space for page numbers to prevent them from touching content
+\setlength{\footskip}{2cm}
 
 % Theorem environments
 \newtheorem{lemma}{Lemma}
@@ -181,7 +184,7 @@
 \renewcommand{\arraystretch}{2}
 
 % Page style and formatting
-\pagestyle{empty}
+\pagestyle{plain}
 \setlength{\parindent}{0em}
 
 % Matrix environment customization

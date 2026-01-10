@@ -1,0 +1,61 @@
+\renewcommand{\arraystretch}{0.7}
+
+We answer here the questions 5, 6, 9, 10 and 13 from the exercise sheet. Answer to other questions are found in the source code of \texttt{homework.py}.
+
+\section{Question 5.} Assume that the coefficients of $A$ and $B$ takes $O(1)$ bits in memory. Prove that, in the worst case, the coefficients of the result of the sequence of products use $\Theta(n)$ bits.
+
+\textit{Solution.} Let $C^{(n)}, n\ge 1$ be the result of the product of $n$ matrices. By the hypothesis, the coefficients of $C^{(1)}$ use $O(1)$ bits. Denote by the constant $b$ the largest number of bits used by the coefficients of $C^{(1)}$. We consider the worst case where all coefficients $A$ and $B$ are equal to $2^{b}-1$, or $C^{(1)} = (2^b-1)\begin{bmatrix}
+    1 & 1 \\
+    1 & 1
+  \end{bmatrix}$. Then $C^{(n)} = (2^b-1)^n \begin{bmatrix}
+    1 & 1 \\
+    1 & 1
+  \end{bmatrix}^n$. Using induction, we can prove that $\begin{bmatrix}
+    1 & 1 \\
+    1 & 1
+  \end{bmatrix}^n = 2^{n-1} \begin{bmatrix}
+    1 & 1 \\
+    1 & 1
+  \end{bmatrix}$. Then $C^{(n)} = (2^b-1)^n 2^{n-1} \begin{bmatrix}
+    1 & 1 \\
+    1 & 1
+  \end{bmatrix}$. It remains to estimate the number of bits used by $(2^b-1)^n 2^{n-1}$. We have
+$$2^{n-1}\le (2^b-1)^n 2^{n-1} \le 2^{bn+n-1} \le 2^{(b+1)n}-1.$$
+Therefore, the number of bits used by $(2^b-1)^n 2^{n-1}$ is between $n$ and $(b+1)n$, which is $\Theta(n)$. Thus, in the worst case, the coefficients of the result of the sequence of products use $\Theta(n)$ bits.
+
+\section{Question 6.} The large integer addition of two numbers encoded with $O(n)$ bits takes $O(n)$ time and their multiplication takes $O(n\log n)$ time. What is the complexity of \texttt{naive}.
+
+\textit{Solution.} Multiplication of two $2\times 2$ matrices involves 4 additions and 8 multiplications. From Question 5, the number of bits used by the coefficients of $C^{(n)}$ is $\Theta(n)$. Hence the time complexity of multiplying $C^{(n)}$ and either $A$ or $B$ is in
+$$8O(n\log n) + 4O(n) = O(n\log n).$$
+For $u$ of length $n$, we need to perform $n-1$ multiplications. We have,
+$$\sum\limits_{i=1}^{n-1} i\log i \in O((n-1)^2 \log (n-1)) = O(n^2 \log n).$$
+Thus, the time complexity of \texttt{naive} is $O(n^2 \log n)$.
+
+\section{Question 9.} Under the same complexity hypothesis as in Question 6, what is the complexity of \texttt{divide\_and\_conquer}.
+
+\textit{Solution.} Let $T(n)$ be the time complexity of \texttt{divide\_and\_conquer} for a word of length $n$. We have the recurrence
+$$T(n) = 2T\left(\frac{n}{2}\right) + f(n),$$
+where $f(n)\in O(n\log n)$ as in Question 6. Using the Master Theorem with $a=2$, $b=2$ and $f(n) \in O(n^{\log_b a} \log n)$, we have
+$$T(n) \in O(n^{\log_b a} \log^2 n) = O(n \log^2 n).$$
+
+\section{Question 10.} Draw the curves of an experimental comparison between \texttt{naive} and \texttt{divide\_and\_conquer}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{question10.png}
+  \caption{Comparison between \texttt{naive} and \texttt{divide\_and\_conquer}.}
+  \label{fig:dac_vs_naive}
+\end{figure}
+
+\section{Question 12.} Draw the curves of an experimental comparison between \texttt{divide\_and\_conquer} and \texttt{opt\_divide\_and\_conquer}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{question12.png}
+  \caption{Comparison between \texttt{divide\_and\_conquer} and \texttt{opt\_divide\_and\_conquer} (the cache is cleared before each run).}
+  \label{fig:opt_dac_vs_dac}
+\end{figure}
+
+\section{Question 13.} Explain the result in Question 12?
+
+\textit{Solution.} It is seen from Figure \ref{fig:opt_dac_vs_dac} that \texttt{opt\_divide\_and\_conquer} consistently outperforms \texttt{divide\_and\_conquer} across various lengths of $u$, especially with larger ones. This is because there can be the same subproblems occurring many times, producing a cache hit. The larger the length of $u$ is, the greater chance an expensive subproblem is hit, which is then more likely to surpass the cost of cache management.
