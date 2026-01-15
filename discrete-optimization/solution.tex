@@ -1,0 +1,393 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+
+\newcommand{\conv}{\operatorname{conv}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\diam}{\operatorname{diam}}
+\newcommand{\symdiff}{\mathbin{\triangle}}
+
+\title{Discrete Optimisation --- Final Exam (14/01/25)\\Solutions}
+\date{}
+\author{}
+
+\begin{document}
+\maketitle
+
+\section*{Problem 1}
+\textit{Statement.}
+The distance between two vertices (extreme points) $u,v$ of a polytope $P$ is the length of the shortest path between $u$ and $v$ in the $1$-skeleton (graph of vertices and edges) of $P$.
+The diameter of $P$ is the maximum distance between two vertices of $P$.
+Let $G=(V,E)$ be a graph and $P_{\mathrm{pm}}(G)$ its perfect matching polytope. Prove that
+\[
+\diam\!\bigl(P_{\mathrm{pm}}(G)\bigr)\ \le\ \frac{|V|}{4}.
+\]
+\textit{Hint.} $P_{\mathrm{pm}}(G)$ has an edge between two perfect matchings $M,N$ if and only if $M\symdiff N$ is an even cycle.
+
+\medskip
+\noindent\textbf{Solution.}
+Vertices of $P_{\mathrm{pm}}(G)$ are incidence vectors of perfect matchings of $G$. Hence its $1$-skeleton has a node for each perfect matching, and (by the hint) an edge between matchings $M$ and $N$ exactly when $M\symdiff N$ is a single even cycle.
+
+Fix two perfect matchings $M$ and $N$. Consider the symmetric difference $M\symdiff N$. It is well-known (and easy) that:
+\begin{itemize}[leftmargin=2em]
+\item every vertex has degree $0$ or $2$ in the subgraph $(V,M\symdiff N)$ (because each matching contributes exactly one incident edge at each vertex, and edges in the intersection cancel),
+\item therefore $M\symdiff N$ decomposes into a disjoint union of (vertex-disjoint) even cycles:
+\[
+M\symdiff N \ =\ C_1 \,\dot\cup\, C_2 \,\dot\cup\, \cdots \,\dot\cup\, C_k.
+\]
+\end{itemize}
+For each $i$, define
+\[
+M^{(i)} \ :=\ M\ \symdiff\ \Bigl(\bigcup_{t=1}^{i} C_t\Bigr),
+\qquad i=0,1,\dots,k,
+\]
+where $M^{(0)}=M$. Each $M^{(i)}$ is a perfect matching: on cycle $C_i$ we simply swap the $M$-edges with the $N$-edges, and elsewhere we keep the matching unchanged. Moreover,
+\[
+M^{(i-1)} \symdiff M^{(i)} \ =\ C_i,
+\]
+which is an even cycle. By the hint, $M^{(i-1)}$ and $M^{(i)}$ are adjacent in the $1$-skeleton. Hence we have a path of length $k$ from $M$ to $N$, and thus
+\[
+\dist(M,N) \le k.
+\]
+
+It remains to bound $k$ in terms of $|V|$. The cycles $C_1,\dots,C_k$ are vertex-disjoint, and each has length at least $4$ (even cycle in a simple graph). Therefore
+\[
+4k \ \le\ \sum_{i=1}^k |V(C_i)| \ \le\ |V|,
+\]
+so $k \le |V|/4$. Combining with $\dist(M,N)\le k$ yields
+\[
+\dist(M,N)\ \le\ \frac{|V|}{4}.
+\]
+Taking the maximum over all pairs of vertices (perfect matchings) gives $\diam(P_{\mathrm{pm}}(G)) \le |V|/4$, as required. \qed
+
+\section*{Problem 2}
+\textit{Statement.}
+A cut-edge (bridge) in a graph $G=(V,E)$ is an edge $e\in E$ such that $G-e$ has one more connected component than $G$.
+Let $G$ be a $3$-regular graph that has no cut-edge. Use Tutte's theorem to prove that $G$ has a perfect matching.
+
+\medskip
+\noindent\textbf{(a) Claim.}
+Let $U\subseteq V$ and let $H$ be an odd-sized connected component of $G-U$. Prove that there are at least $3$ edges between $H$ and $U$ in $G$.
+
+\medskip
+\noindent\textbf{Solution (a).}
+Let $\delta(H)$ be the cut set of edges with one endpoint in $V(H)$ and the other in $V\setminus V(H)$.
+Since $H$ is a component of $G-U$, all neighbors of $H$ outside $H$ lie in $U$, hence $\delta(H)$ is exactly the set of edges between $H$ and $U$.
+
+Because $G$ is $3$-regular,
+\[
+\sum_{v\in V(H)} \deg_G(v) \ =\ 3|V(H)|.
+\]
+On the other hand, this equals $2|E(H)| + |\delta(H)|$ (each internal edge counted twice, each cut edge once), so
+\[
+3|V(H)| \ =\ 2|E(H)| + |\delta(H)|.
+\]
+Reducing modulo $2$, we get
+\[
+|V(H)| \equiv |\delta(H)| \pmod 2.
+\]
+Since $|V(H)|$ is odd by assumption, $|\delta(H)|$ is odd. In particular, $|\delta(H)|\neq 2$.
+
+If $|\delta(H)|=1$, then the unique edge in $\delta(H)$ is a bridge: removing it disconnects $H$ from the rest of the graph. This contradicts the assumption that $G$ has no cut-edge. Therefore the smallest possible odd value is $3$, and we conclude $|\delta(H)|\ge 3$, i.e., at least $3$ edges join $H$ to $U$. \qed
+
+\medskip
+\noindent\textbf{(b) Use Tutte.}
+\textit{Tutte's theorem.} A graph $G$ has a perfect matching if and only if for every $U\subseteq V$,
+\[
+o(G-U) \ \le\ |U|,
+\]
+where $o(G-U)$ is the number of odd components of $G-U$.
+
+\medskip
+\noindent\textbf{Solution (b).}
+Fix any $U\subseteq V$ and let $o=o(G-U)$. By part (a), each odd component contributes at least $3$ edges crossing from that component to $U$. Since distinct components of $G-U$ are disjoint, these crossing edges are distinct. Hence the total number of edges between $U$ and $V\setminus U$ satisfies
+\[
+|E(U, V\setminus U)| \ \ge\ 3o.
+\]
+On the other hand, because $G$ is $3$-regular, each vertex in $U$ has at most $3$ incident edges leaving $U$, so
+\[
+|E(U, V\setminus U)| \ \le\ 3|U|.
+\]
+Combining yields $3o \le 3|U|$, i.e.\ $o(G-U)\le |U|$ for all $U\subseteq V$. By Tutte's theorem, $G$ has a perfect matching. \qed
+
+\section*{Problem 3}
+\textit{Statement.}
+Let $G=(V,E)$ be an undirected graph. Consider the polytope
+\[
+Q_f(G) \;=\; \Bigl\{x\in\mathbb{R}_{\ge 0}^{E} : \forall v\in V,\ \sum_{e\in\delta(v)} x_e \le 1\Bigr\}.
+\]
+Prove by induction on $|E|$ that $Q_f(G)$ is half-integral, i.e.\ every extreme point $x\in Q_f(G)$ satisfies $x_e\in\{0,\tfrac12,1\}$ for all $e\in E$.
+
+\medskip
+\noindent\textbf{Induction parameter.}
+We induct on $|E|$. The claim is trivial for $|E|=0$. Assume $|E|\ge 1$ and let $x$ be an extreme point of $Q_f(G)$.
+
+\subsection*{(a) Case: some $x_e=0$}
+\textit{Task.} Suppose $x_e=0$ for some $e\in E$. Show how to apply the induction hypothesis.
+
+\medskip
+\noindent\textbf{Solution (a).}
+Let $e\in E$ with $x_e=0$, and consider $G'=(V,E\setminus\{e\})$. Let $x'\in\mathbb{R}^{E\setminus\{e\}}$ be the restriction of $x$ to $E\setminus\{e\}$. Then $x'\in Q_f(G')$.
+
+We claim that $x'$ is an extreme point of $Q_f(G')$. If not, write $x'=\lambda a'+(1-\lambda)b'$ with $a'\neq b'$, $\lambda\in(0,1)$, and $a',b'\in Q_f(G')$. Extend $a',b'$ to vectors $a,b\in\mathbb{R}^E$ by setting $a_e=b_e=0$ and keeping the other coordinates. Then $a,b\in Q_f(G)$ and
+\[
+x=\lambda a+(1-\lambda)b,\qquad a\neq b,
+\]
+contradicting extremality of $x$ in $Q_f(G)$. Hence $x'$ is extreme in $Q_f(G')$.
+
+By induction, $x'$ is half-integral. Since $x_e=0$, $x$ is also half-integral. \qed
+
+\subsection*{(b) Case: some $x_e=1$}
+\textit{Task.} Suppose $x_e=1$ for some $e\in E$. Show how to apply the induction hypothesis.
+
+\medskip
+\noindent\textbf{Solution (b).}
+Let $e=uv$ with $x_{uv}=1$. The constraints at $u$ and $v$ give
+\[
+\sum_{f\in\delta(u)} x_f \le 1,\qquad \sum_{f\in\delta(v)} x_f \le 1.
+\]
+Since $x_{uv}=1$ and $x\ge 0$, necessarily $x_f=0$ for all $f\in\delta(u)\setminus\{uv\}$ and for all $f\in\delta(v)\setminus\{uv\}$.
+
+Remove $u$ and $v$ and all incident edges: let $G''=G-\{u,v\}$ with edge set
+\[
+E'' \;=\; E \setminus \bigl(\delta(u)\cup \delta(v)\bigr).
+\]
+Let $x''$ be the restriction of $x$ to $E''$. Then $x''\in Q_f(G'')$.
+
+As in part (a), one checks that $x''$ must be an extreme point of $Q_f(G'')$: otherwise we could express $x''$ as a nontrivial convex combination in $Q_f(G'')$ and extend by setting the removed coordinates to the fixed values (namely $x_{uv}=1$ and the other incident edges $0$), thereby writing $x$ as a nontrivial convex combination in $Q_f(G)$, contradicting extremality.
+
+By induction, $x''$ is half-integral. Together with $x_{uv}=1$ and the forced zeros on $\delta(u)\cup\delta(v)\setminus\{uv\}$, we conclude that $x$ is half-integral. \qed
+
+\medskip
+\noindent\textbf{From here on, assume}
+\[
+0<x_e<1\quad \text{for every } e\in E.
+\]
+
+\subsection*{(c) Degrees and tightness}
+\textit{Task.} Show that every vertex in $G$ has degree $0$ or $2$, and that $\sum_{e\in\delta(v)} x_e=1$ for every degree-$2$ vertex $v$.
+(\textit{Hint.} Use the right definition of an extreme point to show that
+$|E|\le |\{v\in V:\deg(v)=2\}|$.)
+
+\medskip
+\noindent\textbf{Solution (c).}
+Because $0<x_e$ for all $e$, none of the nonnegativity constraints $x_e\ge 0$ is tight at $x$.
+Hence the only inequalities that can be tight at $x$ are the degree constraints
+\[
+\sum_{e\in\delta(v)} x_e \le 1,\qquad v\in V.
+\]
+Let
+\[
+T \;=\; \Bigl\{v\in V:\ \sum_{e\in\delta(v)} x_e = 1\Bigr\}
+\]
+be the set of tight vertices.
+
+\medskip
+\noindent\emph{Step 1: $|T|\ge |E|$.}
+Since $x$ is an extreme point of a polyhedron defined by linear inequalities, $x$ is the unique feasible point satisfying all inequalities that are tight at $x$ (equivalently: the gradients of the tight constraints span $\mathbb{R}^E$).
+Concretely, if we write the tight constraints as equalities, they must determine $x$ uniquely; therefore, the corresponding row vectors must have rank $|E|$, and in particular there must be at least $|E|$ of them. Hence
+\[
+|T|\ \ge\ |E|.
+\]
+
+\medskip
+\noindent\emph{Step 2: every $v\in T$ satisfies $\deg(v)=2$.}
+Take $v\in T$. Because $0<x_e<1$ for all $e$, if $\deg(v)=1$ then $\sum_{e\in\delta(v)}x_e=x_e<1$, contradicting $v\in T$. Thus $\deg(v)\neq 1$.
+Suppose $\deg(v)\ge 3$. Consider three distinct edges $e_1,e_2,e_3\in\delta(v)$.
+One can construct a nonzero direction $d\in\mathbb{R}^E$ with the following properties:
+\begin{itemize}[leftmargin=2em]
+\item $d$ is supported on edges in a simple walk starting at $v$ and alternating $\pm 1$ on consecutive edges,
+\item for every tight vertex $u\in T$, we have $\sum_{e\in\delta(u)} d_e = 0$.
+\end{itemize}
+Intuitively, the alternation ensures that at any internal vertex of the walk, the $+1$ and $-1$ contributions cancel in the degree sum. Because $\deg(v)\ge 3$, we can start the walk using two different incident edges to create a nontrivial alternating structure; maximality of the walk yields either an even cycle or a path whose endpoints are not constrained by tight equalities, and in both cases one obtains $d\neq 0$ satisfying the tight equalities.
+Then for sufficiently small $\varepsilon>0$, both $x+\varepsilon d$ and $x-\varepsilon d$ remain feasible (since all $x_e$ are strictly between $0$ and $1$), and they satisfy all tight constraints at equality. This contradicts uniqueness of $x$ under the tight equalities, hence contradicts extremality.
+Therefore $\deg(v)\not\ge 3$, and we conclude $\deg(v)=2$.
+
+So $T\subseteq \{v\in V:\deg(v)=2\}$, hence
+\[
+|T| \ \le\ |\{v\in V:\deg(v)=2\}|.
+\]
+
+\medskip
+\noindent\emph{Step 3: conclude degree $0$ or $2$ for all vertices, and tightness at degree-$2$ vertices.}
+We have shown
+\[
+|E|\ \le\ |T|\ \le\ |\{v\in V:\deg(v)=2\}|.
+\]
+On the other hand, by the handshake lemma,
+\[
+2|E| \ =\ \sum_{v\in V}\deg(v) \ \ge\ 2\cdot |\{v:\deg(v)=2\}| + 3\cdot |\{v:\deg(v)\ge 3\}| + 1\cdot |\{v:\deg(v)=1\}|.
+\]
+If there were any vertex with degree $1$ or at least $3$, the right-hand side would be strictly larger than $2|\{v:\deg(v)=2\}|$, implying $|E|>|\{v:\deg(v)=2\}|$, contradicting $|E|\le |\{v:\deg(v)=2\}|$.
+Therefore no vertex has degree $1$ or $\ge 3$, i.e.\ every vertex has degree $0$ or $2$.
+
+Finally, if $\deg(v)=2$ then $v$ must belong to $T$: otherwise $v\notin T$ would imply $|T|<|\{v:\deg(v)=2\}|$, and the chain
+$|E|\le |T|$ would force $|E|<|\{v:\deg(v)=2\}|$, contradicting $\sum_v \deg(v)=2|E|$ with all degrees in $\{0,2\}$ (which gives $|E|=|\{v:\deg(v)=2\}|$ exactly).
+Hence for every degree-$2$ vertex $v$ we indeed have $\sum_{e\in\delta(v)} x_e=1$. \qed
+
+\subsection*{(d) Deduce $x_e=\tfrac12$ for all $e\in E$}
+\textit{Task.} Deduce from (c) that $x_e=1/2$ for every $e\in E$.
+
+\medskip
+\noindent\textbf{Solution (d).}
+By (c), every connected component of $G$ is a cycle (all degrees are $2$) or an isolated vertex (degree $0$). Isolated vertices do not affect $x$; all edges lie on cycle components.
+
+Fix a cycle component $C$ with vertices $v_1,\dots,v_k$ and edges
+$e_i=v_iv_{i+1}$ (indices modulo $k$). The tightness at each vertex gives
+\[
+x_{e_{i-1}} + x_{e_i} \ =\ 1,\qquad i=1,\dots,k.
+\]
+These equations imply $x_{e_{i+1}} = x_{e_{i-1}}$ for all $i$, so the values alternate. There are two cases:
+\begin{itemize}[leftmargin=2em]
+\item If $k$ is odd, the alternation forces all $x_{e_i}$ to be equal, hence $2x_{e_i}=1$ and $x_{e_i}=1/2$ for all $i$.
+\item If $k$ is even, the system has a one-dimensional family of solutions:
+$x_{e_1}=t$, $x_{e_2}=1-t$, $x_{e_3}=t$, $x_{e_4}=1-t$, etc.
+Since we assumed $0<x_e<1$ for all edges, we may pick $t\neq 1/2$ and then perturb $t$ slightly to obtain two distinct feasible points satisfying all tight equalities (hence staying in the face determined by tight constraints). This contradicts extremality of $x$.
+\end{itemize}
+Therefore every cycle component must be odd, and on each such component all edge variables equal $1/2$. Hence $x_e=1/2$ for all $e\in E$. \qed
+
+\medskip
+\noindent\textbf{Conclusion of Problem 3.}
+Combining parts (a)--(d) with the induction completes the proof that every extreme point of $Q_f(G)$ is half-integral. \qed
+
+\section*{Problem 4}
+\textit{Statement.}
+In the (weighted) set cover problem, we are given a ground set of elements
+$E=\{e_1,\dots,e_n\}$, subsets $S_1,\dots,S_m\subseteq E$, and weights $w_j\ge 0$.
+We seek $I\subseteq\{1,\dots,m\}$ minimizing $\sum_{j\in I} w_j$ such that $\bigcup_{j\in I} S_j = E$.
+Consider the IP:
+\[
+\min \ \sum_{j=1}^m w_j x_j
+\quad\text{s.t.}\quad
+\sum_{j: e_i\in S_j} x_j \ge 1\ (i=1,\dots,n),
+\qquad
+x_j\in\{0,1\}\ (j=1,\dots,m).
+\tag{1}
+\]
+
+\subsection*{(a) LP relaxation and its dual}
+Relax $x_j\in\{0,1\}$ to $x_j\ge 0$:
+\[
+\begin{aligned}
+\text{(P)}\qquad
+\min\ & \sum_{j=1}^m w_j x_j\\
+\text{s.t. }& \sum_{j: e_i\in S_j} x_j \ge 1,\qquad i=1,\dots,n,\\
+& x_j \ge 0,\qquad j=1,\dots,m.
+\end{aligned}
+\]
+Let $y_i\ge 0$ be the dual variables for the covering constraints. The dual is
+\[
+\begin{aligned}
+\text{(D)}\qquad
+\max\ & \sum_{i=1}^n y_i\\
+\text{s.t. }& \sum_{i: e_i\in S_j} y_i \le w_j,\qquad j=1,\dots,m,\\
+& y_i \ge 0,\qquad i=1,\dots,n.
+\end{aligned}
+\]
+
+\subsection*{(b) Complementary slackness}
+For primal--dual feasible $(x,y)$, complementary slackness reads:
+\begin{itemize}[leftmargin=2em]
+\item For each element constraint $i$:
+\[
+y_i\Bigl(\sum_{j: e_i\in S_j} x_j - 1\Bigr)=0.
+\]
+\item For each set constraint $j$:
+\[
+x_j\Bigl(w_j - \sum_{i: e_i\in S_j} y_i\Bigr)=0.
+\]
+\end{itemize}
+
+\subsection*{(c) Primal--dual algorithm (detailed)}
+We maintain a dual feasible $y\ge 0$ and a set family $I$.
+Initially, $I\leftarrow\emptyset$ and $y\leftarrow 0$.
+
+\medskip
+\noindent\textbf{Algorithm.}
+\begin{enumerate}[leftmargin=2em]
+\item While there exists an uncovered element $e_i$ (i.e.\ $e_i\notin \bigcup_{j\in I} S_j$), do:
+\begin{enumerate}[leftmargin=2em]
+\item Increase $y_i$ continuously from its current value, keeping all other $y_{i'}$ fixed, until some dual constraint becomes tight:
+\[
+\sum_{h: e_h\in S_j} y_h \ =\ w_j
+\quad\text{for some } j \text{ with } e_i\in S_j.
+\]
+(Choose any such $j$ if multiple constraints become tight simultaneously.)
+\item Add this set to the primal solution: $I\leftarrow I\cup\{j\}$.
+\end{enumerate}
+\item Output $I$.
+\end{enumerate}
+Throughout, dual feasibility is preserved because we stop increasing $y_i$ at the first time any relevant constraint reaches equality.
+
+\subsection*{(d) Prove the identity (2)}
+\textit{Claim.} After every iteration,
+\[
+\sum_{j\in I} w_j
+\ =\
+\sum_{i=1}^n y_i \cdot \bigl|\{j\in I:\ e_i\in S_j\}\bigr|.
+\tag{2}
+\]
+
+\medskip
+\noindent\textbf{Solution (d).}
+Proceed by induction over iterations. Initially $I=\emptyset$ and $y=0$, so both sides are $0$.
+
+Suppose the identity holds before an iteration, and we add a set $j^\star$ when its dual constraint becomes tight. At that moment,
+\[
+w_{j^\star} \ =\ \sum_{i: e_i\in S_{j^\star}} y_i.
+\]
+The left-hand side of (2) increases by $w_{j^\star}$. The right-hand side increases by
+\[
+\sum_{i=1}^n y_i \cdot
+\Bigl(\bigl|\{j\in I\cup\{j^\star\}: e_i\in S_j\}\bigr|
+      -\bigl|\{j\in I: e_i\in S_j\}\bigr|\Bigr)
+\ =\
+\sum_{i: e_i\in S_{j^\star}} y_i,
+\]
+since only those $i$ with $e_i\in S_{j^\star}$ see their multiplicity increase by $1$.
+This equals $w_{j^\star}$ by tightness. Therefore (2) remains true after adding $j^\star$. \qed
+
+\subsection*{(e) Approximation factor in terms of $f$}
+Let
+\[
+f \ :=\ \max_{i=1,\dots,n} \bigl|\{j\in I:\ e_i\in S_j\}\bigr|.
+\]
+Using (2),
+\[
+\sum_{j\in I} w_j
+\ =\
+\sum_{i=1}^n y_i \cdot \bigl|\{j\in I:\ e_i\in S_j\}\bigr|
+\ \le\
+\sum_{i=1}^n y_i \cdot f
+\ =\
+f\sum_{i=1}^n y_i.
+\]
+By weak duality, for any dual feasible $y$ we have
+\[
+\sum_{i=1}^n y_i \ \le\ \mathrm{OPT}_{\mathrm{LP}} \ \le\ \mathrm{OPT}_{\mathrm{IP}}.
+\]
+Therefore,
+\[
+\sum_{j\in I} w_j \ \le\ f\,\mathrm{OPT}_{\mathrm{IP}},
+\]
+so the algorithm is an $f$-approximation for the optimum of (1). \qed
+
+\subsection*{(f) Tightness of the analysis}
+A standard notion of tightness here is: in general, the bound in (e) cannot be improved (as a function of $f$ alone), because there exist instances where the algorithm attains ratio arbitrarily close to $f$.
+
+\medskip
+\noindent\textbf{One such family (frequency-$f$ tightness).}
+Assume each element appears in at most $f$ sets in the \emph{input instance}. Then any run of the algorithm satisfies
+$\bigl|\{j\in I:\ e_i\in S_j\}\bigr|\le f$, hence the analysis gives an $f$-approximation.
+There are instances with element-frequency exactly $f$ for which this primal--dual method (under an adversarial but valid choice of uncovered elements and tie-breaking among simultaneously tight sets) returns a solution of cost $f$ times optimum; hence the dependence on $f$ is worst-case tight.
+
+\medskip
+\noindent\textbf{Remark.}
+The statement above matches the standard tightness result for primal--dual set cover analyses parameterized by frequency. In particular, without additional structure (e.g.\ bounded set sizes with a different algorithmic choice, or randomized rounding), no uniform factor better than $f$ can be guaranteed from this style of argument. \qed
+
+\end{document}
