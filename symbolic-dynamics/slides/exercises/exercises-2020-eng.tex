@@ -1,0 +1,165 @@
+% English translation of: "Symbolic Dynamics — Exercises (2020), V. Berthé"
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\title{Symbolic Dynamics\\Exercises}
+\author{V.~Berth\'e \texttt{berthe@irif.fr}}
+\date{2020}
+
+\begin{document}
+\maketitle
+
+\section{Study of an infinite word defined by a substitution}
+
+Let $A=\{a,b\}$ and let $\sigma : A \to A^\ast$ be the substitution defined by
+\[
+  \sigma(a)=abaa
+  \qquad\text{and}\qquad
+  \sigma(b)=babb.
+\]
+
+\begin{enumerate}[label=\arabic*.]
+  \item How many fixed points does the substitution $\sigma$ admit in $A^{\mathbb{N}}$?
+        In the rest, let $u$ denote the fixed point of $\sigma$ that begins with $a$.
+
+  \item Show that the sequence $u$ is uniformly recurrent.
+
+  \item Show that the set of its factors is invariant under exchanging the letters $a$ and $b$.
+
+  \item List the factors of $u$ of length at most $6$.
+        List the right special factors of $u$ of length $5$.
+        Draw the Rauzy graphs of $u$ of order $1$ to $5$.
+        What does the complexity of $u$ seem to be?
+
+  \item Is the set of factors of $u$ invariant under reversal (mirror image)?
+
+  \item The goal of this question is to prove the following decomposition lemma:
+        every factor $W$ of $u$ of length at least $5$ can be written uniquely as
+        \[
+          W = R\,\sigma(V)\,S
+        \]
+        where $V$ is a factor of $u$,
+        $R \in \{\varepsilon, a, aa, baa, b, bb, abb\}$, and
+        $S \in \{\varepsilon, a, ab, aba, b, ba, bab\}$.
+        \begin{enumerate}[label=(\alph*)]
+          \item \textbf{Existence.}
+                Show that if $u=u_0u_1\cdots u_n$, then
+                \[
+                  \sigma(u_n)=u_{4n}u_{4n+1}u_{4n+2}u_{4n+3}.
+                \]
+                Deduce the existence of such a decomposition.
+
+          \item \textbf{Uniqueness.}
+                Show that $R$ is determined by a prefix of $W$ of length at most $5$;
+                to do this, by a case analysis, show that for each possible value of $R$,
+                that value determines a prefix of $W$ of length at most $5$.
+                Conclude by observing that determining $R$ implies determining $S$.
+        \end{enumerate}
+
+  \item Show that if $W$ is a right special factor of $u$ of length at least $5$,
+        then $W$ decomposes uniquely as
+        \[
+          W = R\,\sigma(V),
+        \]
+        where $V$ is a right special factor of $u$ and $R \in \{\varepsilon, a, aa, baa, b, bb, abb\}$.
+        You may use the fact that the suffix of $W$ of length $5$ is, in particular, right special.
+
+  \item Show that for every $n\ge 2$, $u$ has the same number of right special factors of length $n$.
+        Give this number.
+
+  \item Deduce the complexity function of $u$.
+\end{enumerate}
+
+\section{Complexity functions of the form $p(n)=n+k$, for all $n$}
+
+\begin{enumerate}[label=\arabic*.]
+  \item Let $k\ge 1$. Construct, from the Fibonacci word, an example $u$ of a sequence whose
+        complexity function $p_u(n)$ satisfies
+        \[
+          p_u(n)=n+k,\qquad \text{for all } n.
+        \]
+
+  \item Let $u$ be a sequence over the alphabet $A$ such that every letter of $A$
+        appears in $u$. Show that if the complexity function of $u$ satisfies
+        \[
+          \exists n\in\mathbb{N},\quad p_u(n) < n + \operatorname{Card}(A) - 1,
+        \]
+        then $u$ is ultimately periodic.
+
+  \item Let $k\ge 1$. Throughout this question, $u=(u_n)_{n\in\mathbb{N}}$ is a
+        non-recurrent sequence whose complexity function satisfies
+        \[
+          p_u(n)=n+k,\qquad \text{for all } n.
+        \]
+        \begin{enumerate}[label=(\alph*)]
+          \item Let $a=u_0$ be the first letter of $u$. The goal is to prove by contradiction
+                that the letter $a$ does not extend to the left in $u$.
+                Assume, on the contrary, that $a$ extends to the left in $u$.
+                What are the two possible shapes of the order-$1$ word graph of $u$?
+                Deduce that the $k+1$ letters of $A$ appear infinitely often in $u$.
+                Deduce from the non-recurrence of $u$ and Question~2 a contradiction.
+
+          \item What is the complexity of the sequence $(u_n)_{n\ge 1}$?
+
+          \item Deduce that if $u$ is non-recurrent, then there exist $l\ge 1$, a subalphabet $A_0$
+                of $A$, letters $a_1,a_2,\dots,a_l \in A$ such that
+                $A=A_0\cup\{a_1,\dots,a_l\}$ and a recurrent sequence $w$ over the alphabet $A_0$ such that
+                \[
+                  u=a_1a_2\cdots a_l w.
+                \]
+                What is the complexity of $w$?
+        \end{enumerate}
+\end{enumerate}
+
+\section{Central words}
+
+\begin{enumerate}[label=\arabic*.]
+  \item Give the Christoffel word of slope $5/4$ over the alphabet $\{x<y\}$.
+        Give its Cayley graph. Give its dual Christoffel word.
+
+  \item Give the inverses of $5$ and $4$ modulo $9$.
+        Construct all non-constant words of periods $5$ and $4$ of length $7$.
+
+  \item Show that if two words $U$ and $V$ satisfy $UV=VU$, then there exist a word $W$
+        and $i,j\in\mathbb{N}$ such that $U=W^i$ and $V=W^j$.
+        Give an inductive proof and a proof based on the Fine--Wilf theorem.
+\end{enumerate}
+
+\section{Sturmian words}
+
+Show that the set of Sturmian factors is closed under reversal (mirror image).
+
+\section{Episturmian words}
+
+An infinite word is called \emph{episturmian} if its language is closed under reversal
+and it has a unique right special factor of each length.
+Show that frequencies are uniform for an episturmian word.
+
+\section{Chacon word}
+
+The Chacon word $u=\sigma^\infty(0)$ is defined over $\{0,1\}$ by the substitution
+$\sigma : 0 \mapsto 0010$, $1 \mapsto 1$.
+Show that the Chacon word is uniformly recurrent.
+\textit{Hint:} Show that the words $b_n$ defined by
+\[
+  b_0=1,\qquad b_{n+1}=b_n b_n 1 b_n \quad \text{for all } n
+\]
+are prefixes of $u$.
+Show that frequencies are uniform in the Chacon word.
+
+\section{Frequencies}
+
+Consider the substitution $\sigma : 0 \mapsto 0011$, $1 \mapsto 0101$.
+Let $u=\sigma^\infty(0)$.
+Show that $(O(u),T)$ is minimal and uniquely ergodic.
+Do factor frequencies exist?
+Show that the values of frequencies on cylinder sets are not determined
+by their values on letter-cylinder sets.
+
+\end{document}
