@@ -20,7 +20,8 @@ Types of counted operations.
   ```
 
   Notes: it would take much longer (10x) than actual training.
-3) Analyze the result.
+
+4) Analyze the output.
   ```bash
   python analyze.py
   ```
