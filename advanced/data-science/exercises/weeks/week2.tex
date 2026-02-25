@@ -1,8 +1,76 @@
 \begin{center}
   \bf
   \vspace{0.9cm}
-  Advanced Data Science - Exercises\\
+  Advanced Data Science - Homework 2\\
   \vspace{0.2cm}
   CHAU Dang Minh
-
 \end{center}
+
+\section{Exercise 1.} Let $\tau\in[0,1]$. Prove that for any $z_1,\ldots,z_m,z\in\RR$,
+$$z\le \hat{Q}^{\tau}_{m+1}(z_1,\ldots,z_m,z)\Longleftrightarrow z\le \hat{Q}^{\tau(1+1/m)}_m(z_1,\ldots,z_m).$$
+
+\textit{Solution.} Suppose that $ z\le \hat{Q}^{\tau}_{m+1}(z_1,\ldots,z_m,z)$. We have
+\begin{align*}
+  \hat{Q}^{\tau}_{m+1}(z_1,\ldots,z_m,z)
+   & = \inf\left\{t\in \RR: \dfrac{1}{m+1} \left(\sum_{i=1}^{m}\mathds{1}_{\{z_i\le t\}} + \mathds{1}_{\{z\le t\}}\right) \ge \tau\right\}         \\
+   & =\inf\left\{t\in \RR:  \sum_{i=1}^{m}\mathds{1}_{\{z_i\le t\}} + \mathds{1}_{\{z\le t\}} \ge (m+1)\tau\right\}                                \\
+   & = \inf\underbrace{\left\{t\in \RR: \sum_{i=1}^{m} \mathds{1}_{\{z_i\le t\}} + \mathds{1}_{\{z\le t\}} \ge \lceil(m+1)\tau\rceil\right\}}_{Q}.
+\end{align*}
+
+The last equality holds because $\sum_{i=1}^{m} \mathds{1}_{\{z_i\le t\}} + \mathds{1}_{\{z\le t\}}$ is an integer. Similarly,
+\begin{align*}
+  \hat{Q}^{\tau(1+1/m)}_m(z_1,\ldots,z_m)
+   & = \inf\left\{t\in \RR: \dfrac{1}{m} \sum_{i=1}^{m} \mathds{1}_{\{z_i\le t\}} \ge \tau(1+1/m)\right\}                 \\
+   & = \inf\underbrace{\left\{t\in \RR: \sum_{i=1}^{m} \mathds{1}_{\{z_i\le t\}} \ge \lceil(m+1)\tau\rceil\right\}}_{Q'}.
+\end{align*}
+If $\sum_{i=1}^{m} \mathds{1}_{\{z_i\le t\}} \ge \lceil(m+1)\tau\rceil$, then $\sum_{i=1}^{m} \mathds{1}_{\{z_i\le t\}} + \mathds{1}_{\{z\le t\}} \ge \lceil(m+1)\tau\rceil$. Hence, $Q'\subset Q$, or
+$$\hat{Q}^{\tau}_{m+1}(z_1,\ldots,z_m,z)\le \hat{Q}^{\tau(1+1/m)}_m(z_1,\ldots,z_m).$$
+That means, if $z\le \hat{Q}^{\tau}_{m+1}(z_1,\ldots,z_m,z)$, then $z\le \hat{Q}^{\tau(1+1/m)}_m(z_1,\ldots,z_m)$.
+
+We will prove the converse by contrapositive. Suppose that $z > \hat{Q}^{\tau}_{m+1}(z_1,\ldots,z_m,z)$. By monotonicity of the function $t\mapsto \sum_{i=1}^{m} \mathds{1}_{\{z_i\le t\}} + \mathds{1}_{\{z\le t\}}$, then there exists $t^*<z$ such that
+$$\sum_{i=1}^{m} \mathds{1}_{\{z_i\le t^*\}} + \mathds{1}_{\{z\le t^*\}} \ge \lceil(m+1)\tau\rceil.$$
+But $\mathds{1}_{\{z\le t^*\}} = 0$. Hence,
+$$\sum_{i=1}^{m} \mathds{1}_{\{z_i\le t^*\}} \ge \lceil(m+1)\tau\rceil.$$
+Therefore, $t^*\in Q'$ or $z> t^*\ge \hat{Q}^{\tau(1+1/m)}_m(z_1,\ldots,z_m)$.
+
+\section{Exercise 2.} Let $\tau\in[0,1]$. Prove that if $Z_1,\ldots,Z_m$ are exchangeable, then
+$$\tau \le \PP\left(Z_i \le \hat{Q}^{\tau}_m(Z_1,\ldots,Z_m)\right) \underset{Z_i \text{continuous}}{\le} \tau + \dfrac{1}{m}.$$
+
+\textit{Solution.} Using a similar argument as in Exercise 1,
+\begin{align*}
+  \hat{Q}_m^{\tau}(Z_1,\ldots,Z_m)
+   & = \inf\left\{t\in \RR:  \sum_{j=1}^{m} \mathds{1}_{\{Z_j\le t\}} \ge \lceil m\tau\rceil\right\}
+\end{align*}
+
+By exchangebility, for any Borel set $S\subset\RR^m$ and any permutation $\sigma$ of $\{1,\ldots,m\}$,
+\begin{align*}
+  \PP((Z_1,\ldots,Z_m)\in S)
+   & = \PP((Z_{\sigma(1)},\ldots,Z_{\sigma(m)})\in S).
+\end{align*}
+
+Choose $S=\{(z_1,\ldots,z_m)\in\RR^m: z_1\le \hat{Q}^{\tau}_m(z_1,\ldots,z_m)\}$. We have,
+\begin{align*}
+  \PP\left(Z_1\le \hat{Q}^{\tau}_m(Z_1,\ldots,Z_m)\right)
+   & = \PP\left((Z_1,\ldots,Z_m)\in S\right)                                                           \\
+   & = \PP\left((Z_2,Z_1,Z_3,\ldots,Z_m)\in S\right)                                                   \\
+   & = \PP\left(\{(Z_2,Z_1,Z_3,\ldots,Z_m) :Z_2\le \hat{Q}^{\tau}_m(Z_2,Z_1,Z_3,\ldots,Z_m)\ \}\right) \\
+   & = \PP\left(Z_2\le \hat{Q}^{\tau}_m(Z_1,\ldots,Z_m)\right)
+\end{align*}
+The last equality holds because $\hat{Q}^{\tau}_m$ is symmetric in its arguments.  Continuing the process, we get the fact that $\PP\left(Z_i \le \hat{Q}^{\tau}_m\right)$ is the same for every $i\in\{1,\ldots,m\}$. By definition of $\hat{Q}^{\tau}_m := \hat{Q}_m^{\tau}(Z_1,\ldots,Z_m)$, we have
+$$\sum_{j=1}^{m} \mathds{1}_{\{Z_j\le \hat{Q}^{\tau}_m\}} \ge \lceil m\tau\rceil.$$
+Thus we have the lower bound
+\begin{align*}
+  \PP\left(Z_i \le \hat{Q}^{\tau}_m\right)
+   & = \dfrac{1}{m} \sum_{j=1}^{m} \PP\left(Z_j \le \hat{Q}^{\tau}_m\right)                 \\
+   & = \dfrac{1}{m} \EE\left[\sum_{j=1}^{m} \mathds{1}_{\{Z_j\le \hat{Q}^{\tau}_m\}}\right] \\
+   & \ge \dfrac{\lceil m\tau\rceil}{m} \ge \dfrac{m\tau}{m}=\tau.
+\end{align*}
+
+Now we prove the upper bound. Using exchangeability again for $S=A\times\RR^{m-1}$ for some Borel set $A\subset \RR$, we have
+$$\PP(Z_1\in A, Z_2\in\RR,\ldots,Z_m\in\RR) = \PP(Z_2\in A, Z_1\in\RR,Z_3\in\RR,\ldots,Z_m\in\RR).$$
+
+Hence, $\PP(Z_1\in A) = \PP(Z_2\in A)$. Continuing the process, we get the fact that $Z_1,\ldots,Z_m$ are identically distributed. Given that $Z_i$ is continuous, all $Z_1,\ldots,Z_m$ are continuous. Hence, $Z_i-Z_j$ is continuous, then $\PP(Z_i=Z_j)=0$ for all $i\ne j$ i.e. $X_1,\ldots,X_m$ are all distinct with probability 1. Therefore,
+$$\sum_{j=1}^{m} \mathds{1}_{\{Z_j\le \hat{Q}^{\tau}_m\}} = \lceil m\tau\rceil$$
+with probability 1. Thus,
+$$\PP\left(Z_i \le \hat{Q}^{\tau}_m\right) = \dfrac{\lceil m\tau\rceil}{m} \le \dfrac{m\tau+1}{m} = \tau + \dfrac{1}{m}.$$
+
