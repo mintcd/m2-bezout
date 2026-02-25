@@ -2,7 +2,7 @@
 
 The experiment counts FLOPs for the sklearn pipelines given in `TP1.ipynb`. The library `pyPAPI` does not work on Windows and WSL.
 
-This solution uses [Intel® Software Development Emulator](https://www.intel.com/content/www/us/en/download/684897/intel-software-development-emulator.html) for Intel's CPU architectures. In particular, it was ran on `Intel64 Family 6 Model 151 Stepping 2`
+This solution uses [Intel® Software Development Emulator](https://www.intel.com/content/www/us/en/download/684897/intel-software-development-emulator.html) for Intel's CPU architectures. Its mechanism is to provide an emulation for the program. In particular, it was ran on `Intel64 Family 6 Model 151 Stepping 2`
 
 
 Types of counted operations.
