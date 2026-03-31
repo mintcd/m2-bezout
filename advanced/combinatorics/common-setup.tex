@@ -26,12 +26,19 @@
 \usepackage{enumerate}
 \usepackage{tikz}
 \usepackage{titlesec}
-\usepackage{dsfont}
-\usepackage{bm}
+\usepackage{hyperref}
+
+\definecolor{gustave}{HTML}{1d2392}
 
 
 % TikZ libraries
 \usetikzlibrary{arrows.meta, automata,positioning, calc}
+
+\tikzset{
+  bsquare/.style={rectangle, fill=black, minimum size=10pt, inner sep=0pt},
+  bcircle/.style={circle, fill=black, minimum size=10pt, inner sep=0pt},
+  brhombus/.style={rectangle, rotate=45, fill=black, minimum size=10pt, inner sep=0pt}
+}
 
 % Margins
 \setmarginsrb{2.5cm}{2cm}{2.5cm}{3cm}{0cm}{0cm}{0cm}{0cm}
@@ -41,8 +48,12 @@
 
 % Theorem environments
 \newtheorem{lemma}{Lemma}
-\newtheorem{proposition}{Proposition}
+\newtheorem{proposition}[lemma]{Proposition}
 \newtheorem*{lemmas}{Lemmas}
+
+\theoremstyle{definition}
+\newtheorem{example}[lemma]{Example}
+\newtheorem{definition}[lemma]{Definition}
 
 % Custom commands
 \newcommand\norm[1]{\left\lVert#1\right\rVert}
@@ -139,16 +150,16 @@
 
 % Title formatting
 % Make \section look like normal text
-\titleformat{\section}[runin]   % "runin" = same line, no big break
-{\normalfont\normalsize\bfseries} % style: normal text size + bold
-{}                             % no number
-{0pt}                          % no space before text
+\titleformat{\section}
+{\normalfont\large\bfseries} % style: slightly larger text + bold
+{\thesection}                  % section number
+{1em}                          % space before text
 {}                             % code before the title
 
 \titlespacing*{\section}
 {0pt}{1em}{0.5em} % {left}{before}{after}
-\titleformat{\subsection}[runin]{\bfseries}{}{}{}[]
-\titleformat{\subsubsection}[runin]{\bfseries}{}{}{}[]
+\titleformat{\subsection}{\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\bfseries}{\thesubsubsection}{1em}{}
 
 % Exercise counters and commands
 \newcounter{exo}

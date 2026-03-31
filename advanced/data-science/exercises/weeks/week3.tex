@@ -1,0 +1,19 @@
+\begin{center}
+  \bf
+  \vspace{0.9cm}
+  Advanced Data Science - Homework 3\\
+  \vspace{0.2cm}
+  CHAU Dang Minh
+\end{center}
+
+\section{Exercise 1.} Let $\G$ be a class of classifiers and
+$$\H_\lambda = \left\{\sum_{j=1}^m \alpha_jg_j : m\in\NN, \bm{\alpha} \in \RR^m_+, (g_1,\ldots,g_m) \in \G^m, \sum_{j=1}^m \alpha_j \le \lambda \right\}.$$
+Show that $\H_\lambda$ is convex.
+
+\textit{Solution.} Let $h,k\in \H_\lambda$. Then there exist $m,n\in\NN$ and $\bm{\alpha}\in\RR^m_+$, $\bm{\beta}\in\RR^n_+$, $(g_1,\ldots,g_m)\in\G^m$, $(g'_1,\ldots,g'_n)\in\G^n$ such that
+$$h = \sum_{j=1}^m \alpha_j g_j, \sum_{j=1}^m \alpha_j \le \lambda, \quad k = \sum_{j=1}^n \beta_j g'_j, \sum_{j=1}^n \beta_j \le \lambda.$$
+Let $\theta\in[0,1]$. Then
+$$\theta h + (1-\theta)k = \sum_{j=1}^m \theta \alpha_j g_j + \sum_{j=1}^n (1-\theta)\beta_j g'_j.$$
+We have $(g_1,\ldots,g_m,g'_1,\ldots,g'_n)\in\G^{m+n}$ and $(\theta \bm{\alpha}, (1-\theta)\bm{\beta})\in\RR^{m+n}_+$, we have $\theta h + (1-\theta)k \in \H_\lambda$. Moreover,
+$$\sum_{j=1}^m \theta \alpha_j + \sum_{j=1}^n (1-\theta)\beta_j = \theta \sum_{j=1}^m \alpha_j + (1-\theta) \sum_{j=1}^n \beta_j \le \theta \lambda + (1-\theta)\lambda = \lambda.$$
+Thus $\H_\lambda$ is convex.
