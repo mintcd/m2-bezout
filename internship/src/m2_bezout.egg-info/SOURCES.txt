@@ -1,0 +1,8 @@
+pyproject.toml
+src/m2_bezout.egg-info/PKG-INFO
+src/m2_bezout.egg-info/SOURCES.txt
+src/m2_bezout.egg-info/dependency_links.txt
+src/m2_bezout.egg-info/top_level.txt
+src/sage/__init__.py
+src/sage/type_checking.py
+src/sage/utils.py

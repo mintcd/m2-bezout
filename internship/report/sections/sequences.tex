@@ -1,0 +1,129 @@
+\begin{center}
+  \vspace{1em}
+  \textbf{\Large Asymptotic Analysis of Some Sequences}
+  \vspace{1em}
+\end{center}
+
+In this section, we analyze the asymptotic behavior of some recurrences that arise in the analysis of regular expressions.
+
+\begin{proposition}
+  \label{prop:recurrence-sum}
+  Consider the recurrence
+  \begin{equation}
+    x_{n+2} = \dfrac{a}{n}\sum_{i=1}^{n}x_i + b, \quad n \ge 1, \quad x_1=x_2=0.
+  \end{equation}
+  \begin{itemize}
+    \item If $a<1$, then $x_n \sim \dfrac{b}{1-a}$.
+    \item If $a=1$, then $x_n \sim b\ln n$.
+    \item If $a>1$, then $x_n \sim \dfrac{b}{(a-1)\Gamma(a)} n^{a-1}$.
+  \end{itemize}
+\end{proposition}
+
+\begin{proof}
+  Consider the generating function $X(z) = \sum_{n=1}^{\infty} x_n z^n$ with the convention that $x_0=0$. We rewrite the recurrence as
+  $$(n+2)x_{n+2} - 2x_{n+2} = a\sum_{i=1}^{n}x_i + bn.$$
+  We multiply both sides by $z^{n+2}$ and sum over $n \ge 1$. The left-hand side becomes
+  \begin{align*}
+    \sum_{n=1}^{\infty}((n+2)x_{n+2} - 2x_{n+2})z^{n+2}
+     & = \sum_{n=3}^{\infty}n x_{n}z^{n} - 2\sum_{n=3}^{\infty}x_{n}z^{n}     \\
+     & = z \sum_{n=1}^{\infty}n x_{n}z^{n-1} - 2\sum_{n=1}^{\infty}x_{n}z^{n} \\
+     & = z X'(z) - 2X(z).
+  \end{align*}
+  The right-hand side becomes
+  \begin{align*}
+    \sum_{n=1}^{\infty}(a\sum_{i=1}^{n}x_i + bn)z^{n+2}
+     & = az^2\sum_{n=1}^{\infty}\sum_{i=1}^{n}x_i z^{n} + bz^2\sum_{n=1}^{\infty}nz^{n} \\
+     & = az^2 \dfrac{X(z)}{1-z} + \dfrac{bz^3}{(1-z)^2}.
+  \end{align*}
+
+  Therefore, the generating function $X(z)$ satisfies the following ODE
+  $$X'(z) - \left(\dfrac{2}{z} + \dfrac{az}{1-z}\right)X(z) = \dfrac{bz^3}{(1-z)^2}.$$
+
+  We have $\mu(z) = \exp\left( \int -\left( \frac{2}{z} + \frac{a}{1-z} - a \right) \,\mathrm{d}z \right) = z^{-2} (1-z)^a$. which gives
+  $$z^{-2} (1-z)^a X(z) = \int b (1-z)^{a-2} \,\mathrm{d}z.$$
+
+  There are two cases of $a$ that determine the integral. If $a=1$, we have
+  $$z^{-2} (1-z) X(z) = b\ln\left(\dfrac{1}{1-z}\right) + C.$$
+  Since $x_1=x_2=0$, we have $z^{-2}X(z)\to 0$ as $z\to 0$, which gives $C=0$. Therefore, we have
+  $$X(z) = b \dfrac{z^2}{1-z} \ln\left(\dfrac{1}{1-z}\right).$$
+  Hence, $x_n = bH_{n-2} \sim b\ln n$.
+
+  If $a \neq 1$, we have
+  $$z^{-2} (1-z)^a X(z) = -\dfrac{b}{a-1} (1-z)^{a-1} + C.$$
+  Using the same argument as above, we have $C= \dfrac{b}{a-1}$. Therefore, we have
+  $$X(z) = \dfrac{b}{a-1}z^2 \left((1-z)^{-a}-(1-z)^{-1}\right).$$
+  Using the generalized binomial theorem $$(1-z)^{-a} = \sum_{n=0}^{\infty} \binom{n+r-1}{n} z^n,$$ we have
+  $$x_n = \dfrac{b}{a-1}\left(\binom{n-3+a}{n-2} - 1\right) \sim \dfrac{b}{a-1}\left(\dfrac{n^{a-1}}{\Gamma(a)}-1\right).$$
+
+  If $a<1$ then $x_n \sim \dfrac{b}{1-a}$. If $a>1$, then $x_n  \sim \dfrac{b}{(a-1)\Gamma(a)} n^{a-1}$.
+\end{proof}
+
+Next, we want to see if adding a difference term to the recurrence changes the asymptotic behavior.
+
+\begin{proposition}
+  Consider the recurrence
+  \begin{equation}
+    x_{n+2} = \dfrac{a}{n}\sum_{i=1}^{n}x_i + \dfrac{b}{n}\sum_{i=1}^{n}|x_i - x_{n+1-i}| + c, \quad n \ge 1, \quad x_1=x_2=0.
+  \end{equation}
+  Where $a>1$, $0 < b < 1$ and $c>0$ are constants.
+\end{proposition}
+
+\begin{lemma}
+  The sequence $(x_n)$ is increasing.
+\end{lemma}
+
+\begin{proof}
+  One checks that $x_n\ge 0$ for all $n$. Let us prove that $(x_n)$ is increasing. We have $x_2\ge x_1$. Assume that $x_n\ge x_{n-1} \ge \ldots \ge x_0$ for some $n\ge 3$. Then,
+  \begin{align*}
+    n x_{n+2} & = a\sum_{i=1}^{n}x_i + b\sum_{i=1}^{n}|x_i - x_{n+1-i}| + nc                   \\
+              & = a\sum_{i=1}^{n}x_i + b\sum_{i=1}^{\lfloor n/2\rfloor} (x_{n+1-i} - x_i) + nc \\
+              & = a\sum_{i=1}^{n}x_i + b\sum_{i=1}^{\lfloor n/2\rfloor} (x_{n+1-i} - x_i) + nc \\
+              & = a\sum_{i=1}^{n}x_i + b\sum_{i=1}^{\lfloor n/2\rfloor} (x_{n+1-i} - x_i) + nc \\
+              & = a\sum_{i=1}^{n}x_i + b\sum_{i=1}^{\lfloor n/2\rfloor} (x_{n+1-i} - x_i) + nc \\
+              & = (a+b)\sum_{i=1}^{n}x_i - 2b\sum_{i=1}^{\lfloor n/2\rfloor} x_i - bm_n + nc,
+  \end{align*}
+
+  where
+  $$m_n =
+    \begin{cases} x_{\lfloor n/2\rfloor+1} & \text{if } n \text{ is odd}, \\ 0 & \text{if } n \text{ is even}.
+    \end{cases}$$
+
+  Let $S_n = \sum_{i=1}^n x_i$. Then,
+  \begin{align*}
+    nx_{n+2} & = (a+b)S_n - 2b S_{\lfloor n/2\rfloor}  -bm_n + nc, \\
+    S_{n+1}  & = S_n + x_{n+1}.
+  \end{align*}
+
+  Hence,
+  $$nx_{n+2} - (n-1)x_{n+1} = (a+b)x_n - 2b(S_{\lfloor n/2\rfloor} - S_{\lfloor (n-1)/2\rfloor}) - b(m_n - m_{n-1}) + c.$$
+
+  Let us check the right-hand side according to the parity of $n$.
+
+  \begin{itemize}
+    \item If $n=2k$, then $S_{\lfloor n/2\rfloor} - S_{\lfloor (n-1)/2\rfloor} = x_k$ and $m_n - m_{n-1} = -x_{k}$. The right-hand side is $(a+b)x_n - bx_k + c$.
+    \item If $n=2k+1$, then $S_{\lfloor n/2\rfloor} - S_{\lfloor (n-1)/2\rfloor} = 0$ and $m_n - m_{n-1} = x_{k+1}$. The right-hand side is $(a+b)x_n - bx_{k+1} + c$.
+  \end{itemize}
+
+  Collecting the two cases, we have
+  \begin{align*}
+    nx_{n+2} - (n-1)x_{n+1} = (a+b)x_n - b x_{\lceil n/2\rceil} + c.
+  \end{align*}
+  Therefore,
+  \begin{align*}
+     & n(x_{n+2} - x_{n+1})                                                                                                                              \\
+     & = -x_{n+1} +(a+b)x_n - b x_{\lceil n/2\rceil} + c                                                                                                 \\
+     & = -\dfrac{n-2}{n-1}x_n - \dfrac{a+b}{n-1}x_{n-1} + \dfrac{b}{n-1} x_{\lceil (n-1)/2\rceil} +(a+b)x_n - b x_{\lceil n/2\rceil} + \dfrac{n-2}{n-1}c \\
+     & =  \dfrac{a+b}{n-1}(x_n - x_{n-1}) + \dfrac{n-2}{n-1}(a+b-1)x_n +  + c
+  \end{align*}
+\end{proof}
+
+\begin{lemma}
+  The sequence can be rewritten as
+  \begin{equation}
+    nx_{n+2} - (n-1)x_{n+1} = (a+b)x_n - b x_{\lceil n/2\rceil} + c.
+  \end{equation}
+\end{lemma}
+
+We guess the asymptotic of $(x_n)$, then do experiments, then try to prove it. Suppose $x_n \sim D n^{\alpha}$.
+
+
