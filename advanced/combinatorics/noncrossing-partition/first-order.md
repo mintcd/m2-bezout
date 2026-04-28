@@ -1,0 +1,1 @@
+$(i < j \wedge i\sim_{\alpha(\pi)} j ) \iff (\forall k,\ell:(k<\ell \wedge k\sim_\pi \ell)\Rightarrow \neg (i\le n-k < j\le n-\ell \vee n-k<i\le n-\ell <j))$
