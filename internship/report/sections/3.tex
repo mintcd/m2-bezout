@@ -1,8 +1,4 @@
-\begin{center}
-  \vspace{1em}
-  \textbf{\Large Largest Concatenation-Component in Regular Expressions}
-  \vspace{1em}
-\end{center}
+\chapter{Largest Concatenation-Component in Regular Expressions}
 
 Hyperscan implements algorithms to decompose regexes into literals and FA in its Rose engine. There may be a relation between how well a regex can be decomposed and the size of its largest concatenation-component.
 
@@ -86,45 +82,38 @@ where $I$ and $J$ are independent Bernoulli random variables taking value $1$ wi
 Let $y_n=\EE[Y_n]$. Take expectation on both sides, we have
 $$y_{n+2} = u + \dfrac{2u}{n}\sum_{i=1}^{n}y_i + \dfrac{v}{n}\sum_{i=1}^{n}\EE[\max(Y_i, Y_{n+1-i})].$$
 
-For the upper bound, we use the fact that $\max(Y_i, Y_{n+1-i}) \le Y_i + Y_{n+1-i}$, which gives an upper bound sequence
+For an upper bound, we use the fact that $\max(Y_i, Y_{n+1-i}) \le Y_i + Y_{n+1-i}$, which gives an upper bound sequence
 \begin{equation}
   y_{n+2}^U = u + \dfrac{2(u+v)}{n}\sum_{i=1}^{n}y_i^U, \quad y_1^U=y_2^U=0.
   \label{eq:upper_bound}
 \end{equation}
 
-For the lower bound, we use
+For a lower bound, we use
 \begin{align*}
   \EE[\max(Y_i, Y_{n+1-i})]
    & = \EE\left[\dfrac{1}{2}(Y_i + Y_{n+1-i} + |Y_i - Y_{n+1-i}|)\right]                   \\
    & \ge \dfrac{1}{2}(\EE[Y_i] + \EE[Y_{n+1-i}]) + \dfrac{1}{2}|\EE[Y_i] - \EE[Y_{n+1-i}]| \\
    & = \dfrac{1}{2}(y_i + y_{n+1-i} + |y_i - y_{n+1-i}|).
 \end{align*}
-
 This gives the lower bound sequence
 \begin{equation}
   \label{eq:lower_bound}
-  y_{n+2}^L = u + \dfrac{2u+v}{n}\sum_{i=1}^{n}y_i^L + \dfrac{v}{n}\sum_{i=1}^{n}|y_i^L - y_{n+1-i}^L|, \quad y_1^L=y_2^L=0.
+  y_{n+2}^{L} = u + \dfrac{2u+v}{n}\sum_{i=1}^{n}y_i^{L} + \dfrac{v}{2n}\sum_{i=1}^{n}|y_i^{L} - y_{n+1-i}^{L}|, \quad y_1^{L}=y_2^{L}=0.
 \end{equation}
 
+
 \begin{remark}
-  Another lower bound is obtained by Jensen's inequality as follows.
+  Another lower bound is obtained as follows. By Jensen's inequality
   $$\EE[\max(Y_i, Y_{n+1-i})] \ge \max(\EE[Y_i], \EE[Y_{n+1-i}]) = \max(y_i, y_{n+1-i}) = y_{\max(i, n+1-i)},$$
   where the last equality holds because $y_n$ is non-decreasing in $n$. This gives the following lower bound sequence
   \begin{align}
-    y_{n+2}^{L'} & = u + \dfrac{2u}{n}\sum_{i=1}^{n}y_i^{L'} + \dfrac{2v}{n}\sum_{i=\lfloor (n+1)/2 \rfloor}^{n}y_{i}^{L'}, & y_1^{L'}=y_2^{L'}=0.
+    y_{n+2}^{L} & = u + \dfrac{2u}{n}\sum_{i=1}^{n}y_i^{L} + \dfrac{2v}{n}\sum_{i=\lfloor (n+1)/2 \rfloor}^{n}y_{i}^{L}, & y_1^{L}=y_2^{L}=0.
   \end{align}
 \end{remark}
 
-Looking at the bounds (\ref{eq:lower_bound}) and (\ref{eq:upper_bound}), there are four regimes that are worth considering
-\begin{enumerate}
-  \item If $2u+v>1$, the bounds are polynomials. This case agrees well with the empirical data.
-  \item $2(u+v) = 1$.
-  \item $2u+v=1$.
-  \item $2(u+v)<1$.
-\end{enumerate}
+Looking at the bounds (\ref{eq:lower_bound}), we know that when $2u+v > 1$, $(y_n)$ grows at least polynomially.
 
-
-\subsection{Asymptotic when both bounds are polynomial}
+\subsection{Asymptotic when both bounds are at least polynomial}
 
 Consider the case $2u+v>1$. By the bounds,  there exists
 $$\alpha = \inf\left\{\beta: \dfrac{Y_n}{n^\beta} \xlongrightarrow{d} 0\right\}.$$
@@ -225,8 +214,8 @@ converges.
   $$T(\mu) = \L\left(I(U^\alpha X^{(1)} + (1-U)^\alpha X^{(2)}) + J\max(U^\alpha X^{(1)}, (1-U)^\alpha X^{(2)})\right),$$
   where $X^{(1)}, X^{(2)} \overset{\text{iid}}{\sim} \mu$ and $U, I, J$ are independent of $X^{(1)}, X^{(2)}$, defined as in (\ref{eq:yield_indicator}).
 
-  Then $T$ is a contraction in the $(\M_1, \ell_1)$ space, where the $\ell_1$ metric is defined by
-  $$\ell_1(\mu, \nu) = \inf\{\EE[|X-Y|]: X\sim \mu, Y\sim \nu\}.$$
+  Then $T$ is a contraction in the $(\M_p, \ell_p)$ space with $p\ge 2$, where the $\ell_p$ metric is defined by
+  $$\ell_p(\mu, \nu) = \inf\{\EE[|X-Y|^p]: X\sim \mu, Y\sim \nu\}.$$
 \end{proposition}
 
 \begin{proof}

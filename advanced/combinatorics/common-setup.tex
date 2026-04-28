@@ -47,13 +47,16 @@
 \setlength{\footskip}{2cm}
 
 % Theorem environments
-\newtheorem{lemma}{Lemma}
-\newtheorem{proposition}[lemma]{Proposition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
 \newtheorem*{lemmas}{Lemmas}
 
 \theoremstyle{definition}
-\newtheorem{example}[lemma]{Example}
-\newtheorem{definition}[lemma]{Definition}
+\newtheorem{observation}[theorem]{Observation}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{definition}[theorem]{Definition}
 
 % Custom commands
 \newcommand\norm[1]{\left\lVert#1\right\rVert}

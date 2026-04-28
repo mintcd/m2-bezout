@@ -40,6 +40,21 @@
 \usepackage{dsfont}
 \usepackage{hyperref}
 
+% Chapter formatting for report/book classes
+% Chapter formatting for report/book classes (no "Chapter N" label)
+\titleformat{\chapter}[display]
+{\normalfont\bfseries\centering\LARGE}
+{}{5pt}{\LARGE}
+\titlespacing*{\chapter}{0pt}{-10pt}{20pt}
+
+% Starred (numberless) chapters should use the same visual style
+% Starred (numberless) chapters use same visual style
+\titleformat{name=\chapter,numberless}[display]
+{\normalfont\bfseries\centering\Huge}{}{0pt}{\Huge}
+
+% Keep section style as provided by the document class (restore default)
+% (No custom \titleformat for \section so sections behave as before.)
+
 \definecolor{gustave}{HTML}{1d2392}
 % TikZ libraries
 \usetikzlibrary{arrows.meta, automata,positioning, calc}
