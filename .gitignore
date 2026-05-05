@@ -1,3 +1,5 @@
+# Latex temporary files
+
 *.aux
 *.bbl
 *.bcf
@@ -12,10 +14,11 @@
 *.toc
 *.run.xml
 *.synctex.gz
+*.bbl-SAVE-ERROR
+*.out
 
-# Tex temporary files
-*~
-.#*
+# Compiler generated files
 .DS_Store
+**/*/__pycache__/
 
-.vscode/
+.vscode

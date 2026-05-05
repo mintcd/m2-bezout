@@ -70,14 +70,15 @@ We have used $Y_n^{(1)}, Y_n^{(2)}, M_n^{(1)}, M_n^{(2)}$ as independent copies 
 
 \section{The yield recurrence}
 
-\subsection{Lower and upper bounds}
-
 We rewrite the recurrence (\ref{eq:yield}) as
 \begin{equation}
-  Y_{n+2} \stackrel{d}{=} I\left(Y_{U_n}^{(1)} + Y_{n+1-U_n}^{(2)} + 1\right) + J\max\left(Y_{U_n}^{(1)}, Y_{n+1-U_n}^{(2)}\right), \label{eq:yield_indicator}
+  \label{eq:yield_indicator}
+  Y_{n+2} \stackrel{d}{=} I_n\left(Y_{U_n}^{(1)} + Y_{n+1-U_n}^{(2)} + 1\right) + J_n\max\left(Y_{U_n}^{(1)}, Y_{n+1-U_n}^{(2)}\right).
 \end{equation}
 
-where $I$ and $J$ are independent Bernoulli random variables taking value $1$ with probability $u$ and $v$ respectively such that $I+J\le 1$, and $Y_n^{(1)}, Y_n^{(2)}$ are independent copies of $Y_n$. The notion of equality is in distribution. Note that we can reuse the same $Y_n^{(1)}, Y_n^{(2)}$ and $U_n$ for the second term because the two terms are mutually exclusive.
+In (\ref{eq:yield_indicator}), $(I_n, J_n)$ is a pair of mutually exclusive Bernoulli random variables with $\mathbb{E}[I_n] = u$ and $\mathbb{E}[J_n] = v$ such that $I_n+J_n\le 1$. The sequences $\bm{Y}^{(1)} = (Y_n^{(1)})_{n \ge 1}$ and $\bm{Y}^{(2)} = (Y_n^{(2)})_{n \ge 1}$ are independent copies of the sequence $\bm{Y} = (Y_n)_{n \ge 1}$. The notion of equality is in distribution. Note that we can reuse the same variables $Y_{U_n}^{(1)}, Y_{n+1-U_n}^{(2)}$ and $U_n$ across both terms because at most one indicator is non-zero for any given realization. Let $\bm{I} = (I_n)_{n \ge 1}$, and define $\bm{J}$ and $\bm{U}$ similarly. We assume that the sequence of pairs $(\bm{I}, \bm{J})$ and the sequence $\bm{U}$ each consist of independent and identically distributed elements. Furthermore, the entire stochastic processes $(\bm{I}, \bm{J})$, $\bm{U}$, $\bm{Y}^{(1)}$, and $\bm{Y}^{(2)}$ are mutually independent.
+
+\subsection{Lower and Upper Bounds of the Expectation}
 
 Let $y_n=\EE[Y_n]$. Take expectation on both sides, we have
 $$y_{n+2} = u + \dfrac{2u}{n}\sum_{i=1}^{n}y_i + \dfrac{v}{n}\sum_{i=1}^{n}\EE[\max(Y_i, Y_{n+1-i})].$$
@@ -113,7 +114,7 @@ This gives the lower bound sequence
 
 Looking at the bounds (\ref{eq:lower_bound}), we know that when $2u+v > 1$, $(y_n)$ grows at least polynomially.
 
-\subsection{Asymptotic when both bounds are at least polynomial}
+\subsection{Asymptotic of the Expectation}
 
 Consider the case $2u+v>1$. By the bounds,  there exists
 $$\alpha = \inf\left\{\beta: \dfrac{Y_n}{n^\beta} \xlongrightarrow{d} 0\right\}.$$
@@ -154,75 +155,75 @@ Equivalently,
   \end{equation}
 \end{proposition}
 
-\begin{lemma}
-  Let $U_n$ be a uniform random variable on $\{1, 2, \ldots, n\}$ and let $U$ be a uniform random variable on $[0,1]$. Then $\dfrac{U_n}{n}\xlongrightarrow{d} U$.
-\end{lemma}
-
 \begin{proof}
-  Recall that the CFD of $U$ is
-  $$F_U(x) = \begin{cases}
-      0 & x < 0,         \\
-      x & 0 \le x \le 1, \\
-      1 & x > 1.
-    \end{cases}$$
-  Let $V_n = U_n/n$. We have $F_{V_n}(x) = \PP(U_n/n \le x) = \PP(U_n\le nx)$. Hence
-  \begin{itemize}
-    \item If $x\le 0$, then $F_{V_n}(x) = 0 = F_U(x)$, since $U_n\ge 1$.
-    \item If $x > 1$, then $F_{V_n}(x) = 1 = F_U(x)$, since $U_n\le n$.
-    \item If $0 < x \le 1$, then $F_{V_n}(x) = \dfrac{\lfloor nx \rfloor}{n}$. Since $x - \dfrac{1}{n} \le \dfrac{\lfloor nx \rfloor}{n} \le x$, we have $F_{V_n}(x) \to x = F_U(x)$.
-  \end{itemize}
-\end{proof}
+  We first show that
+  $$\left(\dfrac{U_n}{n+2}\right)^\alpha X_{U_n}^{(1)} + \left(\dfrac{n+1-U_n}{n+2}\right)^\alpha X_{n+1-U_n}^{(2)} \xlongrightarrow{d} U^\alpha X^{(1)} + (1-U)^\alpha X^{(2)}.$$
 
-Back to our case. By Slutsky's theorem, we have $\dfrac{U_n}{n+2} = \dfrac{U_n}{n} \cdot \dfrac{n}{n+2} \xlongrightarrow{d} U$ as $n \to \infty$. Similarly, we have $\dfrac{n+1-U_n}{n+2} \xlongrightarrow{d} 1-U$.
+  By Lemma \ref{lemma:average_uniform_convergence} and Slutsky's theorem,
+  $$\dfrac{U_n}{n+2} = \dfrac{U_n}{n} \cdot \dfrac{n}{n+2} \xlongrightarrow{d} U.$$
 
-\begin{lemma}
-  Let $(X_n)$ be a sequence of random variables converging in distribution to $X$. Let $(N_n)$ be a integer-valued sequence of random variables independent of $(X_n)$ such that $N_n \xlongrightarrow{d} \infty$. Then $X_{N_n} \xlongrightarrow{d} X$.
-\end{lemma}
+  To apply the Continuous Mapping Theorem, we need to show that
+  $$\left(\dfrac{U_n}{n+2}, X_{U_n}^{(1)}, X_{n+1-U_n}^{(2)}\right) \xlongrightarrow{d} \left(U, X^{(1)}, X^{(2)}\right).$$
 
-\begin{proof}
-  We want to show that $\lim\limits_{n \to \infty} \PP(X_{N_n} \le x) = \PP(X \le x)$ for all $x$ at which $F_X$ is continuous. The CDF of $X_{N_n}$ is
-  $$\PP(X_{N_n} \le x) = \sum_{k=1}^\infty \PP(X_k \le x, N_n = k) = \sum_{k=1}^\infty\PP(N_n = k)\PP(X_k\le k),$$
-  where the last equality holds because $X_k$ and $N_n$ are independent. Let $\epsilon > 0$. Since $X_n \xlongrightarrow{d} X$, there exists $K$ such that for all $k\ge K$, we have
-  $$|\PP(X_k \le x) - \PP(X \le x)| < \dfrac{\epsilon}{2}.$$
-  Since $\sum\limits_{k=1}^\infty\PP(N_n = k) = 1$, we have
+  Since $U, X^{(1)}, X^{(2)}$ are independent, this is equivalent to showing that $\forall u, x_1, x_2 \in \mathbb{R}$
+  $$\PP\left(U_n \le \lfloor nu \rfloor, X_{U_n}^{(1)} \le x_1, X_{n+1-U_n}^{(2)} \le x_2\right) \longrightarrow \PP(U \le u) \PP(X^{(1)} \le x_1) \PP(X^{(2)} \le x_2).$$
+
+  Indeed,
   \begin{align*}
-    \left|\PP(X_{N_n} \le x) - \PP(X \le x)\right|
-     & = \left|\sum_{k=1}^\infty\PP(N_n = k)\left(\PP(X_k\le k) - \PP(X \le x)\right)\right|               \\
-     & \le \sum_{k=1}^\infty\PP(N_n = k)\left|\PP(X_k\le k) - \PP(X \le x)\right|                          \\
-     & \le \sum_{k=1}^{K-1}\PP(N_n = k)\left|\PP(X_k\le k) - \PP(X \le x)\right|                           \\
-     & \,\,\,\, +  \sum_{k=K}^\infty\PP(N_n = k)\left|\PP(X_k\le k) - \PP(X \le x)\right|                  \\
-     & \le \sum_{k=1}^{K-1}\PP(N_n = k) \cdot 1 +  \sum_{k=K}^\infty\PP(N_n = k) \cdot \dfrac{\epsilon}{2} \\
+     & \PP\left(U_n \le \lfloor nu \rfloor, X_{U_n}^{(1)} \le x_1, X_{n+1-U_n}^{(2)} \le x_2\right)                                                                         \\
+     & = \sum_{k=1}^{\lfloor nu \rfloor} \PP(U_n=k) \PP\left(X_{k}^{(1)} \le x_1, X_{n+1-k}^{(2)} \le x_2 | U_n=k\right)                                                    \\
+     & =  \dfrac{1}{n}\sum_{k=1}^{\lfloor nu \rfloor} \PP\left(X_{k}^{(1)} \le x_1, X_{n+1-k}^{(2)} \le x_2\right)               & (U_n\bot (X_{k}^{(1)}, X_{n+1-k}^{(2)})) \\
+     & =  \dfrac{1}{n}\sum_{k=1}^{\lfloor nu \rfloor} \PP\left(X_{k}^{(1)} \le x_1\right)\PP\left(X_{n+1-k}^{(2)} \le x_2\right) & (X_{k}^{(1)} \bot X_{n+1-k}^{(2)})       \\
   \end{align*}
-  Since $N_n \xlongrightarrow{d} \infty$, we have $\PP(N_n \ge K) \to 1$ as $n \to \infty$. Hence, there exists $N$ such that for all $n\ge N$, we have $\PP(N_n \ge K) > 1 - \dfrac{\epsilon}{2}$. Therefore, for all $n\ge N$, we have
-  $$\left|\PP(X_{N_n} \le x) - \PP(X \le x)\right| < \dfrac{\epsilon}{2} + \dfrac{\epsilon}{2}\left(1- \dfrac{\epsilon}{2}\right) \le \epsilon.$$
 
-  Since $\epsilon$ is arbitrary, the result follows.
+  Let $F_n$ be the common CDF of $X_n^{(1)}$ and $X_n^{(2)}$, and $F$ be the CDF of $X^{(1)}$. Let $m = \lfloor nu \rfloor$. The problem becomes showing that
+  $$\dfrac{1}{n}\sum_{k=1}^{m} F_k(x_1)F_{n+1-k}(x_2) \longrightarrow u F(x_1) F(x_2).$$
+  Equivalently,
+  $$\dfrac{m}{n}\left(\dfrac{1}{m}\sum_{k=1}^{m} \left(F_k(x_1)F_{n+1-k}(x_2)-F(x_1) F(x_2)\right)\right) \longrightarrow 0.$$
+
+  We have
+  \begin{align*}
+     & \dfrac{1}{m}\sum_{k=1}^{m} \left|F_k(x_1)F_{n+1-k}(x_2)-F(x_1) F(x_2)\right|                                                                                                       \\
+     & \le \dfrac{1}{m}\sum_{k=1}^{m} \left|F_k(x_1)\left(F_{n+1-k}(x_2)-F(x_2)\right)\right| + \dfrac{1}{m}\sum_{k=1}^{m} \left|F(x_2)\left(F_k(x_1)-F(x_1)\right)\right|                \\
+     & \le \dfrac{1}{m}\sum_{k=1}^{m} \left|F_{n+1-k}(x_2)-F(x_2)\right| + \dfrac{1}{m}\sum_{k=1}^{m} \left|F_k(x_1)-F(x_1)\right|                                         & (|F_n|\le 1) \\
+  \end{align*}
+  The second term goes to zero by the fact that $F_n(x_1)\to F(x_1)$ and Cesàro Means. We can write the first term as
+  \begin{align*}
+    \dfrac{1}{m}\sum_{k=n-m+1}^{n} \left|F_{k}(x_2)-F(x_2)\right|.
+  \end{align*}
+
+  If $u=1$, its convergence is similar to the second term. If $u<1$, then $n-m+1 \to \infty$. By pointwise convergence,$\forall \epsilon>0, \exists N, \forall n\ge N: |F_n(x_2)-F(x_2)|<\epsilon$. Hence, for $n-m+1\ge N$,
+  \begin{align*}
+    \dfrac{1}{m}\sum_{k=n-m+1}^{n} \left|F_{k}(x_2)-F(x_2)\right| < \epsilon.
+  \end{align*}
+
+  Using Slutsky's theorem again, we have
+
+  $$\left(\dfrac{n+1}{n+2}, \dfrac{U_n}{n+2}, X_{U_n}^{(1)}, X_{n+1-U_n}^{(2)}\right) \xlongrightarrow{d} \left(1, U, X^{(1)}, X^{(2)}\right).$$
+
+  Now define the function $f:\mathbb{R}^4_+\cap \left\{(t,u,x,y): t\ge u\right\} \to \mathbb{R}$ by
+  $$f(t,u,x,y) = u^\alpha x + (t-u)^\alpha y.$$
+  Then $f$ is continuous. The Continuous Mapping Theorem applies. The convergence
+  $$\max\left(\left(\dfrac{U_n}{n+2}\right)^\alpha X_{U_n}^{(1)}, \left(\dfrac{n+1-U_n}{n+2}\right)^\alpha X_{n+1-U_n}^{(2)}\right) \xlongrightarrow{d} \max\left(U^\alpha X^{(1)}, (1-U)^\alpha X^{(2)}\right)$$
+
+  is similar. And finally, we define the continuous function $g(i,j,u,v) = iu+jv$ on $\RR^4$ to finish the proof.
+
+
 \end{proof}
-
-We want to show that
-$$\left(\dfrac{U_n}{n+2}\right)^\alpha X_{U_n}^{(1)} + U^\alpha X^{(1)} + \left(\dfrac{n+1-U_n}{n+2}\right)^\alpha X_{n+1-U_n}^{(2)} \xlongrightarrow{d} U^\alpha X^{(1)} + (1-U)^\alpha X^{(2)}.$$
-
-We already have the function $(u,v,x,y)\mapsto u^\alpha x + v^\alpha y$ being continuous. In order to use the Continuous Mapping Theorem, we need to show that the joint distribution of
-
-$$\left(\dfrac{U_n}{n+2}, \dfrac{n+1-U_n}{n+2}, \dfrac{X_{U_n}^{(1)}}{n+2}, \dfrac{X_{n+1-U_n}^{(2)}}{n+2}\right)$$
-
-converges.
-
 \begin{proposition}
-  Let $T:\M_1\to \M_1$ be an operator in the space of probability distributions with finite first moment, defined by
+  Let $T:\M\to \M$ be an operator in the space of probability distributions with finite expectation, defined by
 
   $$T(\mu) = \L\left(I(U^\alpha X^{(1)} + (1-U)^\alpha X^{(2)}) + J\max(U^\alpha X^{(1)}, (1-U)^\alpha X^{(2)})\right),$$
-  where $X^{(1)}, X^{(2)} \overset{\text{iid}}{\sim} \mu$ and $U, I, J$ are independent of $X^{(1)}, X^{(2)}$, defined as in (\ref{eq:yield_indicator}).
-
-  Then $T$ is a contraction in the $(\M_p, \ell_p)$ space with $p\ge 2$, where the $\ell_p$ metric is defined by
+  where $X^{(1)}, X^{(2)} \overset{\text{iid}}{\sim} \mu$, $U$ is uniformly distributed on $[0,1]$, $I$ and $J$ are Bernoulli with expectation $u$ and $v$ respectively, such that $I+J\le 1$. The variables $U, I, J$ and $(X^{(1)}, X^{(2)})$ are mutually independent.
+  Then there exists $p\ge 2$ such that $T$ is a contraction in the $(\M_p, \ell_p)$, where the $\ell_p$ metric is defined by
   $$\ell_p(\mu, \nu) = \inf\{\EE[|X-Y|^p]: X\sim \mu, Y\sim \nu\}.$$
 \end{proposition}
 
 \begin{proof}
-  Let $\mu,\nu \in \M_1$. Let $X, X^{(1)}, X^{(2)} \overset{\text{iid}}{\sim} \mu$ and $Y, Y^{(1)}, Y^{(2)} \overset{\text{iid}}{\sim} \nu$ be independent of each other. We have
+  Let $\mu,\nu \in \M_p$. Let $X, X^{(1)}, X^{(2)} \overset{\text{iid}}{\sim} \mu$ and $Y, Y^{(1)}, Y^{(2)} \overset{\text{iid}}{\sim} \nu$ be independent of each other. We have
   \begin{align*}
-    \ell_1(T(\mu), T(\nu))
-     & \le \EE\left[\left|I(U^\alpha X^{(1)} + (1-U)^\alpha X^{(2)}) + J\max(U^\alpha X^{(1)}, (1-U)^\alpha X^{(2)})\right.\right.                       \\
+    \ell_p(T(\mu), T(\nu))
+     & = \EE\left[\left|I(U^\alpha X^{(1)} + (1-U)^\alpha X^{(2)}) + J\max(U^\alpha X^{(1)}, (1-U)^\alpha X^{(2)})\right.\right.                         \\
      & \,\,\,\, \left.\left.- I(U^\alpha Y^{(1)} + (1-U)^\alpha Y^{(2)}) - J\max(U^\alpha Y^{(1)}, (1-U)^\alpha Y^{(2)})\right|\right]                   \\
      & \le \EE\left[\left|I \left(U^\alpha X^{(1)} + (1-U)^\alpha X^{(2)} - U^\alpha Y^{(1)} - (1-U)^\alpha Y^{(2)}\right)\right|\right]                 \\
      & \,\,\,\, + \EE\left[\left|J\left(\max(U^\alpha X^{(1)}, (1-U)^\alpha X^{(2)}) - \max(U^\alpha Y^{(1)}, (1-U)^\alpha Y^{(2)})\right)\right|\right]
