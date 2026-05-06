@@ -145,9 +145,8 @@ In this section, we analyze the asymptotic behavior of lower bounds of $\EE[Y_n]
 
   $$n^{\alpha}\left(1-\dfrac{\alpha+1}{n}\right) + 2u+v \ge n^\alpha + 1 \iff 2u + v - 1 \ge \dfrac{\alpha+1}{n^{1-\alpha}}.$$
 
-  Let $N_0 = \left\lceil \left(\dfrac{2u + v - 1}{\alpha+1}\right)^{\frac{1}{\alpha-1}} \right\rceil$. The inequality holds for every $n\ge N_0$. Now we choose $K$ for it to hold for $n < N_0$. In particular,
-
-  $$K = \min\left(\dfrac{1}{2}, \min\limits_{3\le i < N_0}\dfrac{x_i}{i^{\alpha}}\right)$$
+  Let $N_0 = \left\lceil \left(\dfrac{\alpha+1}{2u + v - 1}\right)^{\frac{1}{1-\alpha}} \right\rceil$. The inequality holds for every $n\ge N_0$. Now we choose $K$ for it to hold for $n < N_0$. In particular,
+  $$K = \min\left(\dfrac{1}{2}, \min\limits_{3\le i < N_0}\dfrac{x_i}{i^{\alpha} + 1}\right) > 0.$$
 
   The lower bound follows.
 

@@ -57,6 +57,45 @@ def styled_print(text: object,
                 from IPython.display import Math
                 from IPython import get_ipython
 
+                def _safe_display_latex(latex_candidate: object) -> bool:
+                    """Safely display LaTeX via `Math` if small; otherwise show
+                    a preformatted HTML fallback. Returns True if something was
+                    displayed.
+                    """
+                    try:
+                        s = str(latex_candidate)
+                    except Exception:
+                        return False
+                    candidate = s.strip()
+                    # Strip surrounding dollar delimiters if present
+                    if (candidate.startswith('$$') and candidate.endswith('$$')) or (
+                            candidate.startswith('$') and candidate.endswith('$')):
+                        if candidate.startswith('$$') and candidate.endswith('$$'):
+                            candidate = candidate[2:-2].strip()
+                        else:
+                            candidate = candidate[1:-1].strip()
+
+                    # Heuristic guards to avoid frontend LaTeX expansion issues
+                    MAX_LATEX_LEN = 2000
+                    MAX_BRACE_COUNT = 1000
+                    if len(candidate) == 0:
+                        return False
+                    if len(candidate) <= MAX_LATEX_LEN and candidate.count('{') <= MAX_BRACE_COUNT:
+                        try:
+                            display(Math(candidate))
+                            return True
+                        except Exception:
+                            # If display(Math) raises synchronously, fallthrough
+                            pass
+
+                    # Fall back to preformatted HTML to avoid frontend LaTeX parsing
+                    safe_html = "<pre style='white-space:pre-wrap; font-family:monospace;'>" + _html.escape(candidate) + "</pre>"
+                    try:
+                        display(HTML(safe_html))
+                        return True
+                    except Exception:
+                        return False
+
                 ip = get_ipython()
                 latex_func = None
                 if ip is not None:
@@ -76,17 +115,22 @@ def styled_print(text: object,
                 if callable(latex_func):
                     try:
                         latex_str = latex_func(text)
-                        display(Math(latex_str))
-                        return
+                        if _safe_display_latex(latex_str):
+                            return
                     except Exception:
                         # If latex conversion fails, fall through to HTML
                         pass
 
-                # If object provides a rich LaTeX repr, let IPython render it.
+                # If object provides a rich LaTeX repr, obtain it and render
+                # it safely (avoid delegating raw rendering to the frontend).
                 repr_latex = getattr(text, '_repr_latex_', None)
                 if callable(repr_latex):
                     try:
-                        display(text)
+                        latex_repr = repr_latex()
+                        if _safe_display_latex(latex_repr):
+                            return
+                        # If repr returned nothing usable, show the object safely
+                        display(HTML(_html.escape(str(text))))
                         return
                     except Exception:
                         pass
@@ -101,8 +145,8 @@ def styled_print(text: object,
                                           lambda m: f"{m.group(1)}_{{{m.group(2)}}}",
                                           ss)
                     if latex_guess != ss:
-                        display(Math(latex_guess))
-                        return
+                        if _safe_display_latex(latex_guess):
+                            return
                 except Exception:
                     pass
             except Exception:
