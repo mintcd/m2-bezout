@@ -106,7 +106,7 @@ This gives the lower bound sequence
 \begin{remark}
   Another lower bound is obtained as follows. By Jensen's inequality
   $$\EE[\max(Y_i, Y_{n+1-i})] \ge \max(\EE[Y_i], \EE[Y_{n+1-i}]) = \max(y_i, y_{n+1-i}) = y_{\max(i, n+1-i)},$$
-  where the last equality holds because $y_n$ is non-decreasing in $n$. This gives the following lower bound sequence
+  where the last equality holds because $y_n$ is non-decreasing in $n$ \textit{(we have to prove it)}. This gives the following lower bound sequence
   \begin{align}
     y_{n+2}^{L} & = u + \dfrac{2u}{n}\sum_{i=1}^{n}y_i^{L} + \dfrac{2v}{n}\sum_{i=\lfloor (n+1)/2 \rfloor}^{n}y_{i}^{L}, & y_1^{L}=y_2^{L}=0.
   \end{align}

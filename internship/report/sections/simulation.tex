@@ -85,4 +85,6 @@ Proposition \ref{prop:Wasserstein_convergence} provides an $O(n\log n)$ algorith
 where $(\hat{X}_1, \ldots, \hat{X}_n)$ and $(\hat{Y}_1, \ldots, \hat{Y}_n)$ are the sorted samples from $\mu_n$ and $\nu_n$, respectively.
 
 \subsection{Random Distributions}
-Our conjectures include convergence of distributions. We need a way to generate random distributions. In particular, we need to generate random distributions with mean 1.
+Our conjectures include convergence of distributions. We need a way to generate random distributions. In particular, we need to generate random distributions with mean 1. A straightforward way is to use a bank of parametric distributions, such as uniform, log-normal, and gamma distributions. The base distribution is chosen randomly from the bank, and the shape parameters are also randomized. Finally, we can normalize the distribution to have mean 1.
+
+A problem with the last approach is expressivity.

@@ -1,14 +1,26 @@
 
 \chapter{Asymptotic Analysis of Some Sequences}
+\begin{center}
+  April 28, 2026
+  \vspace{0.5cm}
+\end{center}
 
-In this section, we analyze the asymptotic behavior of some recurrences that arise in the analysis of regular expressions.
+In this section, we analyze the asymptotic behavior of lower bounds of $\EE[Y_n]$, as follows.
+\begin{equation}
+  \label{eq:recurrence-sum}
+  x_{n+2} = \dfrac{a}{n}\sum_{i=1}^{n}x_i + b, \quad n \ge 1, \quad x_1=x_2=0.
+\end{equation}
+\begin{equation}
+  \label{eq:recurrence-diff}
+  x_{n+2} = \dfrac{a}{n}\sum_{i=1}^{n}x_i + \dfrac{b}{n}\sum_{i=1}^{n}|x_i - x_{n+1-i}| + c, \quad n \ge 1, \quad x_1=x_2=0 \quad (a>1, 0 < b < 1, c>0)
+\end{equation}
+\begin{equation}
+  \label{eq:recurrence-sum-half-sum}
+  x_{n} = \dfrac{2u}{n}\sum_{i=0}^{n-1}x_i + \dfrac{2v}{n}\sum_{i=\lfloor (n-1)/2 \rfloor}^{n-1}x_{i}, x_0=x_1=1 \quad (u,v > 0, u+v\le1, 2u+v>1).
+\end{equation}
 
 \begin{proposition}
-  \label{prop:recurrence-sum}
-  Consider the recurrence
-  \begin{equation}
-    x_{n+2} = \dfrac{a}{n}\sum_{i=1}^{n}x_i + b, \quad n \ge 1, \quad x_1=x_2=0.
-  \end{equation}
+  Consider recurrence \eqref{eq:recurrence-sum}. We have
   \begin{itemize}
     \item If $a<1$, then $x_n \sim \dfrac{b}{1-a}$.
     \item If $a=1$, then $x_n \sim b\ln n$.
@@ -55,16 +67,8 @@ In this section, we analyze the asymptotic behavior of some recurrences that ari
   If $a<1$ then $x_n \sim \dfrac{b}{1-a}$. If $a>1$, then $x_n  \sim \dfrac{b}{(a-1)\Gamma(a)} n^{a-1}$.
 \end{proof}
 
-Next, we want to see if adding a difference term to the recurrence changes the asymptotic behavior.
-Consider the recurrence
-\begin{equation}
-  x_{n+2} = \dfrac{a}{n}\sum_{i=1}^{n}x_i + \dfrac{b}{n}\sum_{i=1}^{n}|x_i - x_{n+1-i}| + c, \quad n \ge 1, \quad x_1=x_2=0. \label{eq:recurrence-diff}
-\end{equation}
-where $a>1$, $0 < b < 1$ and $c>0$ are constants.
-
-
 \begin{lemma}
-  The sequence $(x_n)$ is increasing.
+  The sequence $(x_n)$ in \eqref{eq:recurrence-diff} is increasing.
 \end{lemma}
 
 \begin{proof}
@@ -107,11 +111,64 @@ where $a>1$, $0 < b < 1$ and $c>0$ are constants.
 \end{proof}
 
 \begin{lemma}
-  The sequence can be rewritten as
+  The sequence in \eqref{eq:recurrence-diff} can be rewritten as
   \begin{equation}
     nx_{n+2} - (n-1)x_{n+1} = (a+b)x_n - 2b x_{\lceil n/2\rceil} + c.
   \end{equation}
 \end{lemma}
 
+\begin{proposition}
+  Consider the sequence defined by \eqref{eq:recurrence-sum-half-sum}. We have $x_n = \Theta(n^{\alpha})$, where $\alpha$ is the unique solution of
+  $$2(u+v) - v2^{-\alpha} = \alpha+1.$$
+\end{proposition}
+
+\begin{proof}
+  For the lower bound, assume the inductive hypothesis $x_n \ge K(n^{\alpha}+1)$ with $K\le \dfrac{1}{2}$ to be determined. The base cases $n=0,1$ hold. Let us check for $n=2$.
+  \begin{align*}
+    x_2 = 2u + 2v = \alpha+1+v2^{-\alpha} \ge \alpha+1 \ge \dfrac{1}{2}(2^{\alpha}+1), \forall \alpha \in [0,1].
+  \end{align*}
+
+  For $n\ge 3$, we have
+  \begin{align*}
+    \dfrac{x_{n}}{K}
+     & \ge \dfrac{2u}{n}\sum_{i=0}^{n-1}(i^{\alpha}+1) + \dfrac{2v}{n}\sum_{i=\lfloor (n-1)/2 \rfloor}^{n-1}(i^{\alpha}+1)                                                         \\
+     & \ge \dfrac{2u}{n}\left(\left(\int_{0}^{n-1}x^{\alpha}\,\mathrm{d}x\right)+n\right)  + \dfrac{2v}{n}\int_{(n-3)/2}^{n-1}(x^{\alpha}+1) \,\mathrm{d}x                         \\
+     & \ge \dfrac{2u}{n}\left(\left(\int_{0}^{n-1}x^{\alpha}\,\mathrm{d}x\right)+n\right)  + \dfrac{2v}{n}\left(\int_{(n-2)/2}^{n-1}x^{\alpha}+\dfrac{n+1}{2}\right) \,\mathrm{d}x \\
+     & = \dfrac{2u}{n}\left(\dfrac{(n-1)^{\alpha+1}}{\alpha+1} + n\right) + \dfrac{2v}{n}\left(\dfrac{(n-1)^{\alpha+1} - (n/2)^{\alpha+1}}{\alpha+1} + \dfrac{n+1}{2}\right)       \\
+     & = \dfrac{(n-1)^{\alpha+1}}{n(\alpha+1)}\left(2u+2v - v2^{-\alpha}\right)+ 2u + v\left(1+\dfrac{1}{n}\right)                                                                 \\
+     & \ge n^{\alpha}\left(1-\dfrac{1}{n}\right)^{\alpha+1} + 2u+v
+  \end{align*}
+
+  We are done if we can prove that for every $n\ge 3$,
+  $$n^{\alpha}\left(1-\dfrac{1}{n}\right)^{\alpha+1} + 2u+v \ge n^\alpha + 1.$$
+  By Bernoulli's inequality, we have $\left(1-\dfrac{1}{n}\right)^{\alpha+1} \ge 1 - \dfrac{\alpha+1}{n}$. Hence, it suffices to show that
+
+  $$n^{\alpha}\left(1-\dfrac{\alpha+1}{n}\right) + 2u+v \ge n^\alpha + 1 \iff 2u + v - 1 \ge \dfrac{\alpha+1}{n^{1-\alpha}}.$$
+
+  Let $N_0 = \left\lceil \left(\dfrac{2u + v - 1}{\alpha+1}\right)^{\frac{1}{\alpha-1}} \right\rceil$. The inequality holds for every $n\ge N_0$. Now we choose $K$ for it to hold for $n < N_0$. In particular,
+
+  $$K = \min\left(\dfrac{1}{2}, \min\limits_{3\le i < N_0}\dfrac{x_i}{i^{\alpha}}\right)$$
+
+  The lower bound follows.
+
+  % For the upper bound, assume the inductive hypothesis $x_n \le K(n^{\alpha}-L)$. We have
+  % \begin{align*}
+  %   \dfrac{x_{n}}{K}
+  %    & \le \dfrac{2u}{n}\sum_{i=0}^{n-1}(i^{\alpha}-L) + \dfrac{2v}{n}\sum_{i=\lfloor (n-1)/2 \rfloor}^{n-1}(i^{\alpha}-L)                                                  \\
+  %    & \le \dfrac{2u}{n}\int_{0}^{n}\left(x^{\alpha}-L\right)\,\mathrm{d}x  + \dfrac{2v}{n}\int_{(n-2)/2}^{n}\left(x^{\alpha}-L \right)\,\mathrm{d}x                        \\
+  %    & = \dfrac{2u}{n}\left(\dfrac{n^{\alpha+1}}{\alpha+1} - Ln\right)  + \dfrac{2v}{n}\left(\dfrac{n^{\alpha+1} - ((n-2)/2)^{\alpha+1}}{\alpha+1} - L\dfrac{n+1}{2}\right) \\
+  %    & = \dfrac{n^{\alpha}}{\alpha+1}\left(2u+2v - \left(\dfrac{n-2}{n}\right)^{\alpha+1}v2^{-\alpha}\right) - L\left(2u + \left(\dfrac{n+1}{n}\right)v\right)              \\
+  %    & \le \dfrac{n^{\alpha}}{\alpha+1}\left(2u+2v - \left(\dfrac{n-2}{n}\right)^{\alpha+1}v2^{-\alpha}\right) - \dfrac{Lv}{3} - L                                          \\
+  % \end{align*}
+
+  % We are done if we can prove that
+  % \begin{align*}
+  %        & \dfrac{n^{\alpha}}{\alpha+1}\left(2u+2v - \left(\dfrac{n-2}{n}\right)^{\alpha+1}v2^{-\alpha}\right) - \dfrac{Lv}{3} \le n^\alpha            \\
+  %   \iff & n^{\alpha}\left(1 + \left(1-\left(\dfrac{n-2}{n}\right)^{\alpha+1}\right)\dfrac{v2^{-\alpha}}{\alpha+1}\right) - n^\alpha \le \dfrac{Lv}{3} \\
+  %   \iff & \dfrac{v2^{-\alpha}}{\alpha+1} \left(n^{\alpha}-\dfrac{(n-2)^{\alpha+1}}{n}\right) \le \dfrac{Lv}{3}
+  % \end{align*}
 
 
+  % Equivalently,
+  % $$.$$
+\end{proof}
