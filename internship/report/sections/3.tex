@@ -1,5 +1,10 @@
 \chapter{Largest Concatenation-Component in Regular Expressions}
 
+\begin{center}
+  April 23rd, 2026
+  \vspace{0.5cm}
+\end{center}
+
 Hyperscan implements algorithms to decompose regexes into literals and FA in its Rose engine. There may be a relation between how well a regex can be decomposed and the size of its largest concatenation-component.
 
 \section{Recurrences}
@@ -210,49 +215,49 @@ Equivalently,
 
 
 \end{proof}
-\begin{proposition}
-  Let $T:\M\to \M$ be an operator in the space of probability distributions with finite expectation, defined by
+% \begin{proposition}
+%   Let $T:\M\to \M$ be an operator in the space of probability distributions with finite expectation, defined by
 
-  $$T(\mu) = \L\left(I(U^\alpha X^{(1)} + (1-U)^\alpha X^{(2)}) + J\max(U^\alpha X^{(1)}, (1-U)^\alpha X^{(2)})\right),$$
-  where $X^{(1)}, X^{(2)} \overset{\text{iid}}{\sim} \mu$, $U$ is uniformly distributed on $[0,1]$, $I$ and $J$ are Bernoulli with expectation $u$ and $v$ respectively, such that $I+J\le 1$. The variables $U, I, J$ and $(X^{(1)}, X^{(2)})$ are mutually independent.
-  Then there exists $p\ge 2$ such that $T$ is a contraction in the $(\M_p, \ell_p)$, where the $\ell_p$ metric is defined by
-  $$\ell_p(\mu, \nu) = \inf\{\EE[|X-Y|^p]: X\sim \mu, Y\sim \nu\}.$$
-\end{proposition}
+%   $$T(\mu) = \L\left(I(U^\alpha X^{(1)} + (1-U)^\alpha X^{(2)}) + J\max(U^\alpha X^{(1)}, (1-U)^\alpha X^{(2)})\right),$$
+%   where $X^{(1)}, X^{(2)} \overset{\text{iid}}{\sim} \mu$, $U$ is uniformly distributed on $[0,1]$, $I$ and $J$ are Bernoulli with expectation $u$ and $v$ respectively, such that $I+J\le 1$. The variables $U, I, J$ and $(X^{(1)}, X^{(2)})$ are mutually independent.
+%   Then there exists $p\ge 2$ such that $T$ is a contraction in the $(\M_p, \ell_p)$, where the $\ell_p$ metric is defined by
+%   $$\ell_p(\mu, \nu) = \inf\{\EE[|X-Y|^p]: X\sim \mu, Y\sim \nu\}.$$
+% \end{proposition}
 
-\begin{proof}
-  Let $\mu,\nu \in \M_p$. Let $X, X^{(1)}, X^{(2)} \overset{\text{iid}}{\sim} \mu$ and $Y, Y^{(1)}, Y^{(2)} \overset{\text{iid}}{\sim} \nu$ be independent of each other. We have
-  \begin{align*}
-    \ell_p(T(\mu), T(\nu))
-     & = \EE\left[\left|I(U^\alpha X^{(1)} + (1-U)^\alpha X^{(2)}) + J\max(U^\alpha X^{(1)}, (1-U)^\alpha X^{(2)})\right.\right.                         \\
-     & \,\,\,\, \left.\left.- I(U^\alpha Y^{(1)} + (1-U)^\alpha Y^{(2)}) - J\max(U^\alpha Y^{(1)}, (1-U)^\alpha Y^{(2)})\right|\right]                   \\
-     & \le \EE\left[\left|I \left(U^\alpha X^{(1)} + (1-U)^\alpha X^{(2)} - U^\alpha Y^{(1)} - (1-U)^\alpha Y^{(2)}\right)\right|\right]                 \\
-     & \,\,\,\, + \EE\left[\left|J\left(\max(U^\alpha X^{(1)}, (1-U)^\alpha X^{(2)}) - \max(U^\alpha Y^{(1)}, (1-U)^\alpha Y^{(2)})\right)\right|\right]
-  \end{align*}
+% \begin{proof}
+%   Let $\mu,\nu \in \M_p$. Let $X, X^{(1)}, X^{(2)} \overset{\text{iid}}{\sim} \mu$ and $Y, Y^{(1)}, Y^{(2)} \overset{\text{iid}}{\sim} \nu$ be independent of each other. We have
+%   \begin{align*}
+%     \ell_p(T(\mu), T(\nu))
+%      & = \EE\left[\left|I(U^\alpha X^{(1)} + (1-U)^\alpha X^{(2)}) + J\max(U^\alpha X^{(1)}, (1-U)^\alpha X^{(2)})\right.\right.                         \\
+%      & \,\,\,\, \left.\left.- I(U^\alpha Y^{(1)} + (1-U)^\alpha Y^{(2)}) - J\max(U^\alpha Y^{(1)}, (1-U)^\alpha Y^{(2)})\right|\right]                   \\
+%      & \le \EE\left[\left|I \left(U^\alpha X^{(1)} + (1-U)^\alpha X^{(2)} - U^\alpha Y^{(1)} - (1-U)^\alpha Y^{(2)}\right)\right|\right]                 \\
+%      & \,\,\,\, + \EE\left[\left|J\left(\max(U^\alpha X^{(1)}, (1-U)^\alpha X^{(2)}) - \max(U^\alpha Y^{(1)}, (1-U)^\alpha Y^{(2)})\right)\right|\right]
+%   \end{align*}
 
-  Consider the first term. We have
-  \begin{align*}
-             & \EE\left[\left|I \left(U^\alpha X^{(1)} + (1-U)^\alpha X^{(2)} - U^\alpha Y^{(1)} - (1-U)^\alpha Y^{(2)}\right)\right|\right]                                       \\
-    = \,\,   & \EE\left[I\left| \left(U^\alpha X^{(1)} + (1-U)^\alpha X^{(2)} - U^\alpha Y^{(1)} - (1-U)^\alpha Y^{(2)}\right)\right|\right]        & (I\ge 0)                     \\
-    =  \,\,  & u \EE\left[\left|U^\alpha \left(X^{(1)} - Y^{(1)}\right) + (1-U)^\alpha \left(X^{(2)} - Y^{(2)}\right)\right|\right]                 & \text{(independence of $I$)} \\
-    \le \,\, & u \left(\EE\left[U^\alpha \left|X^{(1)} - Y^{(1)}\right|\right] + \EE\left[(1-U)^\alpha \left|X^{(2)} - Y^{(2)}\right|\right]\right) & (U, 1-U \ge 0)               \\
-    = \,\,   & \dfrac{2u}{\alpha+1} \EE[\left|X - Y\right|].
-  \end{align*}
+%   Consider the first term. We have
+%   \begin{align*}
+%              & \EE\left[\left|I \left(U^\alpha X^{(1)} + (1-U)^\alpha X^{(2)} - U^\alpha Y^{(1)} - (1-U)^\alpha Y^{(2)}\right)\right|\right]                                       \\
+%     = \,\,   & \EE\left[I\left| \left(U^\alpha X^{(1)} + (1-U)^\alpha X^{(2)} - U^\alpha Y^{(1)} - (1-U)^\alpha Y^{(2)}\right)\right|\right]        & (I\ge 0)                     \\
+%     =  \,\,  & u \EE\left[\left|U^\alpha \left(X^{(1)} - Y^{(1)}\right) + (1-U)^\alpha \left(X^{(2)} - Y^{(2)}\right)\right|\right]                 & \text{(independence of $I$)} \\
+%     \le \,\, & u \left(\EE\left[U^\alpha \left|X^{(1)} - Y^{(1)}\right|\right] + \EE\left[(1-U)^\alpha \left|X^{(2)} - Y^{(2)}\right|\right]\right) & (U, 1-U \ge 0)               \\
+%     = \,\,   & \dfrac{2u}{\alpha+1} \EE[\left|X - Y\right|].
+%   \end{align*}
 
-  We turn to the second term. Recall that $|\max(a,b) - \max(c,d)| \le \max(|a-c|, |b-d|)$ and $\max(a,b) = \dfrac{1}{2}(a+b + |a-b|)$ for any real numbers $a,b,c,d$. We have
-  \begin{align*}
-        & \EE\left[\left|J\left(\max(U^\alpha X^{(1)}, (1-U)^\alpha X^{(2)}) - \max(U^\alpha Y^{(1)}, (1-U)^\alpha Y^{(2)})\right)\right|\right]                                                   \\
-    \le & v\EE\left[\max\left(\left|U^\alpha\left(X^{(1)} -  Y^{(1)}\right)\right| ,\left|(1-U)^\alpha \left(X^{(2)} - Y^{(2)}\right)\right|\right)\right]                                         \\
-    =   & \dfrac{v}{2} \left(\EE\left[U^\alpha\right]\EE\left[\left|X^{(1)} - Y^{(1)}\right|\right] + \EE\left[(1-U)^\alpha\right]\EE\left[\left|X^{(2)} - Y^{(2)}\right|\right]\right.            \\
-        & \left.+ \EE\left[\left|U^\alpha\left(X^{(1)} -  Y^{(1)}\right) - (1-U)^\alpha\left(X^{(2)} - Y^{(2)}\right)\right|\right]\right)                                                         \\
-    =   & \dfrac{v}{\alpha+1} \EE\left[\left|X - Y\right|\right]  + \dfrac{v}{2} \EE\left[\left|U^\alpha\left(X^{(1)} -  Y^{(1)}\right) - (1-U)^\alpha\left(X^{(2)} - Y^{(2)}\right)\right|\right] \\
-  \end{align*}
+%   We turn to the second term. Recall that $|\max(a,b) - \max(c,d)| \le \max(|a-c|, |b-d|)$ and $\max(a,b) = \dfrac{1}{2}(a+b + |a-b|)$ for any real numbers $a,b,c,d$. We have
+%   \begin{align*}
+%         & \EE\left[\left|J\left(\max(U^\alpha X^{(1)}, (1-U)^\alpha X^{(2)}) - \max(U^\alpha Y^{(1)}, (1-U)^\alpha Y^{(2)})\right)\right|\right]                                                   \\
+%     \le & v\EE\left[\max\left(\left|U^\alpha\left(X^{(1)} -  Y^{(1)}\right)\right| ,\left|(1-U)^\alpha \left(X^{(2)} - Y^{(2)}\right)\right|\right)\right]                                         \\
+%     =   & \dfrac{v}{2} \left(\EE\left[U^\alpha\right]\EE\left[\left|X^{(1)} - Y^{(1)}\right|\right] + \EE\left[(1-U)^\alpha\right]\EE\left[\left|X^{(2)} - Y^{(2)}\right|\right]\right.            \\
+%         & \left.+ \EE\left[\left|U^\alpha\left(X^{(1)} -  Y^{(1)}\right) - (1-U)^\alpha\left(X^{(2)} - Y^{(2)}\right)\right|\right]\right)                                                         \\
+%     =   & \dfrac{v}{\alpha+1} \EE\left[\left|X - Y\right|\right]  + \dfrac{v}{2} \EE\left[\left|U^\alpha\left(X^{(1)} -  Y^{(1)}\right) - (1-U)^\alpha\left(X^{(2)} - Y^{(2)}\right)\right|\right] \\
+%   \end{align*}
 
-  Combining the bounds for both terms, we get
-  $$\ell_1(T(\mu), T(\nu)) \le \dfrac{2u}{\alpha+1} \EE[|X - Y|] + J \EE[|X - Y|].$$
+%   Combining the bounds for both terms, we get
+%   $$\ell_1(T(\mu), T(\nu)) \le \dfrac{2u}{\alpha+1} \EE[|X - Y|] + J \EE[|X - Y|].$$
 
-  Since $\dfrac{2u}{\alpha+1} + J < 1$, the operator $T$ is a contraction in the $(\M_1, \ell_1)$ space.
+%   Since $\dfrac{2u}{\alpha+1} + J < 1$, the operator $T$ is a contraction in the $(\M_1, \ell_1)$ space.
 
 
-\end{proof}
+% \end{proof}
 
 
