@@ -1,7 +1,7 @@
 \chapter{Largest Concatenation-Component in Regular Expressions}
 
 \begin{center}
-  April 23rd, 2026
+  April 23, 2026
   \vspace{0.5cm}
 \end{center}
 
@@ -74,50 +74,6 @@ We have the following recurrences
 We have used $Y_n^{(1)}, Y_n^{(2)}, M_n^{(1)}, M_n^{(2)}$ as independent copies of $Y_n$ and $M_n$ respectively, and $U_n$ as a uniform random variable over $\{1, 2, \ldots, n\}$ independent of all $Y_n^{(i)}$ and $M_n^{(i)}$.
 
 \section{The yield recurrence}
-
-We rewrite the recurrence (\ref{eq:yield}) as
-\begin{equation}
-  \label{eq:yield_indicator}
-  Y_{n+2} \stackrel{d}{=} I_n\left(Y_{U_n}^{(1)} + Y_{n+1-U_n}^{(2)} + 1\right) + J_n\max\left(Y_{U_n}^{(1)}, Y_{n+1-U_n}^{(2)}\right).
-\end{equation}
-
-In (\ref{eq:yield_indicator}), $(I_n, J_n)$ is a pair of mutually exclusive Bernoulli random variables with $\mathbb{E}[I_n] = u$ and $\mathbb{E}[J_n] = v$ such that $I_n+J_n\le 1$. The sequences $\bm{Y}^{(1)} = (Y_n^{(1)})_{n \ge 1}$ and $\bm{Y}^{(2)} = (Y_n^{(2)})_{n \ge 1}$ are independent copies of the sequence $\bm{Y} = (Y_n)_{n \ge 1}$. The notion of equality is in distribution. Note that we can reuse the same variables $Y_{U_n}^{(1)}, Y_{n+1-U_n}^{(2)}$ and $U_n$ across both terms because at most one indicator is non-zero for any given realization. Let $\bm{I} = (I_n)_{n \ge 1}$, and define $\bm{J}$ and $\bm{U}$ similarly. We assume that the sequence of pairs $(\bm{I}, \bm{J})$ and the sequence $\bm{U}$ each consist of independent and identically distributed elements. Furthermore, the entire stochastic processes $(\bm{I}, \bm{J})$, $\bm{U}$, $\bm{Y}^{(1)}$, and $\bm{Y}^{(2)}$ are mutually independent.
-
-\subsection{Lower and Upper Bounds of the Expectation}
-
-Let $y_n=\EE[Y_n]$. Take expectation on both sides, we have
-$$y_{n+2} = u + \dfrac{2u}{n}\sum_{i=1}^{n}y_i + \dfrac{v}{n}\sum_{i=1}^{n}\EE[\max(Y_i, Y_{n+1-i})].$$
-
-For an upper bound, we use the fact that $\max(Y_i, Y_{n+1-i}) \le Y_i + Y_{n+1-i}$, which gives an upper bound sequence
-\begin{equation}
-  y_{n+2}^U = u + \dfrac{2(u+v)}{n}\sum_{i=1}^{n}y_i^U, \quad y_1^U=y_2^U=0.
-  \label{eq:upper_bound}
-\end{equation}
-
-For a lower bound, we use
-\begin{align*}
-  \EE[\max(Y_i, Y_{n+1-i})]
-   & = \EE\left[\dfrac{1}{2}(Y_i + Y_{n+1-i} + |Y_i - Y_{n+1-i}|)\right]                   \\
-   & \ge \dfrac{1}{2}(\EE[Y_i] + \EE[Y_{n+1-i}]) + \dfrac{1}{2}|\EE[Y_i] - \EE[Y_{n+1-i}]| \\
-   & = \dfrac{1}{2}(y_i + y_{n+1-i} + |y_i - y_{n+1-i}|).
-\end{align*}
-This gives the lower bound sequence
-\begin{equation}
-  \label{eq:lower_bound}
-  y_{n+2}^{L} = u + \dfrac{2u+v}{n}\sum_{i=1}^{n}y_i^{L} + \dfrac{v}{2n}\sum_{i=1}^{n}|y_i^{L} - y_{n+1-i}^{L}|, \quad y_1^{L}=y_2^{L}=0.
-\end{equation}
-
-
-\begin{remark}
-  Another lower bound is obtained as follows. By Jensen's inequality
-  $$\EE[\max(Y_i, Y_{n+1-i})] \ge \max(\EE[Y_i], \EE[Y_{n+1-i}]) = \max(y_i, y_{n+1-i}) = y_{\max(i, n+1-i)},$$
-  where the last equality holds because $y_n$ is non-decreasing in $n$ \textit{(we have to prove it)}. This gives the following lower bound sequence
-  \begin{align}
-    y_{n+2}^{L} & = u + \dfrac{2u}{n}\sum_{i=1}^{n}y_i^{L} + \dfrac{2v}{n}\sum_{i=\lfloor (n+1)/2 \rfloor}^{n}y_{i}^{L}, & y_1^{L}=y_2^{L}=0.
-  \end{align}
-\end{remark}
-
-Looking at the bounds (\ref{eq:lower_bound}), we know that when $2u+v > 1$, $(y_n)$ grows at least polynomially.
 
 \subsection{Asymptotic of the Expectation}
 

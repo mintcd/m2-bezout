@@ -1,0 +1,68 @@
+\chapter{The Yield Recurrence}
+
+\begin{center}
+  May 13, 2026
+  \vspace{0.5cm}
+\end{center}
+
+The recurrence we consider in this section is the following.
+
+\begin{equation}
+  \label{eq:yield_indicator}
+  Y_{n+2} \stackrel{d}{=} I^{(n)}\left(Y_{U_n}^{(1)} + Y_{n+1-U_n}^{(2)} + 1\right) + J^{(n)}\max\left(Y_{U_n}^{(1)}, Y_{n+1-U_n}^{(2)}\right).
+\end{equation}
+
+Let us explain the notations. Let $Y_n$ be the yield of the tree with $n$ nodes. The variables $I$ and $J$ are Bernoulli with expectation $u$ and $v$ respectively, such that $I + J \le 1$. That means we can only either take the sum-plus-one term, or the max term, or zero. The variable $U_n$ is uniformly distributed on $\{1, \ldots, n\}$. Superscripts are for independent copies. We assume that all collections of copies are independent. Now we can understand why it is correct to reuse the same variables $Y_{U_n}^{(1)}, Y_{n+1-U_n}^{(2)}$ and $U_n$ across both terms.
+
+
+\section{Lower and Upper Bounds of the Expectation}
+
+Let $y_n=\EE[Y_n]$. Take expectation on both sides, we have
+$$y_{n+2} = u + \dfrac{2u}{n}\sum_{i=1}^{n}y_i + \dfrac{v}{n}\sum_{i=1}^{n}\EE[\max(Y_i, Y_{n+1-i})].$$
+
+For an upper bound, using $\max(Y_i, Y_{n+1-i}) \le Y_i + Y_{n+1-i}$, we get an upper bound sequence
+\begin{equation}
+  \label{eq:upper_bound}
+  y_{n+2} = u + \dfrac{2(u+v)}{n}\sum_{i=1}^{n}y_i, \quad y_1=y_2=0.
+\end{equation}
+
+There are several ways to get a lower bound. The first one is to use convexity of the absolute value function.
+\begin{align*}
+  \EE[\max(Y_i, Y_{n+1-i})]
+   & = \EE\left[\dfrac{1}{2}(Y_i + Y_{n+1-i} + |Y_i - Y_{n+1-i}|)\right]                   \\
+   & \ge \dfrac{1}{2}(\EE[Y_i] + \EE[Y_{n+1-i}]) + \dfrac{1}{2}|\EE[Y_i] - \EE[Y_{n+1-i}]| \\
+   & = \dfrac{1}{2}(y_i + y_{n+1-i} + |y_i - y_{n+1-i}|).
+\end{align*}
+
+This gives
+\begin{equation}
+  \label{eq:lower_bound_difference}
+  y_{n+2} = u + \dfrac{2u+v}{n}\sum_{i=1}^{n}y_i + \dfrac{v}{2n}\sum_{i=1}^{n}|y_i - y_{n+1-i}|, \quad y_1=y_2=0.
+\end{equation}
+
+Another way is to use convexity of the max function.
+
+$$\EE[\max(Y_i, Y_{n+1-i})] \ge \max(\EE[Y_i], \EE[Y_{n+1-i}]) = \max(y_i, y_{n+1-i}) = y_{\max(i, n+1-i)}.$$
+
+This gives
+
+\begin{equation}
+  \label{eq:lower_bound_max}
+  y_{n+2} = u + \dfrac{2u}{n}\sum_{i=1}^{n}y_i + \dfrac{v}{n}\sum_{i=1}^{n}y_{\max(i, n+1-i)}, \quad y_1=y_2=0.
+\end{equation}
+
+If we can prove that $y_n$ is non-decreasing in $n$, then we can ignore the middle term in the sum of maxima, and get
+\begin{equation}
+  \label{eq:lower_bound_half_sum}
+  y_{n+2} = u + \dfrac{2u}{n}\sum_{i=1}^{n}y_i + \dfrac{2v}{n}\sum_{i=\lfloor (n+1)/2 \rfloor}^{n}y_{i}, \quad y_1=y_2=0.
+\end{equation}
+
+The weakest lower bound is to replace the max by the average, which gives
+\begin{equation}
+  \label{eq:lower_bound_average}
+  y_{n+2} = u + \dfrac{2u+v}{n}\sum_{i=1}^{n}y_i, \quad y_1=y_2=0.
+\end{equation}
+
+When $2u+v>1$, the true expectation is bounded between by polynomial of degrees $2u+v-1$ and $2(u+v)-1$. This case agrees with real data. We conjecture that the true expectation also grows polynomially. Details of the analysis of the deterministic recurrences are in Chapter~\ref{chap:sequences}.
+
+\section{Asymptotic of the Expectation}
