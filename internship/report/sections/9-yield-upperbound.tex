@@ -1,0 +1,61 @@
+\chapter{A Tighter Upper Bound on the Yield Recurrence}
+
+\begin{center}
+  May 20, 2026
+  \vspace{0.5cm}
+\end{center}
+
+Let us recall the yield recurrence
+$$Y_{n+2} \stackrel{d}{=} I^{(n)}\left(Y_{U_n}^{(1)} + Y_{n+1-U_n}^{(2)} + 1\right) + J^{(n)}\max\left(Y_{U_n}^{(1)}, Y_{n+1-U_n}^{(2)}\right),\forall n \geq 1, \quad Y_1 = Y_2 = 0.$$
+
+\section{Escaping from the Random Variables}
+
+Let $Z_n = \lambda^{Y_n}$, where $\lambda > 0$ is a constant to be determined later. For every $I\in \{0,1\}$ and $C\in \mathbb{R}$, we have
+$$C^I = I\cdot C + (1-I).$$
+
+Since $I^{(n)}J^{(n)}=0$, we have
+\begin{align*}
+   & \lambda^{Y_{n+2}}                                                                                                                                                                           \\
+   & = \left(I^{(n)}\left(\lambda^{Y_{U_n}^{(1)} + Y_{n+1-U_n}^{(2)} + 1}\right) + 1-I^{(n)}\right)\left(J^{(n)}\left(\lambda^{\max(Y_{U_n}^{(1)}, Y_{n+1-U_n}^{(2)})}\right) + 1-J^{(n)}\right) \\
+   & = I^{(n)}\left(\lambda^{Y_{U_n}^{(1)} + Y_{n+1-U_n}^{(2)} + 1}\right) + J^{(n)}\left(\lambda^{\max\left(Y_{U_n}^{(1)}, Y_{n+1-U_n}^{(2)}\right)}\right) + 1 - J^{(n)} - I^{(n)}             \\
+   & \le I^{(n)}\left(\lambda^{Y_{U_n}^{(1)} + Y_{n+1-U_n}^{(2)} + 1}\right) + J^{(n)}\left(\lambda^{Y_{U_n}^{(1)}}+ \lambda^{Y_{n+1-U_n}^{(2)}}\right) + 1  - I^{(n)} - J^{(n)}                 \\
+\end{align*}
+Let $z_n = \mathbb{E}[Z_n]$. Taking the expectation, we get
+$$z_{n+2} \le \dfrac{\lambda u}{n}\sum\limits_{i=1}^n z_iz_{n+1-i} + \dfrac{2v}{n}\sum\limits_{i=1}^n z_i + 1-u-v.$$
+Hence let us consider the sequence
+\begin{equation}
+  \label{eq:upper_bound_z}
+  nz_{n+2} = \lambda u\sum\limits_{i=1}^n z_iz_{n+1-i} + 2v\sum\limits_{i=1}^n z_i + n(1-u-v), \forall n\ge 1, \quad z_1=z_2=1.
+\end{equation}
+
+Experiments show that $(z_n)$ grows exponentially, the bound fails. That means, using $\max(x,y) \le x+y$ keeps the sequence sublinear, but using $\lambda^{\max(x,y)} \le \lambda^x + \lambda^y$ pushes it to linear.
+
+% Another approach is as follows. We have
+% \begin{align*}
+%   z_{n+2} & \le \dfrac{1}{n}\sum\limits_{i=1}^n \left(\lambda uz_iz_{n+1-i} + 2v z_i\right) + 1-u-v \\
+%           & \le \max\limits_{1\le i \le n} \left(\lambda uz_iz_{n+1-i} + 2v z_i\right) + 1-u-v
+% \end{align*}
+
+\section{Using Techniques from Analytic Combinatorics}
+Let $Z(t) = \sum_{n=1}^\infty z_n t^n$ be the generating function for the sequence $\{z_n\}$. Let us analyze each term in \eqref{eq:upper_bound_z} through $Z$.
+\begin{align*}
+   & \sum\limits_{n=1}^\infty nz_{n+2}t^n
+  = t\dfrac{\mathrm{d}}{\mathrm{d}t}\left(\dfrac{Z(t) - z_1t - z_2t^2}{t^2}\right) = t\dfrac{\mathrm{d}}{\mathrm{d}t}\left(\dfrac{Z(t)}{t^2} - \dfrac{1}{t} - 1\right) = \dfrac{Z'(t)}{t} - \dfrac{2Z(t)}{t^2} + \dfrac{1}{t}, \\
+   & \sum\limits_{n=1}^\infty \sum\limits_{i=1}^n z_iz_{n+1-i}t^n
+  = \dfrac{Z(t)^2}{t},                                                                                                                                                                                                         \\
+   & \sum\limits_{n=1}^\infty \sum\limits_{i=1}^n z_it^n = \dfrac{Z(t)}{1-t},                                                                                                                                                  \\
+   & \sum\limits_{n=1}^\infty nt^n = \dfrac{t}{(1-t)^2}.
+\end{align*}
+The function equation is
+$$\dfrac{Z'(t)}{t} - \dfrac{2Z(t)}{t^2} + \dfrac{1}{t} = \lambda u\dfrac{Z(t)^2}{t} + 2v\dfrac{Z(t)}{1-t} + (1-u-v)\dfrac{t}{(1-t)^2}.$$
+Equivalently,
+\begin{equation}
+  Z'(t) = \lambda u Z(t)^2 + \left( \frac{2}{t} + \frac{2v t}{1-t} \right) Z(t) + \frac{(1-u-v) t^2}{(1-t)^2} - 1.
+\end{equation}
+
+Substituting $Z(t) = -\dfrac{1}{\lambda u} \dfrac{W'(t)}{W(t)}$ in the convention of a Riccati equation, we get
+\begin{align*}
+       & -\dfrac{1}{\lambda u}\dfrac{W''(t)W(t)-W'(t)^2}{W(t)^2} = \dfrac{1}{\lambda u} \dfrac{W'(t)^2}{W(t)^2} - \dfrac{1}{\lambda u} \left( \frac{2}{t} + \frac{2v t}{1-t} \right) \dfrac{W'(t)}{W(t)} + \frac{(1-u-v) t^2}{(1-t)^2} - 1 \\
+  \iff & -\dfrac{1}{\lambda u}\dfrac{W''(t)}{W(t)} = - \dfrac{1}{\lambda u} \left( \frac{2}{t} + \frac{2v t}{1-t} \right) \dfrac{W'(t)}{W(t)} + \frac{(1-u-v) t^2}{(1-t)^2} - 1                                                            \\
+  \iff & W''(t) - \left( \frac{2}{t} + \frac{2v t}{1-t} \right) W'(t) + \left(\frac{(1-u-v) t^2}{(1-t)^2} - 1\right)\lambda u W(t) = 0.
+\end{align*}
