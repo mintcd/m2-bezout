@@ -124,7 +124,7 @@ def plot_distribution(
                           stat="density", alpha=0.6)
                           
     elif not show_bins and show_kde:
-        ax = sns.kdeplot(view_array, fill=True, alpha=0.3, linewidth=2)
+        ax = sns.kdeplot(view_array, fill=True, alpha=0.3, linewidth=2, warn_singular=False)
         
     else:
         print("Error: Must choose to show either bins, KDE, or both.")
