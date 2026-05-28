@@ -1,0 +1,311 @@
+ \documentclass[xcolor=dvipsnames, aspectratio=169, 10pt]{beamer}
+% \usepackage{vntex}
+\usetheme[sectionpage=progressbar,subsectionpage=progressbar]{metropolis}
+\usepackage{tikz}
+\usetikzlibrary{bayesnet}
+\usetikzlibrary{arrows}
+\usetikzlibrary{backgrounds}
+\usepackage{caption}
+\usepackage{animate}
+\usepackage{bm}
+\usepackage{mathabx}
+% \setbeamertemplate{caption}[numbered]
+% \usepackage{subcaption}
+
+\usepackage[lined,commentsnumbered]{algorithm2e}
+\usepackage{etoolbox}
+\beamertemplatenavigationsymbolsempty
+% \useinnertheme{circles}
+%\useoutertheme{split}
+
+\definecolor{gustave}{HTML}{1d2392}
+
+\definecolor{background}{HTML}{274150}
+\definecolor{sbackground}{HTML}{1d2392}
+\definecolor{main-text}{HTML}{80A07C}
+\definecolor{enumercolor}{HTML}{A4CCE0}
+\definecolor{progress-bar}{HTML}{E6CBA0}\usecolortheme[named=sbackground]{structure} % define for item color, commented Jan 4,2024
+
+%% TITLE PAGE 
+\title[]{Reasoning on Quantitative Properties of Programs \\ with an Algebraic Approach}
+% \subtitle{Paper Presentation}
+
+\AtBeginDocument{
+	\author[Minh]{
+		\begin{tabular}{lll}
+      {\small Supervisors:} & \small Patrick BAILLOT \\
+      & Leandro MOREIRA GOMES\\\\
+			{\small Applicant:} & \small CHAU Dang Minh
+		\end{tabular}
+	}
+}
+% \institute[Gustave Eiffel]{
+% 	{
+% 		Gustave Eiffel University \\
+% 	}
+% }
+% TOC
+\setbeamertemplate{section in toc}[circle]
+\setbeamercolor{section in toc}{bg=sbackground!40, fg=black} % change color section item
+ \setbeamerfont{section number projected}{size=\large}
+% ENUM
+  % \setbeamercolor{item projected}{bg=red!70!black,fg=white}
+  \setbeamercolor{frametitle}{fg=sbackground,bg=sbackground!40} % change color bar
+  \setbeamercolor{background canvas}{bg=white} % change color frame
+  \setbeamercolor{normal text}{fg=black} % change text color
+\setbeamercolor{progress bar}{fg=progress-bar!110,bg=progress-bar!50} % change progress bar color
+    \setbeamertemplate{enumerate items}[circle]
+    \setbeamerfont{itemize item projected}{size=\huge}
+        \setbeamerfont{item projected}{size=\large}
+% CAPTION
+\setbeamertemplate{caption}{\raggedright\insertcaption\par}
+% LOGO
+\usepackage{textpos} 
+
+\addtobeamertemplate{frametitle}{}{%
+	\begin{textblock*}{100mm}(\textwidth,-.9cm)
+		% \includegraphics[height=.7cm,width=.7cm]{logo.png}
+\end{textblock*}}
+\usepackage{eso-pic}
+\usepackage{pgf}
+% \titlegraphic{
+% 	\begin{picture}(0,0)
+% 		\put(420,5){\makebox(0,0)[rt]{\includegraphics[width=5cm]{logo.png}}}
+% 	\end{picture}
+% }
+\setbeamertemplate{bibliography item}{\insertbiblabel}
+\newcommand{\nologo}{\setbeamertemplate{logo}{}}
+% HEADLINE
+%\setbeamertemplate{headline}{}
+% FOOTLINE
+\setbeamercolor{custom1}{fg=black,bg=mycolor}
+\setbeamercolor{custom2}{fg=black, }
+\setbeamercolor{custom3}{fg=black,}
+\setbeamerfont{footline}{series=\bfseries}%, family=\ttfamily}
+\setbeamertemplate{footline}{%
+	\leavevmode%
+% 	\begin{beamercolorbox}[wd=0.25\textwidth, sep=0.4em, center]{custom1}%
+% 		\strut \quad\insertshortauthor \quad (\insertshortinstitute)
+% 	\end{beamercolorbox}%
+% 	\begin{beamercolorbox}[wd=0.45\textwidth, sep=0.4em, center]{custom2}%
+% 		\strut \insertshorttitle
+% 	\end{beamercolorbox}%
+	\begin{beamercolorbox}[wd=1\textwidth, sep=0.4em, right]{custom3}%
+		\strut \insertframenumber/\inserttotalframenumber
+	\end{beamercolorbox}%
+}
+% Thank you slide
+\makeatletter
+\let\beamer@writeslidentry@miniframeson=\beamer@writeslidentry%
+\def\beamer@writeslidentry@miniframesoff{%
+	\expandafter\beamer@ifempty\expandafter{\beamer@framestartpage}{}% does not happen normally
+	{%else
+		% removed \addtocontents commands
+		\clearpage\beamer@notesactions%
+	}
+}
+\newcommand*{\miniframeson}{\let\beamer@writeslidentry=\beamer@writeslidentry@miniframeson}
+\newcommand*{\miniframesoff}{\let\beamer@writeslidentry=\beamer@writeslidentry@miniframesoff}
+\makeatother
+
+\input{commands.tex}
+
+\usepackage[most]{tcolorbox}
+\tcbuselibrary{breakable,skins}
+
+% Shared counter for all theorem-like environments
+\newcounter{mytheoremcounter}
+
+\newtcolorbox{mydefinition}[1][]{%
+  enhanced,
+  title={Definition \stepcounter{mytheoremcounter}\themytheoremcounter\ifstrempty{#1}{}{ (#1)}},
+  % attach boxed title to top left={yshifttext=-1mm},
+  colback=white,
+  colframe=gustave!50!black,
+  fonttitle=\bfseries,
+  boxed title style={
+    size=small,
+    colback=gustave!50!black,
+    colframe=gustave!50!black,
+  },
+}
+
+\newtcolorbox{mytheorem}[1][]{%
+  enhanced,
+  title={Theorem \stepcounter{mytheoremcounter}\themytheoremcounter\ifstrempty{#1}{}{ (#1)}},
+  % attach boxed title to top left={yshifttext=-1mm},
+  colback=white,
+  colframe=gustave!50!black,
+  fonttitle=\bfseries,
+  boxed title style={
+    size=small,
+    colback=gustave!50!black,
+    colframe=gustave!50!black,
+  },
+}
+
+\newtcolorbox{myproposition}[1][]{%
+  enhanced,
+  title={Proposition \stepcounter{mytheoremcounter}\themytheoremcounter\ifstrempty{#1}{}{ (#1)}},
+  % attach boxed title to top left={yshifttext=-1mm},
+  colback=white,
+  colframe=gustave!50!black,
+  fonttitle=\bfseries,
+  boxed title style={
+    size=small,
+    colback=gustave!50!black,
+    colframe=gustave!50!black,
+  },
+}
+
+
+% DOCUMENT
+\begin{document}
+\date{}
+\begin{frame}[noframenumbering,plain]
+  \titlepage
+\end{frame}
+
+\begin{frame}{Education: Maths and CS}
+
+  \textbf{MSc in Mathematics \& Computer Science} \hfill \textit{Gustave Eiffel Univ., in progress}
+  \begin{itemize}
+    \item Labex Bézout Scholar, ranked 1st (excluding internship)
+    \item Relevant coursework: complexity theory, combinatorics, and discrete optimization.
+  \end{itemize}
+
+  \textbf{MSc in Applied Mathematics} \hfill \textit{Univ. of Limoges, 2025}
+  \begin{itemize}
+    \item Ranked 1st
+    \item Relevant coursework: stochastic optimization and game theory.
+  \end{itemize}
+
+  \textbf{BEng in Computer Science (Honors Program)} \hfill \textit{Univ. of Technology, Vietnam, 2024}
+  \begin{itemize}
+    \item Relevant coursework: mathematical modeling (including Hoare logic and model theory for first-order logic), functional programming, and compilers.
+  \end{itemize}
+
+  % Sparked interest in logic, computation and AI.
+\end{frame}
+
+\begin{frame}{Research Experience: Algorithms \& Formal Logic}
+  \begin{columns}[t]
+    \begin{column}{0.72\textwidth}
+      \textbf{Compatibility between Open Automata and Session Types}
+    \end{column}
+    \begin{column}{0.28\textwidth}
+      \raggedleft\textit{M2 internship, \\ Telecom Paris, 2025}
+    \end{column}
+  \end{columns}
+  \vspace{-0.5em}
+  \begin{itemize}
+    \item \textbf{Core Result:} Proved that a simplified OA model is equivalent to multiparty session types, mapping safe composition to subtyping.
+    \item \textbf{Takeaway for PhD:} Foundational experience in formal methods, including linear logic (useful for reasoning on resource usage), and establishing structural equivalences between distinct computational models.
+  \end{itemize}
+
+  % Interpreting something in another world, similarly to providing a semantics (drawing analogy between two models) and proving properties (e.g., equivalence) is a common theme in my research experience, and I expect it to be useful for my PhD project.
+
+  \vspace{0.8em}
+  \begin{columns}[t]
+    \begin{column}{0.72\textwidth}
+      \textbf{Complexity Analysis of the Regex Matcher Hyperscan}
+    \end{column}
+    \begin{column}{0.28\textwidth}
+      \raggedleft\textit{M2 Internship, \\ LIGM, in progress}
+    \end{column}
+  \end{columns}
+
+  \begin{itemize}
+    \item \textbf{Core Analyses:} FDR string matcher (SIMD extension of Shift-Or), correctness of decomposition-based matching, and longest literal in average.
+    \item \textbf{Takeaway for PhD:} Skills in complexity analysis, which is useful for checking examples and counterexamples towards developing a theory.
+  \end{itemize}
+
+  % A specific program
+
+
+\end{frame}
+
+\begin{frame}{PhD Project}
+  \begin{center}
+    Reasoning on $\underbrace{\text{Quantitative Properties}}_{\substack{\text{bounds of success/failure prob.,} \\ \text{execution time,} \\ \text{size bound of variables}}}$ of Programs with an $\underbrace{\text{Algebraic Approach}}_{\substack{\text{Kleene algebra with tests}}}$
+  \end{center}
+
+  A Kleene algebra with tests (KAT) is a Kleene Algebra (an axiomatization of regular expressions) extended with a Boolean subalgebra.
+
+  Programs can be encoded as KAT expressions:
+  \begin{align*}
+    \textbf{if} \ b\  \textbf{then}\ p\ \textbf{else}\ q\ \quad & \text{ as } \quad bp+\bar{b}q   \\
+    \textbf{while} \ b\  \textbf{do}\ p \quad                   & \text{ as } \quad (bp)^*\bar{b}
+  \end{align*}
+
+  For example we can prove Loop Unrolling equivalence
+  $$\textbf{while } b \textbf{ do } p \quad\equiv\quad \textbf{if } b \textbf{ then } (p; \textbf{while } b \textbf{ do } p) \textbf{ else skip}$$ by proving algebraically
+  $$(bp)^*\bar{b} = b p ((bp)^*\bar{b}) + \bar{b}. \text{ (factor RHS, then use $1+xx^* = x^*$) }$$
+\end{frame}
+
+\begin{frame}{PhD Project - Contexts and Motivations}
+  KAT subsumes the traditional \textit{Hoare logic} (HL) in checking input-output properties (\textit{what} a program does) \footnote{Kozen, D. (2000). On Hoare logic and Kleene algebra with tests.}.
+
+  KAT is worth studying for its convenience in checking equivalence (shown above). For HL, given $C_1$ and $C_2$ one has to prove $\{P\} C_1 \{Q\}$ and $\{P\} C_2 \{Q\}$ separately for every properties $P$ and $Q$.
+
+  HL has been extended to \textit{Graded} HL for intensional, quantitative properties (\textit{how}) e.g., $\{P\} C \{Q\}_\beta$ (starting with $P$ satisfied, executing $C$ leading to $\neg Q$ satisfied with probability at most $\beta$) \footnote{Gaboardi, M. et al. (2021). Graded Hoare logic and its categorical semantics.}.
+
+  KAT has been optimized and extended successfully to approximate Guarded KAT (aGKAT) for probabilistic properties \footnote{Gomes, L., Baillot, P., \& Gaboardi, M. (2025). A Kleene algebra with tests for union bound reasoning about probabilistic programs.}.
+\end{frame}
+
+\begin{frame}{PhD Project - Goal and Fruitfulness}
+  \textbf{Goal:} Drawing from KAT and Graded HL, to develop a general framework of \textit{Graded KAT} to formalize quantitative resource bounds.
+
+  \vspace{0.5cm}
+
+  \textbf{Fruitfulness:}
+  \begin{itemize}
+    \item Theoretical advancement.
+    \item Targeting practical coding patterns (programs are in polynomial time, \texttt{for} loops are preferred when possible), a matured theory can be integrated into automated verification tools (e.g., a linter).
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{PhD Project - Challenges}
+  What is common among the desired properties? Relations are not always trivial, e.g.,
+  \begin{itemize}
+    \item In analysis of algorithms, the number of comparisons of a sorting algorithm intuitively relates to its execution time.
+    \item It is not the case for lower bound of success/failure probability and upper bounds \footnote{Gomes, L., Baillot, P., \& Gaboardi, M. (2025). A Kleene algebra with tests for union bound reasoning about probabilistic programs.}.
+  \end{itemize}
+
+  With a group of properties that have a common structure, how to design axioms and a satisfying semantics?
+
+  \textit{This is an iterative progress.}
+
+
+\end{frame}
+
+\begin{frame}{PhD Project - Plan}
+  \textbf{First phase} (6 months): Drawing from GKAT, to develop a theory for execution time, by proposing axioms and experimenting with examples and counterexamples.
+
+  \textbf{Second phase} (9 months): To develop a theory that subsumes the first phase and aGKAT.
+
+  \textbf{Third phase} (6 months): To develop a semantics for the theory in the second phase, drawing from the categorical semantics of Graded HL.
+
+  \textbf{Long-term}: To iterate when other resource bounds are considered. Then to adapt for relational properties (e.g., equivalence).
+\end{frame}
+
+% \begin{frame}{Outline}
+%   \tableofcontents
+% \end{frame}
+
+% \input{sections/introduction.tex}
+% \input{sections/risk-bounds}
+% \input{sections/estimating-rademacher}
+% \input{sections/example}
+% \input{sections/experiment}
+
+
+\begin{frame}[noframenumbering,plain]
+  \begin{center}
+    \Huge\textbf{Thank you for attention !}
+  \end{center}
+\end{frame}
+
+\input{sections/appendix.tex}
+% \printbsibliography
+\end{document}

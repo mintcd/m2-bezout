@@ -1,0 +1,84 @@
+\section{Introduction}
+\begin{frame}{Normalized Risk Bound}
+
+Consider the binary classification setting. Let $D$ is a distribution over $\X\times\{\pm 1\}$. Let $F$ be a hypothesis class of VC-dimension \textcolor{gustave}{$d$}. Consider $\ell$ the $0-1$ loss i.e.  $\ell(y,y') = \bm{1}(y\ne y')$. 
+
+Denote $\hat{\EE}_n[\ell(Y,f(X))] = \dfrac{1}{n}\sum\limits_{i=1}^n\ell(Y_i, f(X_i)),$ where $(X_i,Y_i)_{i=1}^n \sim D^n$.
+
+\uncover<2->{
+Then, with probability at least $1-\delta$, for every $f\in F$,
+\begin{equation*}
+    \dfrac{\EE[\ell(Y,f(X))] - \hat{\EE}_n[\ell(Y,f(X))]}{\hat{\EE}_n[\ell(Y,f(X))]} \le   2\sqrt{\frac{d \ln(2en/d) + \ln(4/\delta)}{n}} := c(d,n). \footnote{Vapnik, Vladimir N., and A. Ya Chervonenkis. "On the uniform convergence of relative frequencies of events to their probabilities." Cham: Springer International Publishing, 2015. 11-30.}
+\end{equation*}
+}
+\uncover<3->{
+This implies
+\begin{equation*}
+\label{eq:vc-bound}
+ \EE[\ell(Y,f(X)) \le  \hat{\EE}_n[\ell(Y,f(X))] + \dfrac{c^2(d,n)}{2}\left(1+\sqrt{1+\dfrac{4 \hat{\EE}_n[\ell(Y,f(X))]}{c^2(d,n)}}\right).   
+\end{equation*}
+}
+\end{frame}
+
+\begin{frame}{Model Selection by Normalized Risk Bound}
+One minimizes RHS of (\ref{eq:vc-bound}) over classes of interest with $\hat{\EE}_n[\ell(Y,f(X))]$ replaced by the train error. 
+
+In such methods, the chosen complexity of a class (VC dimension) is \textcolor{gustave}{independent of data}.
+
+\uncover<2->{
+Problems
+\begin{itemize}
+    \item None of such methods is  universally effective \footnote{Kearns, Michael, et al. "An experimental and theoretical comparison of model selection methods." Proceedings of the Eighth Annual Conference on Computational Learning Theory. 1995.}.
+    \item The bounds are loose (requires the sample size $n$ be large enough to be practical, since otherwise, $RHS \gg 1$).
+\end{itemize}
+}
+
+\uncover<3->{
+Complexity penalties depending on train data are developed.
+}
+\end{frame}
+
+\begin{frame}{Data-Dependent Complexities}
+
+\uncover<1->{
+Empirical Rademacher complexity
+\begin{equation*}
+    \hat{R}_n(F)=\EE\left[\sup\limits_{f\in F}\left.\left|\dfrac{\textcolor{gustave}{2}}{n}\sum\limits_{i=1}^n \sigma_i f(X_i)\right|\,\,\, \right| X_1,\ldots,X_n\right],
+\end{equation*}
+where $\sigma_1,\ldots,\sigma_n$ are i.i.d Rademacher random variables.
+
+}
+
+\only<2>{
+\textbf{Notes:} different conventions
+\begin{itemize}
+    \item The factor is $2$
+    \item Absolute value is taken by default.
+\end{itemize}
+}
+
+\uncover<3->{
+Empirical Gaussian complexity
+\begin{equation*}
+    \hat{G}_n(F)=\EE\left[\sup\limits_{f\in F}\left.\left|\dfrac{\textcolor{gustave}{2}}{n}\sum\limits_{i=1}^n g_i f(X_i)\right|\,\,\, \right| X_1,\ldots,X_n\right],
+\end{equation*}
+where $g_1,\ldots,g_n$ are i.i.d standard Gaussian random variables.
+}
+
+\uncover<4->{
+Expected complexities: $R_n(F)=\EE[\hat{R}_n(F)]$ and $G_n(F)=\EE[\hat{G}_n(F)]$.
+}    
+\end{frame}
+
+\begin{frame}{Model Selection through Data-Dependent Complexities}
+    Other problems towards practice
+    \begin{enumerate}
+        \item Bounds through relaxed loss functions that are friendly to optimization algorithms are desired.
+        \item Computing the complexities is optimizing over $F$, which is intractable with large $F$ of interest.
+        \begin{itemize}
+            \item Paper's solution: estimating by expressing $F$ as a combination of basic classes.
+        \end{itemize}
+
+    \end{enumerate}
+\end{frame}
+

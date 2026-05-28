@@ -121,3 +121,16 @@ Our approach follows closely \cite{koechlin2024effects}.
 \textbf{Step 1.} By Cauchy-Hadamard theorem, the radius of convergence of $Q_0(z)$ is larger than or equal to 1. Suppose that it is strictly larger than 1. Then $Q_0(z), Q'_0(z)$ is finite. Taking the limit of both sides of \eqref{eq:yield_indicator_functional_equation_m0} as $z\to 1^-$, we get a contradiction. Therefore, the radius of convergence of $Q_0(z)$ is exactly 1.
 
 \textbf{Step 2.} We find the indicial equation of the ODE at $z=1$.
+$$\delta_1 = \lim_{z\to 1} (z-1) \left(-\dfrac{2}{z}\right) = 0,$$
+$$\delta_2 = \lim_{z\to 1} -(z-1)^2 v\left(1-\frac{(1-u-v)z^2}{(1-z)^2}\right) = \lim_{z\to 1} -v\left((z-1)^2 -(1-u-v)z^2\right) = v(1-u-v).$$
+Solving $I(\theta) = \theta(\theta-1) + \delta_1\theta + \delta_2 = 0$, we get
+$$\theta_{\pm} = \frac{1 \pm \sqrt{1-4v(1-u-v)}}{2}.$$
+We have $\theta_+ - \theta_- = \sqrt{1-4v(1-u-v)}\in [0,1]$. Choose the star-shaped domain $\tilde{\Omega} = (\CC \setminus [1, \infty)) \cap D(3/4,1/2)$. There are two cases for the solution of the ODE in $\tilde{\Omega}$ near $z=1$.
+\begin{enumerate}
+  \item If $v(1-u-v) < \dfrac{1}{4}$, then
+        $$W(z) = c_1(1-z)^{\theta_+}H_1(1-z) + c_2(1-z)^{\theta_-}H_2(1-z).$$
+  \item If $v(1-u-v) = \dfrac{1}{4}$, then $u=0$ and $v=\dfrac{1}{2}$. Hence,
+        $$W(z) = (1-z)^{1/2}\left(c_1H_1(1-z) + c_2\log(1-z)H_2(1-z)\right).$$
+\end{enumerate}
+
+\textbf{Step 3.} We pass the asymptotic information of $W(z)$ to $Q_0(z)$.

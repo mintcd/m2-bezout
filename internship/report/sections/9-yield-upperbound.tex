@@ -1,4 +1,4 @@
-\chapter{A Tighter Upper Bound on the Yield Recurrence}
+\chapter{Another Upper Bound on the Yield Recurrence}
 
 \begin{center}
   May 20, 2026
@@ -30,11 +30,6 @@ Hence let us consider the sequence
 
 Experiments show that $(z_n)$ grows exponentially, the bound fails. That means, using $\max(x,y) \le x+y$ keeps the sequence sublinear, but using $\lambda^{\max(x,y)} \le \lambda^x + \lambda^y$ pushes it to linear.
 
-% Another approach is as follows. We have
-% \begin{align*}
-%   z_{n+2} & \le \dfrac{1}{n}\sum\limits_{i=1}^n \left(\lambda uz_iz_{n+1-i} + 2v z_i\right) + 1-u-v \\
-%           & \le \max\limits_{1\le i \le n} \left(\lambda uz_iz_{n+1-i} + 2v z_i\right) + 1-u-v
-% \end{align*}
 
 \section{Using Techniques from Analytic Combinatorics}
 Let $Z(t) = \sum_{n=1}^\infty z_n t^n$ be the generating function for the sequence $\{z_n\}$. Let us analyze each term in \eqref{eq:upper_bound_z} through $Z$.

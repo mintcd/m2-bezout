@@ -1,0 +1,35 @@
+\section{Risk Bounds}
+
+\begin{frame}{Dominating, Lipschitz Loss Relaxation}
+    We recall the usual setting
+    \begin{enumerate}
+        \item Let $D$ be a distribution over $\X\times\{\pm 1\}$, $(X,Y)\sim D$ and $(X_i,Y_i)_{i=1}^n\sim D^n$.
+        \item Let $F$ be a class of soft classifiers of the form $f:\X\to \RR$. To each $f\in F$ corresponds a hard classifier $\text{sgn}\circ f$ i.e. $\PP(Y\ne \text{sgn}\circ f(X))\le \PP(Yf(X)\le 0)$.
+    \end{enumerate}
+
+\uncover<2->{
+\begin{mytheorem} \label{theorem:soft-bound}
+    Suppose that every $f\in F$ has a finite supremum. Let $\phi: \RR\to[0,1]$ be $L$-Lipschitz and \textcolor{gustave}{dominate} the $0-1$ loss i.e. $\forall\alpha\in\RR, \phi(\alpha) \ge \bm{1}(\alpha \le 0)$. Then, with probability at least $1-\delta$, for every $f\in F$,
+    \begin{equation*}
+        \PP(Yf(X)\le 0) \le \hat{\EE}_n[\phi(Yf(X))] + 2LR_n(F) + \sqrt{\dfrac{\ln(2/\delta)}{2n}}
+    \end{equation*}
+\end{mytheorem}
+}
+
+\end{frame}
+
+\begin{frame}{Dominating Loss Relaxation}
+   The setting is decision-theoretic. 
+    \begin{enumerate}
+        \item Let $D$ be a distribution over $\X\times\Y$, $(X,Y)\sim D$ and $(X_i,Y_i)_{i=1}^n\sim D^n$.
+        \item Let $\A$ be the action space and $F$ be a class of decision functions of the form $f:\X\to \A$ (commonly $\A=\Y$).
+    \end{enumerate}
+    \begin{mytheorem}
+    \label{theorem:decison-theoretic}
+        Let $\ell,\phi:\Y\times \A\to [0,1]$ be loss functions such that $\phi$ \textcolor{gustave}{dominates} $\ell$ i.e. $\forall y\in\Y,a\in\A, \phi(y,a)\ge\ell(y,a)$. Then, with probability at least $1-\delta$, for every $f\in F$,
+        \begin{equation*}
+            \EE[\ell(Y,f(X))] \le \hat{\EE}_n[\phi(Y,f(X))] + R_n(\tilde{\phi}\circ F) + \sqrt{\dfrac{8\ln(2/\delta)}{n}},
+        \end{equation*}
+        where $\tilde{\phi}\circ F = \left\{(x,y)\mapsto \phi(y,f(x)) - \phi(y,0) \,|\, f\in F\right\}$
+    \end{mytheorem}
+\end{frame}

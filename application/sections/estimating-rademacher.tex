@@ -1,0 +1,190 @@
+% \section{Estimating the Rademacher and Gaussian Complexities of Function Classes}
+% \section{Estimating the Complexities}
+
+% \begin{frame}{Structural Results}
+
+% Various estimations with respect to
+% \begin{itemize}
+%     \item Convex hull.
+%     \item Lipschitz composition (notation: $\phi\circ F = \{\phi\circ f\,|\, f\in F\}$).
+%     \item Minkowski sum.
+% \end{itemize}
+% We will mention when needed later.
+% \end{frame}
+
+% \begin{frame}{Motivation}
+% \textbf{Main question:} how can we estimate the complexity of a complicated class $F$?
+
+% \medskip
+% Even though the empirical Rademacher complexity can be estimated from one sample and one realization of the signs, computing it still requires solving
+% \begin{align*}
+%     \sup_{f\in F}\sum_{i=1}^n \sigma_i f(X_i),
+% \end{align*}
+
+% which is difficult for rich classes. Instead, many large classes can be built from simpler basis classes:
+% \begin{itemize}
+%     \item decision trees = Boolean combinations of node functions,
+%     \item voting methods = thresholded convex combinations,
+%     \item neural networks = Lipschitz activations composed with linear combinations.
+% \end{itemize}
+
+% \medskip
+% Hence, we try to establish the \emph{structural bounds}:
+% \begin{align*}
+%     \text{complexity of }F
+% \quad \Longrightarrow \quad
+% \text{complexities of simpler classes }F_1,\dots,F_m.
+% \end{align*}
+
+% \end{frame}
+
+% \begin{frame}{Empirical estimation: Theorem 11}
+%     \begin{mytheorem}
+%         Let $F$ be a class of functions mapping to $[-1,1]$. Then for any integer $n$,
+%         \begin{align*}
+%             \mathbb{P}\!\left(
+% \left|
+% R_n(F)-\frac{2}{n}\sup_{f\in F}\left|\sum_{i=1}^n \sigma_i f(X_i)\right|
+% \right|\ge \varepsilon
+% \right)
+% \le 2\exp\!\left(-\frac{\varepsilon^2 n}{8}\right),
+%         \end{align*}
+%         and 
+%         \begin{align*}
+%             \mathbb{P}\!\left(
+% \left|R_n(F)-\widehat R_n(F)\right|\ge \varepsilon
+% \right)
+% \le 2\exp\!\left(-\frac{\varepsilon^2 n}{8}\right).
+%         \end{align*}
+%     \end{mytheorem}
+
+%     \begin{itemize}
+%     \item $R_n(F)$ is well approximated by the empirical quantity $\widehat R_n(F)$;
+%     \item so Rademacher complexity is genuinely \emph{data-dependent} and \emph{estimable}.
+% \end{itemize}
+% However, computing the supremum over $F$ is still hard. That motivates the structural results in the rest of the section.
+% \end{frame}
+
+% \begin{frame}{Some simple structural results: Theorem 12}
+
+%     \begin{mytheorem}
+%     Let $F, F_1,..., F_k$ and $H$ be classes of real functions. Then
+%         \begin{enumerate}
+%     \item If $F\subseteq H$, then $ R_n(F)\le R_n(H).$
+
+%     \item $R_n(F)=R_n(\operatorname{conv}F)=R_n(\operatorname{absconv}F).$
+
+%     \item For every $c\in\mathbb{R}$, $R_n(cF)=|c|\,R_n(F).$
+
+%     \item If $\phi:\mathbb{R}\to\mathbb{R}$ is Lipschitz with constant $L_\phi$ and $\phi(0)=0$, then
+%     \[
+%     R_n(\phi\circ F)\le 2L_\phi\,R_n(F).
+%     \]
+
+%     \item For any uniformly bounded $h$,
+%     \[
+%     R_n(F+h)\le R_n(F)+\frac{\|h\|_\infty}{\sqrt n}.
+%     \]
+
+    
+% \end{enumerate}
+%     \end{mytheorem}
+% \end{frame}
+
+% \begin{frame}{Some simple structural results: Theorem 12}
+%     \begin{mytheorem}
+%         \begin{enumerate}
+%         \setcounter{enumi}{5}
+%             \item For $1\le q<\infty$, let
+%     \[
+%     L_{F,h,q}:=\{|f-h|^q:\ f\in F\}.
+%     \]
+%     If $\|f-h\|_\infty\le 1$ for every $f\in F$, then
+%     \[
+%     R_n(L_{F,h,q})\le 2q\left(R_n(F)+\frac{\|h\|_\infty}{\sqrt n}\right).
+%     \]
+
+%     \item We have
+%     \[
+%     R_n\!\left(\sum_{i=1}^k F_i\right)\le \sum_{i=1}^k R_n(F_i).
+%     \]
+%         \end{enumerate}
+%     \end{mytheorem}
+% \end{frame}
+
+% \subsection{Lipschitz function on $\mathbb R^k$}
+
+% \begin{frame}{Lipschitz functions on $\mathbb{R}^k$}
+%     Theorem 12(4) handled real-valued composition:
+%     \begin{align*}
+%         f \mapsto \phi\circ f,\qquad \phi:\mathbb{R}\to\mathbb{R}.
+%     \end{align*}
+%     Now we need a vector-valued version. Suppose $F \subseteq F_1 \oplus \cdots \oplus F_m,$ then each $f\in F$ has the form $f(x) = (f_1(x),\dots,f_m(x)), f_i\in F_i.$
+
+%     Let
+% \[
+% \phi:Y\times \mathbb{R}^m \to \mathbb{R}
+% \]
+% be Lipschitz in the second argument. 
+
+% \textbf{Question:} how large can the Gaussian complexity of $\phi\circ F$ be?
+% \end{frame}
+
+% \begin{frame}{Theorem 14}
+%     \begin{alertblock}{Lemma}
+%         Let $\{X_i\}_{i=1}^m$ and $\{Y_i\}_{i=1}^m$ be Gaussian processes such that
+% \[
+% \|X_i-X_j\|_2^2 \le \|Y_i-Y_j\|_2^2
+% \qquad \text{for all } i,j.
+% \]
+% Then
+% \[
+% \mathbb{E}\sup_i X_i \le 2\,\mathbb{E}\sup_i Y_i.
+% \]
+%     \end{alertblock}
+
+% Using the bound, assume also that for each $y\in Y$, the map
+% \[
+% \phi(y,\cdot):\mathbb{R}^m\to \mathbb{R}
+% \]
+% is Lipschitz with constant $L$, passes through the origin, and is uniformly bounded.
+
+% Then for every sample $(X_1,Y_1),\dots,(X_n,Y_n)$,
+% \[
+% \widehat G_n(\phi\circ F)
+% \le
+% 2L\sum_{i=1}^m \widehat G_n(F_i).
+% \]
+    
+% \end{frame}
+
+
+
+
+% \subsection{Boolean Combinations of Functions}
+
+% \begin{frame}{3.3 Boolean combinations of functions}
+% Let
+% \[
+% g:\{\pm1\}^k \to \{\pm1\}
+% \]
+% be a fixed Boolean function, and let $F_1,\dots,F_k$ be classes of $\{\pm1\}$-valued functions.
+
+% Then
+% \[
+% G_n(g(F_1,\dots,F_k))
+% \le
+% 2\sum_{j=1}^k G_n(F_j).
+% \]
+
+% \medskip
+% \textbf{Why this matters:}
+% many classifiers are built by combining simple binary rules:
+% \begin{itemize}
+%     \item AND / OR / majority,
+%     \item tree node combinations,
+%     \item logical decision architectures.
+% \end{itemize}
+
+% So Boolean composition does not destroy complexity control.
+% \end{frame}

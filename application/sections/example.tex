@@ -1,0 +1,571 @@
+\section{Estimating Complexities}
+
+% \begin{frame}{Structural Results}
+
+% Various estimations with respect to
+% \begin{itemize}
+%     \item Convex hull.
+%     \item Lipschitz composition (notation: $\phi\circ F = \{\phi\circ f\,|\, f\in F\}$).
+%     \item Minkowski sum.
+% \end{itemize}
+% We will mention when needed later.
+% \end{frame}
+
+\subsection{Neural Networks}
+
+\begin{frame}{Neural Networks}
+    % We consider the method of neural networks as the repeated compositions of linear functions with scalar nonlinearities $\sigma : \mathbb R \to [-1,1]$, where $\sigma$ is monotonic and smooth. Here we construct the Gaussian complexity bound for a 2-layer neural networks
+    \begin{mytheorem}
+        \label{theorem:nn-bound}
+        Consider an $L$-Lipschitz activation $\sigma : \mathbb R \to [-1,1]$ being monotonic and smooth. Define a class of two-layer neural networks
+
+        \begin{equation*}
+            F = \left\{ x \mapsto \sum_i w_i \sigma(v_i \cdot x)\,:\, \|w\|_1\le 1 \text{ and } \forall i, \|v_i\|_1\le B \right\}.
+        \end{equation*}
+        Then for any fixed sample $x_1,...,x_n \in \mathbb R^k$, we have
+        \begin{align*}
+            \hat{G}_n(F) := \EE\left[\dfrac{1}{n}\sum\limits_{i=1}^n g_if(x_i)\right] \le \frac{LB(8\ln k)^{1/2}}{n}\max_{j,j'}\sqrt{\sum_{i=1}^n (x_{ij}-x_{ij'})^2}
+        \end{align*}
+    \end{mytheorem}
+    % \textbf{Note.} This is a sure (not almost sure) result.
+\end{frame}
+
+\begin{frame}{Neural Networks}
+    \textit{Proof.} Let $H=\left\{x\mapsto v\cdot x : \|v\|_1\le 1\right\}$, then $F=\text{conv}(\sigma\circ BH)$. We have (with admitted lemmas)
+    \begin{align*}
+        \hat{G}_n(F) &= \hat{G}_n(\sigma\circ BH) \only<2->{\le L\hat{G}_n(BH)} \only<3->{\le LB \cdot \hat{G}_n(H)} \\
+        &\only<4->{=LB\cdot \EE\left[\max\limits_{1\le j\le k}\dfrac{2}{n}\sum\limits_{i=1}^n g_ix_{ij}\right]} \only<5->{=\dfrac{2}{n}LB\cdot \EE\left[\max\limits_{1\le j\le k}\sum\limits_{i=1}^n Z_j\right]\\}
+        \only<6->{&\le \dfrac{2}{n}LB\cdot \sqrt{2\ln k} \max\limits_{1\le j,j'\le k}\sqrt{\EE\left[(Z_j-Z_{j'})^2\right]}\\}
+    \end{align*}
+    \only<1-6>{\textcolor{gray}{
+    \begin{center}
+           \only<1>{invariance under convex hull}
+           \only<2>{scaling with Lipschitz composition}
+           \only<3>{homogeneity}
+           \only<4>{$H$ is symmetric}
+           \only<5>{let $Z_j=\sum\limits_{i=1}^n g_ix_{ij}$}
+           \only<6>{Ledoux-Talagrand 1991, followed from Slepian's Lemma}
+    \end{center}}}
+    \only<7>{
+    \textbf{Note.} When $\|w\|_1\le W$, the bound simply scales by $W$.
+    }
+
+    
+%     \begin{alertblock}{Lemma}
+%         For $x\in \mathbb R^k$, let
+% \[
+% F_1=\{x\mapsto w\cdot x:\ \|w\|_1\le 1\}.
+% \]
+% Then for any $x_1,...,x_n \in \mathbb R^k$, we have
+% \[
+% \hat G_n(F_1)
+% \le
+% \frac{c}{n}(\ln k)^{1/2}
+% \max_{j,j'}
+% \left(\sum_{i=1}^n (x_{ij}-x_{ij'})^2\right)^{1/2}.
+% \]
+%     \end{alertblock}
+\end{frame}
+
+% \begin{frame}{Proof sketch of the Lemma}
+%     The proof needs to use the following lemma
+%     \begin{alertblock}{Slepian's Lemma (Ledoux and Talagrand '91, Pisier '89)}
+%         Let $Z_1,\dots,Z_k$ be random variables such that for every $1\le j\le k$,
+% \[
+% Z_j=\sum_{i=1}^n a_{ij} g_i,
+% \]
+% where $g_1,\dots,g_n$ are independent $N(0,1)$ random variables. Then there is an absolute constant $c$ such that
+% \[
+% \mathbb{E}\max_{1\le j\le k} Z_j
+% \le
+% c(\ln k)^{1/2}\max_{j,j'} \sqrt{\mathbb{E}(Z_j-Z_{j'})^2}.
+% \]
+%     \end{alertblock}
+% \end{frame}
+
+% \begin{frame}{Proof sketch of the Lemma}
+% We have
+%     \begin{align*}
+%         \hat G_n(F_1)&=
+% \mathbb E_g\left[
+% \sup_{\|w\|_1\le 1}
+% \frac{2}{n}\sum_{i=1}^n g_i (w\cdot x_i)
+% \right]
+% \qquad\text{(definition of empirical Gaussian complexity).} \\ 
+% &=
+% \mathbb E_g\left[
+% \sup_{\|w\|_1\le 1}
+% w\cdot\left(\frac{2}{n}\sum_{i=1}^n g_i x_i\right)
+% \right]
+% \qquad\text{(linearity of the inner product).}
+%     \end{align*}
+
+% We set $z:=\frac{2}{n}\sum_{i=1}^n g_i x_i.$ Then
+% \[
+% \sup_{\|w\|_1\le 1} w\cdot z
+% \]
+% is achieved at an extreme point of the $\ell_1$-ball:
+% \[
+% \hat G_n(F_1)= \max_{1\le j\le k} z_j
+% \qquad\text{(extreme-point principle for a linear functional on a convex polytope).}
+% \]
+
+% Hence
+% \[
+% \hat G_n(F_1)
+% =
+% \frac{2}{n}\,
+% \mathbb E_g\max_{1\le j\le k}\sum_{i=1}^n g_i x_{ij}.
+% \]
+% \end{frame}
+
+% \begin{frame}{Proof sketch of the Lemma}
+%     Define
+% \[
+% Z_j:=\sum_{i=1}^n g_i x_{ij}.
+% \]
+% Then
+% \[
+% \hat G_n(F_1)
+% =
+% \frac{2}{n}\,\mathbb E\max_j Z_j
+% \qquad\text{(notation change).}
+% \]
+
+% Apply the Slepian's lemma:
+% \[
+% \mathbb E\max_j Z_j
+% \le
+% c(\ln k)^{1/2}
+% \max_{j,j'}\sqrt{\mathbb E(Z_j-Z_{j'})^2}.
+% \]
+
+% Hence
+% \[
+% \hat G_n(F_1)
+% \le
+% \frac{2c}{n}(\ln k)^{1/2}
+% \max_{j,j'}\sqrt{\mathbb E(Z_j-Z_{j'})^2}.
+% \]
+
+% \end{frame}
+
+
+% \begin{frame}{Proof sketch of the Lemma}
+%     Now compute the variance term:
+% \[
+% Z_j-Z_{j'}
+% =
+% \sum_{i=1}^n g_i(x_{ij}-x_{ij'})
+% \qquad\text{(definition of $Z_j$).}
+% \]
+
+% Thus
+% \[
+% \mathbb E(Z_j-Z_{j'})^2
+% =
+% \mathbb E\left(\sum_{i=1}^n g_i(x_{ij}-x_{ij'})\right)^2.
+% \]
+
+% Expanding the square,
+% \[
+% =
+% \sum_{i,\ell=1}^n
+% (x_{ij}-x_{ij'})(x_{\ell j}-x_{\ell j'})
+% \mathbb E[g_i g_\ell]
+% \qquad\text{(bilinearity of expectation).}
+% \]
+
+% Since $\mathbb E[g_i g_\ell]=0 \text{ for } i\neq \ell, \mathbb E[g_i^2]=1,$ we get
+% \[
+% \mathbb E(Z_j-Z_{j'})^2
+% =
+% \sum_{i=1}^n (x_{ij}-x_{ij'})^2
+% \qquad\text{(independence and normalization of Gaussians).}
+% \]
+% \end{frame}
+
+% \begin{frame}{Proof sketch of the Lemma}
+%     Substitute back to the result, we get:
+% \[
+% \hat G_n(F_1)
+% \le
+% \frac{2c}{n}(\ln k)^{1/2}
+% \max_{j,j'}
+% \left(\sum_{i=1}^n (x_{ij}-x_{ij'})^2\right)^{1/2}.
+% \]
+% \end{frame}
+
+\subsection{Kernel Methods}
+
+\begin{frame}{Kernel Methods}
+A kernel \(k:X\times X\to \mathbb R\) on a compact space \(X\) is a continuous symmetric positive semidefinite function. Kernel methods use expansions of the form
+\[
+f(x)=\sum_{i=1}^n \alpha_i k(X_i,x).
+\]
+
+Fix \(\gamma>0\), and define the margin cost
+\[
+\phi(\alpha)=
+\begin{cases}
+1, & \alpha\le 0,\\[1mm]
+1-\alpha/\gamma, & 0<\alpha\le \gamma,\\[1mm]
+0, & \alpha>\gamma.
+\end{cases}
+\]
+
+So, as in the previous sections, the idea is:
+\[
+\text{true classification error}
+\;\le\;
+\text{empirical margin loss}
++
+\text{complexity term}.
+\]
+
+\end{frame}
+
+\begin{frame}{Kernel methods}
+        \begin{mytheorem}
+        \label{theorem:kernel-bound}
+        Fix \(B,\gamma>0\), and let \(k:X\times X\to\mathbb R\) be a kernel with
+\[
+\sup_{x\in X}|k(x,x)|<\infty.
+\]
+Suppose \((X_1,Y_1),\dots,(X_n,Y_n)\) are i.i.d.\ from \(P\) on \(X\times\{\pm1\}\).
+Then with probability at least \(1-\delta\), every function
+\[
+f(x)=\sum_{i=1}^n \alpha_i k(X_i,x)
+\]
+with $\sum_{i,j}\alpha_i\alpha_j k(X_i,X_j)\le B^2$ satisfying
+
+\[
+P(Yf(X)\le 0)
+\le
+\hat{\mathbb E}_n\phi(Yf(X))
++
+\frac{4B}{\gamma n}\sqrt{\sum_{i=1}^n k(X_i,X_i)}
++
+\left(\frac{8}{\gamma}+1\right)\sqrt{\frac{\ln(4/\delta)}{2n}}.
+\]
+
+    \end{mytheorem}
+\end{frame}
+
+\begin{frame}{Kernel methods}
+\textit{Proof. } Apply the general margin bound from Section 2 to the class
+\[
+F_B=\{x\mapsto \langle w,\Phi(x)\rangle_{\mathcal H}:\ \|w\|_{\mathcal H}\le B\}
+\]
+with the margin loss \(\phi\), which is \(1/\gamma\)-Lipschitz.
+
+\medskip
+This gives
+\[
+P(Yf(X)\le 0)
+\le
+\hat{\mathbb E}_n\phi(Yf(X))
++
+\frac{2}{\gamma}R_n(F_B)
++
+\text{confidence term}.
+\]
+\end{frame}
+
+\begin{frame}{Kernel methods}
+%     Now estimate the complexity of
+% \[
+% F_B=\{x\mapsto \langle w,\Phi(x)\rangle_{\mathcal H}:\|w\|_{\mathcal H}\le B\}.
+% \]
+
+By definition,
+\begin{align*}
+    \hat R_n(F_B)
+&=
+\frac{2}{n}\mathbb E_g\left[
+\sup_{\|w\|_{\mathcal H}\le B}
+\left\langle
+w,\sum_{i=1}^n \sigma_i\Phi(X_i)
+\right\rangle
+\right] \\
+&\leq\frac{2B}{n}\,
+\mathbb E_\sigma
+\left\|
+\sum_{i=1}^n \sigma_i\Phi(X_i)
+\right\|_{\mathcal H}  & \text{(Cauchy-Schwarz)} \\
+&\le \le
+\frac{2B}{n}\left(
+\mathbb E_\sigma
+\left\|
+\sum_{i=1}^n \sigma_i\Phi(X_i)
+\right\|_{\mathcal H}^2
+\right)^{1/2} & \text{(Jensen's)}\\
+&= \frac{2B}{n}\left(
+\mathbb E_\sigma \left[
+\sum_{i,j=1}^n \sigma_i \sigma_j
+\langle \Phi(X_i),\Phi(X_j)\rangle_{\mathcal H}
+\right]\right)^{1/2}\\
+&= \frac{2B}{n}\left(
+\mathbb E_\sigma\left[ \sum_{i,j=1}^n \sigma_i \sigma_j k(X_i,X_j) \right]
+\right)^{1/2}
+\end{align*}
+\end{frame}
+
+
+\begin{frame}{Kernel methods}
+%     Use Jensen's and Cauchy-Schwarz inequality:
+% \[
+% \mathbb E_g
+% \left\|
+% \sum_{i=1}^n g_i\Phi(X_i)
+% \right\|_{\mathcal H}
+% \le
+% \left(
+% \mathbb E_g
+% \left\|
+% \sum_{i=1}^n g_i\Phi(X_i)
+% \right\|_{\mathcal H}^2
+% \right)^{1/2}.
+% \]
+% Expand the squared norm:
+% \[
+% \left\|
+% \sum_{i=1}^n \sigma_i\Phi(X_i)
+% \right\|_{\mathcal H}^2
+% =
+% \sum_{i,j=1}^n \sigma_i \sigma_j
+% \langle \Phi(X_i),\Phi(X_j)\rangle_{\mathcal H}
+% = \sum_{i,j=1}^n \sigma_i \sigma_j k(X_i,X_j),
+% \]
+
+% since $\langle \Phi(X_i),\Phi(X_j)\rangle_{\mathcal H}=k(X_i,X_j)$. 
+Then, taking expectation, we have
+\[
+\mathbb E_g
+\left\|
+\sum_{i=1}^n \sigma_i\Phi(X_i)
+\right\|_{\mathcal H}^2
+=
+\sum_{i=1}^n k(X_i,X_i)
+\qquad\text{(independence of Gaussians: \(\mathbb E[\sigma_i \sigma_j]=0\) for \(i\neq j\)).}
+\]
+Therefore
+\[
+\hat R_n(F_B)
+\le
+\frac{2B}{n}
+\sqrt{\sum_{i=1}^n k(X_i,X_i)}.
+\]
+
+Substitute this into the margin bound:
+\[
+P(Yf(X)\le 0)
+\le
+\hat{\mathbb E}_n\phi(Yf(X))
++
+\frac{4B}{\gamma n}\sqrt{\sum_{i=1}^n k(X_i,X_i)}
++
+\left(\frac{8}{\gamma}+1\right)\sqrt{\frac{\ln(4/\delta)}{2n}}.
+\]
+\end{frame}
+
+\subsection{Decision Trees}
+
+\begin{frame}{Decision Trees}
+% A binary-valued decision tree can be represented as a fixed boolean function of the decision functions computed at its nodes. Instead of estimating the complexity of the whole tree class directly, we bound it in terms of the Gaussian complexity of the \emph{node class} \(H\).
+    \begin{mytheorem}
+        \label{theorem:decision-tree-bound}
+        Let $D$ be a probability distribution on $\mathcal{X}\times\{\pm1\}$, $(X,Y)\sim D$. Let \(H\) be a set of $\{0,1\}$-functions on $\mathcal{X}$. Let \(T\) be the class of decision trees of depth no more than \textcolor{gustave}{\(d\)}, with decision functions from \(H\) (to be clear later). \\
+        
+        For a training sample and a tree \(t\in T\), let \(\tilde P_n(\ell)\) denote the proportion of all training examples which reach leaf $\ell$ and are correctly classified. \\
+        
+        Then with probability at least \(1-\delta\), there exists a constant $c$ such that every \(t\in T\) with \textcolor{gustave}{\(L\)} leaves satisfies
+\[
+\PP(Y\ne t(X)) \le \hat{\PP}_n(Y\ne t(X)) +\sum_\ell \min\!\bigl(\widetilde P_n(\ell),\, c d\, G_n(H)\bigr)+\sqrt{\frac{c\ln(L/\delta)}{2n}}.
+\]
+    \end{mytheorem}
+\end{frame}
+
+\begin{frame}{Decision Trees}
+    For a tree $t$ of depth \(d\), the indicator of whether an input reaches a leaf \(\ell\) is a conjunction of at most \(d_\ell\le d\) node decision functions 
+\[
+\mathbf{1}_{\{x\to \ell\}}
+=
+\bigwedge_{i=1}^{d_\ell} h_{\ell,i}(x),
+\qquad h_{\ell,i}\in H.
+\]
+
+Let $\sigma_\ell\in\{\pm1\}$ be the label assigned at leaf $\ell$.
+
+For every $x\in \X$, $t(x) = \sigma_{\ell^*}$ for some $\ell^*$.
+
+Hence, for \textit{any} $w_\ell > 0$ such that $\sum_\ell w_\ell=1$, the function $f$ defined by
+\[
+f(x)=\sum_\ell w_\ell \sigma_\ell \bigwedge_{i=1}^{d_\ell} h_{\ell,i}(x),
+\]
+is a soft classifier of $t$. Let $F$ be the class of such functions. 
+
+We will bound $\PP(Yf(X)\le 0)$.
+\end{frame}
+
+\begin{frame}{Decision Trees}
+Define $\phi_K:[0,1]\to [0,1]$ such that $\phi_K(\alpha)=\max(0,1-K\alpha)$, then $\phi_K$ is $K$-Lipschitz and dominates the $0-1$ loss.
+
+By Theorem \ref{theorem:soft-bound}, for each $K\in \NN$ (chosen before $f$), with probability $1-\delta_K$
+\[\PP(Yf(X)\le 0)\le\hat{\mathbb E}_n \phi_K(Yf(X))+2K R_n(F)+\sqrt{\frac{\ln(2/\delta_K)}{2n}}.
+\]
+Choose $\delta_K=\frac{6\delta}{\pi^2 K^2}$ (so that $\sum_{K=1}^\infty \delta_K = \delta$). With probability at least $1-\delta$, all inequalities of the following form hold,
+\[\PP(Yf(X)\le 0)\le\hat{\mathbb E}_n[\phi_K(Yf(X))]+2K R_n(F)+\sqrt{\frac{\ln(\pi^2 K/3\delta)}{2n}}.
+\]
+
+Now we can choose $K$ depending on our tree.
+\end{frame}
+
+% \begin{frame}{Proof sketch}
+%     Choose a family of margin cost functions \(\{\phi_L:L\in\mathbb N\}\) such that:
+% \begin{itemize}
+%     \item each \(\phi_L\) dominates the step loss \(\mathbf 1(yf(x)\le 0)\),
+%     \item each \(\phi_L\) is Lipschitz with constant \(L\).
+% \end{itemize}
+
+% Then by Theorem 2, for every \(f\in F\), and for all positive integer values of $L$, we have
+% \[
+% \Pr(yf(x)\le 0)
+% \le
+% \hat{\mathbb E}_n \phi_L(yf(x))
+% +
+% 2L R_n(F)
+% +
+% \sqrt{\frac{\ln(2/\delta)}{2n}}.
+% \]
+% Now we choose the piecewise linear margin loss
+% \[
+% \phi_L(\alpha)=
+% \begin{cases}
+% 1, & \alpha\le 0,\\[2mm]
+% 1-L \alpha, & 0<\alpha\le 1/L,\\[2mm]
+% 0, & \alpha>1/L.
+% \end{cases}
+% \]
+% \end{frame}
+
+% \begin{frame}{Proof sketch}
+%     Let \(\widetilde P_n(\ell)\) be the proportion of training examples that:
+% \begin{itemize}
+%     \item reach leaf \(\ell\),
+%     \item and are correctly classified there, i.e. \(y=\sigma_\ell\).
+% \end{itemize}
+
+% Then
+% \[
+% \hat{\mathbb E}_n\phi_L(yf(x))
+% =
+% \hat P_n(yf(x)\le 0)
+% +
+% \sum_l \widetilde P_n(\ell)\,\phi_L(w_\ell).
+% \]
+
+% Since
+% \[
+% \phi_L(w_\ell)=\max(0,1-L w_\ell),
+% \]
+% we obtain
+% \[
+% \hat{\mathbb E}_n\phi_L(yf(x))
+% =
+% \hat P_n(yf(x)\le 0)
+% +
+% \sum_\ell \max\bigl(0,(1-L w_\ell)\widetilde P_n(\ell)\bigr).
+% \]
+% \end{frame}
+
+    
+\begin{frame}{Decision Trees}
+\begin{align*}
+\hat{\mathbb E}_n[\phi_K(Yf(X))]+2K R_n(F)  
+& = \hat{\PP}_n(Yf(X)\le 0) + \sum\limits_{\ell} \tilde{P}_n(\ell)\phi_K(w_\ell) + 2KR_n(F) \\
+\only<2->{& = \hat{\PP}_n(Y\ne t(X)) + \sum\limits_{\ell} \tilde{P}_n(\ell)\max(0, 1-Kw_\ell) + 2KR_n(F)}
+\end{align*}
+\textcolor{gray}{
+\only<1,2>{\begin{center}
+    \only<1>{penalize misclassifications by true loss, penalize correct classifications by low confidence}
+\end{center}
+}}
+
+\uncover<3->{
+Note the last equality is true even when some $w_\ell=0$, since $\text{sgn}(0) = 1$. Let $x$ such that $f(x) = 0$
+\begin{itemize}
+    \item if $t(x)\ne y$, then $yf(x) \le 0$ is \textit{true}
+    \item if $t(x) = y$, then we are penalized by ``no confidence''
+\end{itemize}}
+
+\end{frame}
+
+\begin{frame}{Decision Trees}
+    Now let $K = \left| \{\ell:\tilde P_n(\ell)>2R_n(F)\}\right| \textcolor{gustave}{\le L}$, $w_\ell=0$ if $\tilde P_n(\ell)\le 2R_n(F)$ and $w_\ell=\frac{1}{K}$, otherwise.
+
+\begin{align*}
+    \sum\limits_{\ell} \tilde{P}_n(\ell)\max(0, 1-Kw_\ell) + 2KR_n(F) 
+    & = \sum\limits_{\ell} \tilde{P}_n(\ell)\cdot \bm{1}(\tilde P_n(\ell)\le2R_n(F)) \\ 
+    & \,\,\,\,\,\,\, + 2R_n(F) \sum\limits_{\ell}\bm{1}(\tilde{P}_n(\ell) >2R_n(F))\\
+    &= \sum_\ell\min(\tilde{P}_n(\ell),2R_n(F))
+\end{align*}
+\end{frame}
+
+\begin{frame}{Decision Trees}
+    Let $g: \{\pm 1\}^d \to \{\pm 1\}$ be the boolean AND function. We express the class $F$ as
+    $$F \subset \text{conv}\left(\pm\dfrac{1}{2}\left(g(K^d) + 1\right)\right)$$ 
+    where $K=\{k:\mathcal{X}\to\{\pm1\} : k = 2h-1, h\in H\}$ (to satisfy the boolean lemma).
+    
+    Then
+    \begin{align*}
+        R_n(F) & \le R_n\left(\dfrac{1}{2}\left(g(K^d) + 1\right)\right)
+        \uncover<2->{\le \sqrt{\dfrac{\pi}{2}}G_n\left(\dfrac{1}{2}\left(g(K^d) + 1\right)\right)} \\
+        \uncover<3->{& \le \sqrt{\dfrac{\pi}{2}}\left(\dfrac{1}{2}G_n(g(K^d)) + \dfrac{1}{2\sqrt{n}}\right)}
+        \uncover<4->{\le \sqrt{\dfrac{\pi}{2}}\left(dG_n(K) + \dfrac{1}{2\sqrt{n}}\right)}\\
+        \uncover<5->{& \le \sqrt{\dfrac{\pi}{2}}\left(2dG_n(H) + \dfrac{2d+1}{2\sqrt{n}}\right)}
+    \end{align*}
+    \only<1-5>{\textcolor{gray}{
+    \begin{center}
+        \only<1>{$\forall F, R_n(F) = R_n(\text{conv}(F)) = = R_n(F\cup-F)$}
+        \only<2>{conversion: $R_n(F)\le \sqrt{\pi/2} G_n(F)$}
+        \only<3>{translation and scaling: $G_n(cF+h)\le |c|G_n(F)+ \|h\|_\infty/\sqrt{n}$}
+        \only<4>{lemma for boolean combination: $G_n(g(K^d)) \le 2dG_n(K)$}
+        \only<5>{go back to $H$}
+    \end{center}}}
+    \only<6>{\textbf{Note.} But $G_n(H)$ is not easy to compute!}
+\end{frame}
+
+% \begin{frame}{Proof sketch}
+    
+
+% % Using the comparison between Rademacher and Gaussian complexities,
+% % \[
+% % R_n(F_B)\le \sqrt{\frac{\pi}{2}}\, G_n(F_B)
+% % \qquad\text{(Gaussian-to-Rademacher comparison).}
+% % \]
+
+% Hence, we also yield the same result for Rademacher complexity,
+% \[
+% \hat R_n(F_B)
+% \le
+% \frac{2B}{n}\sqrt{\sum_{i=1}^n k(X_i,X_i)}.
+% \]
+% Substitute this into the margin bound:
+% \[
+% P(Yf(X)\le 0)
+% \le
+% \hat{\mathbb E}_n\phi(Yf(X))
+% +
+% \frac{4B}{\gamma n}\sqrt{\sum_{i=1}^n k(X_i,X_i)}
+% +
+% \left(\frac{8}{\gamma}+1\right)\sqrt{\frac{\ln(4/\delta)}{2n}}.
+% \]
+% \end{frame}
+
+
+
+
+
+
+
