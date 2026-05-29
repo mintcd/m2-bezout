@@ -25,3 +25,5 @@ $$\mathbb{P}(\max(X,Y) = c) = p_X F_Y(c) + p_Y F_X(c) - p_X p_Y$$
 $$Y_{n+1} \stackrel{d}{=} I^{(n)}\left(Y_{U_n}^{(1)} + Y_{n-1-U_n}^{(2)} + 1\right) + J^{(n)}\max\left(Y_{U_n}^{(1)}, Y_{n-1-U_n}^{(2)}\right), \forall n\ge 1, \quad Y_0=Y_1=0.$$
 
 The variables $I$ and $J$ are Bernoulli with expectation $u$ and $v$ respectively, such that $I + J \le 1$. That means we can only either take the sum-plus-one term, or the max term, or zero. The variable $U_n$ is uniformly distributed on $\{0, \ldots, n-1\}$. Superscripts are for independent copies.
+
+$\lfloor n/2\rfloor- \sum\limits_{m=0}^{\lfloor n/2\rfloor}q_m$
