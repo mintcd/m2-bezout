@@ -79,6 +79,19 @@
 \newcommand\norm[1]{\left\lVert#1\right\rVert}
 \newcommand\sym{\mathcal{S}}
 
+% Define \myspace{n}: output n thin spaces (\,)
+\makeatletter
+\newcommand{\myspace}[1]{%
+  \begingroup
+  \@tempcnta=#1\relax
+  \loop\ifnum\@tempcnta>0
+  \,%
+  \advance\@tempcnta by -1\relax
+  \repeat
+  \endgroup
+}
+\makeatother
+
 \definecolor{myblue}{HTML}{4478a4}
 
 \newcommand{\scrP}{\mathscr{P}}
