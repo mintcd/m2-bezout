@@ -37,17 +37,18 @@ Performance}
 \AtBeginDocument{
 	\author[Minh]{
 		\begin{tabular}{lll}
-      {\small Supervisors:} & \small Cyril NICAUD \\
-      & Pablo ROTONDO\\\\
+      {\small Supervisors:} & \small Prof. Cyril NICAUD \\
+      & Dr. Pablo ROTONDO\\\\
 			{\small Applicant:} & \small CHAU Dang Minh
 		\end{tabular}
 	}
 }
-% \institute[Gustave Eiffel]{
-% 	{
-% 		Gustave Eiffel University \\
-% 	}
-% }
+\institute[Gustave Eiffel]{
+	{
+    \vspace{0.5cm}
+		Gustave Eiffel University, LIGM \\
+	}
+}
 % TOC
 \setbeamertemplate{section in toc}[circle]
 \setbeamercolor{section in toc}{bg=sbackground!40, fg=black} % change color section item
@@ -170,78 +171,62 @@ Performance}
   \titlepage
 \end{frame}
 
-\begin{frame}{Education: Maths and CS}
+\begin{frame}{Education and Research Experience}
+  \textbf{BEng in Computer Science} \hfill \textit{Univ. of Technology, Vietnam, 2024}
 
-  \textbf{MSc in Mathematics \& Computer Science} \hfill \textit{Gustave Eiffel Univ., in progress}
-  \begin{itemize}
-    % \item Labex Bézout Scholar, ranked 1st/12 (excluding internship)
-    \item Relevant coursework: combinatorics, discrete optimization and complexity theory.
-  \end{itemize}
+  \hspace{1.5em}\begin{minipage}{\dimexpr\linewidth-1.5em\relax}
+    \textbf{Relevant coursework:} data structures and algorithms, and compilers.
+  \end{minipage}
+
+  \vspace{1em}
 
   \textbf{MSc in Applied Mathematics} \hfill \textit{Univ. of Limoges, 2025}
-  \begin{itemize}
-    % \item Ranked 1st/10
-    \item Relevant coursework: stochastic optimization.
-  \end{itemize}
 
-  \textbf{BEng in Computer Science} \hfill \textit{Univ. of Technology, Vietnam, 2024}
-  \begin{itemize}
-    \item Relevant coursework: data structures and algorithms, and compilers.
-  \end{itemize}
+  \hspace{1.5em}\begin{minipage}{\dimexpr\linewidth-1.5em\relax}
+    \textbf{Relevant coursework:} stochastic optimization.
 
-  % Sparked interest in logic, computation and AI.
+    \textbf{Internship:} Compatibility between Open Automata (OA) and Session Types
+
+    \hspace{0.5cm} Proved equivalence, mapped safe composition of OA to subtyping.
+
+  \end{minipage}
+
+  \vspace{1em}
+
+  \textbf{MSc in Mathematics \& Computer Science} \hfill \textit{Gustave Eiffel Univ., in progress}
+
+  \hspace{1.5em}\begin{minipage}{\dimexpr\linewidth-1.5em\relax}
+    \textbf{Relevant coursework:} combinatorics, discrete optimization and complexity theory.
+
+    \textbf{Internship:} Complexity Analysis of the Regular Expression Matcher \textcolor{gustave}{Hyperscan} (by Intel)
+
+    {\leftskip=0.5cm
+      Analyze FDR string matcher (SIMD\footnotemark \,extension of Shift-Or), correctness of decomposition-based matching, and longest literal in average.\par
+    }
+  \end{minipage}
+  \footnotetext{Single Instruction, Multiple Data}
 \end{frame}
 
-\begin{frame}{Research Experience: Analysis of Algorithms \& Formal Methods}
-  \begin{columns}[t]
-    \begin{column}{0.72\textwidth}
-      \textbf{Compatibility between Open Automata and Session Types}
-    \end{column}
-    \begin{column}{0.28\textwidth}
-      \raggedleft\textit{M2 internship, \\ Telecom Paris, 2025}
-    \end{column}
-  \end{columns}
-  \vspace{-0.5em}
-  \begin{itemize}
-    \item \textbf{Core Result:} Proved that a simplified OA model is equivalent to multiparty session types, mapping safe composition to subtyping.
-    \item \textbf{Takeaway for PhD:} Foundational experience in models of concurrent computing, useful for building models of SIMD parallelism.
-  \end{itemize}
-
-  \vspace{0.8em}
-  \begin{columns}[t]
-    \begin{column}{0.72\textwidth}
-      \textbf{Complexity Analysis of the Regex Matcher Hyperscan}
-    \end{column}
-    \begin{column}{0.28\textwidth}
-      \raggedleft\textit{M2 Internship, \\ LIGM, in progress}
-    \end{column}
-  \end{columns}
-
-  \begin{itemize}
-    \item \textbf{Core Analyses:} FDR string matcher (SIMD extension of Shift-Or), correctness of decomposition-based matching, and longest literal in average.
-    \item \textbf{Takeaway for PhD:} Techniques for complexity analysis (from analytic combinatorics and probability theory), and experience with SIMD algorithms and their implementation.
-  \end{itemize}
-\end{frame}
-
-\begin{frame}{Research Experience: Analysis of Algorithms - Details}
+\begin{frame}{Research Experience: Analysis of Algorithms}
   Example of a regular expression (regex): $(a+b\cdot c)\cdot d\cdot e^*$, equivalent to $(a \cdot d+b \cdot c \cdot d)e^*$.
 
-  Hyperscan extracts literals ($a\cdot d$ and $b\cdot c\cdot d$ in the example) from a regex, then
+  Hyperscan executes as follows
   \begin{enumerate}
-    \item matches all literals using FDR (or another string matcher \footnote{Qiu et al. (2021). Teddy: An efficient SIMD-based literal matching engine for scalable deep packet inspection.}) \textit{at once},
+    \item extracts literals ($a\cdot d$ and $b\cdot c\cdot d$ in the example) from a regex,
+    \item matches all literals using FDR or another string matcher\footnote{Qiu et al. (2021). Teddy: An efficient SIMD-based literal matching engine for scalable deep packet inspection.} \textit{at once},
     \item verifies subregex matches using the previous results.
   \end{enumerate}
 
-  We assume a distribution over the regex trees, currently the BST-like \footnote{Binary Search Tree}.
+  We assume a distribution over the regex trees, currently the BST-like family\footnote{Binary Search Tree}.
 
-  \only<1-7>{Useful statistics to analyze asymptotically: the average of the number of literals, and the average longest length of the literals (on which we are concentrating).
-
-    The second statistic leads to analyzing the longest literal $Y_n$ that a subtree \textit{yields} to its parent.}
+  \only<1-7>{A useful statistics is the length of longest literals in average, which leads to analyzing the length $Y_n$ of longest literals  that an $n$-node subtree \textit{yields} to its parent.
+  $$Y_{n+2} = \underbrace{I^{(n)}}_{\substack{\text{indicator of root} \\ \text{being concat.}}}\underbrace{\left(Y_{U_n} + Y_{n+1-U_n} + 1\right)}_{\substack{\text{take all of the subtrees,}\\ \text{plus the current}}} + \underbrace{J^{(n)}}_{\substack{\text{indicator of root} \\ \text{being alternation}}} \underbrace{\max\left(Y_{U_n}, Y_{n+1-U_n}\right)}_{\substack{\text{take the longer}\\\text{of the subtrees}}}, \quad Y_1=Y_2=0.$$
+  }
 
   \only<2-6>{
     \begin{tikzpicture}[remember picture,overlay]
       % anchor point on the page
-      \coordinate (treecenter) at ([xshift=-2cm,yshift=-2.5cm]current page.north east);
+      \coordinate (treecenter) at ([xshift=-2cm,yshift=-2cm]current page.north east);
 
       % slide 2: big cloud
       \node[draw,cloud,minimum size=2cm,visible on=<2>] (rootcloud) at ([yshift=-1.25cm]treecenter) {6 nodes};
@@ -281,17 +266,15 @@ Performance}
   }
 \end{frame}
 
-\begin{frame}{Research Experience: Analysis of Algorithms - Details}
-  \vspace{-1.75em}
-  $$Y_{n+2} = \underbrace{I^{(n)}}_{\substack{\text{indicator of root} \\ \text{being concat.}}}\underbrace{\left(Y_{U_n} + Y_{n+1-U_n} + 1\right)}_{\substack{\text{take all of the subtrees,}\\ \text{plus the current}}} + \underbrace{J^{(n)}}_{\substack{\text{indicator of root} \\ \text{being alternation}}} \underbrace{\max\left(Y_{U_n}, Y_{n+1-U_n}\right)}_{\substack{\text{take the longer}\\\text{of the subtrees}}}, \quad Y_1=Y_2=0.$$
-  For $\mathbb{E}[Y_n]$ when $\mathbb{E}[I^{(n)}]+\mathbb{E}[J^{(n)}] := u+v>1/2$ (agreeing with real data),
+\begin{frame}{Research Experience: Analysis of Algorithms}
+  For $\mathbb{E}[Y_n]$ when $2\mathbb{E}[I^{(n)}]+\mathbb{E}[J^{(n)}] := 2u+v>1$ (agreeing with real data),
   \vspace{-0.5em}
   \begin{center}
     \makebox[\textwidth][r]{%
       \begin{minipage}{0.94\textwidth}
         \begin{columns}[c]
           \begin{column}{0.72\textwidth}
-            \textbf{Lower bound} $\Omega(n^\alpha)$ where $\alpha$ solves $\alpha + v2^{-\alpha}=2u+v-1$
+            \textbf{Lower bound} $\Omega(n^\alpha)$ where $\alpha$ solves $\alpha + v2^{-\alpha}=2(u+v)-1$
           \end{column}
           \begin{column}{0.02\textwidth}
             \centering
@@ -306,14 +289,14 @@ Performance}
     }
   \end{center}
   \vspace{-0.5em}
-  \textbf{Conjecture:} in some domain of $(u,v)$, $\mathbb{E}[Y_n]\sim Cn^{\alpha^\star}$.
+  \textbf{Conjecture:} in some domain of $(u,v)$, $\mathbb{E}[Y_n]\sim Cn^{\alpha^\star}$ for some $\alpha^\star\in(\alpha, 2(u+v)-1)$.
 
   \begin{columns}[c]
-    \begin{column}{0.39\textwidth}
+    \begin{column}{0.5\textwidth}
       \centering
       \includegraphics[width=\linewidth]{img/05-03-100000-200000.png}
     \end{column}
-    \begin{column}{0.39\textwidth}
+    \begin{column}{0.5\textwidth}
       \centering
       \includegraphics[width=\linewidth]{img/04-015-100000-200000.png}
     \end{column}
@@ -324,7 +307,7 @@ Performance}
   \textbf{Context and Motivation:}
   \begin{itemize}
     \item Developers optimize their library algorithms in a fine-grained way e.g., they make assumptions on the input or leverage hardware features such as SIMD instructions.
-    \item Researchers are interested in explaining if such optimizations are indeed efficient. Examples include both confirmation (TimSort \footnote{Auger, N., Jugé, V., Nicaud, C., \& Pivoteau, C. (2018). On the worst-case complexity of TimSort.}) and rejection (Lua's hybrid table \footnote{Martínez, C., Nicaud, C., \& Rotondo, P. (2022). A probabilistic model revealing shortcomings in Lua’s hybrid tables.})
+    \item Researchers are interested in explaining if such optimizations are indeed efficient. Examples include both confirmation (TimSort\footnote{Auger, N., Jugé, V., Nicaud, C., \& Pivoteau, C. (2018). On the worst-case complexity of TimSort.}) and rejection (Lua's hybrid table\footnote{Martínez, C., Nicaud, C., \& Rotondo, P. (2022). A probabilistic model revealing shortcomings in Lua’s hybrid tables.})
   \end{itemize}
 
   \textbf{Goal:} Develop a framework for analyzing algorithms that use SIMD.
@@ -333,6 +316,20 @@ Performance}
   \begin{itemize}
     \item Direct applications to algorithm design.
     \item Requirements naturally lead to deep mathematical questions, e.g., $\mathbb{E}[Y_n]$ may not be analyzable by classical techniques.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Professional Project}
+  \textbf{Long-term Goal:} Pursue a career as a researcher/faculty member in theoretical CS.
+
+  \textbf{Short-term Goal:} Secure a postdoc fellowship.
+
+  \textbf{Competencies to Build During the PhD:}
+  \begin{itemize}
+    \item Acquire technical skills in analysis of algorithms.
+    \item Learn how to communicate research effectively, both orally and in writing.
+    \item Write and publish findings in respected conferences and journals.
+    \item Learn French and gain university-level teaching experience.
   \end{itemize}
 \end{frame}
 
@@ -349,7 +346,7 @@ Performance}
 
 \begin{frame}[noframenumbering,plain]
   \begin{center}
-    \Huge\textbf{Thank you for attention !}
+    \Huge\textbf{Thank you for your attention !}
   \end{center}
 \end{frame}
 
