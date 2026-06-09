@@ -148,6 +148,63 @@ def plot_distribution(
     plt.tight_layout()
     plt.show()
 
+
+def find_bin_with_highest_mass(
+        particles=None,
+        counts=None,
+        bin_edges=None,
+        bins=100,
+        range=None,
+        density=False,
+        return_counts=False,
+        return_ties=False):
+    """
+    Find the bin with the highest mass.
+
+    Provide either `particles` (array-like) OR both `counts` and `bin_edges`.
+
+    Returns by default a tuple `(idx, (left, right), center, mass)` where `idx`
+    is the bin index with the largest mass, `(left, right)` are the bin edges,
+    `center` is the bin center, and `mass` is the bin mass (count or density
+    depending on `density`).
+
+    If `return_ties=True` the function returns a list of such tuples for every
+    bin that attains the maximum mass. If `return_counts=True` the histogram
+    `(counts, bin_edges)` is also returned as the final return values.
+    """
+    # Validate inputs
+    if (counts is None) != (bin_edges is None):
+        raise ValueError("Provide both `counts` and `bin_edges` together.")
+
+    if counts is None:
+        if particles is None:
+            raise ValueError("Provide either `particles` or `counts`+`bin_edges`.")
+        counts, bin_edges = np.histogram(particles, bins=bins, range=range, density=density)
+
+    if counts.size == 0:
+        raise ValueError("Empty counts array.")
+
+    max_mass = np.max(counts)
+    idxs = np.where(counts == max_mass)[0]
+
+    def _make_entry(idx):
+        left = float(bin_edges[idx])
+        right = float(bin_edges[idx + 1])
+        center = 0.5 * (left + right)
+        mass = float(counts[idx])
+        return int(idx), (left, right), center, mass
+
+    if return_ties:
+        results = [_make_entry(i) for i in idxs]
+        if return_counts:
+            return results, counts, bin_edges
+        return results
+    else:
+        result = _make_entry(idxs[0])
+        if return_counts:
+            return result, counts, bin_edges
+        return result
+
 def wasserstein(X, Y, p=1):
 
     X = np.asarray(X)

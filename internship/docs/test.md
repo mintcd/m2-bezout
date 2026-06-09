@@ -27,3 +27,8 @@ $$Y_{n+1} \stackrel{d}{=} I^{(n)}\left(Y_{U_n}^{(1)} + Y_{n-1-U_n}^{(2)} + 1\rig
 The variables $I$ and $J$ are Bernoulli with expectation $u$ and $v$ respectively, such that $I + J \le 1$. That means we can only either take the sum-plus-one term, or the max term, or zero. The variable $U_n$ is uniformly distributed on $\{0, \ldots, n-1\}$. Superscripts are for independent copies.
 
 $\lfloor n/2\rfloor- \sum\limits_{m=0}^{\lfloor n/2\rfloor}q_m$
+
+
+$\max((1+2^{-i})^{y_i}, (1+2^{-(n-1-i)})^{y_{n-1-i}}) \ge \mathbb{E}[(1+2^{-(n+1)})^{\max(Y_i^{(1)}, Y_{n-1-i}^{(2)})}]$
+
+$(1+\lambda_i)^{y_i} \ge \exp\left(\lambda_i y_i - \dfrac{1}{2}\lambda_i^2y_i\right)$
