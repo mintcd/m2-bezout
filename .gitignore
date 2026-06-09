@@ -16,6 +16,7 @@
 *.synctex.gz
 *.bbl-SAVE-ERROR
 *.out
+*.nav
 
 # Compiler generated files
 .DS_Store
